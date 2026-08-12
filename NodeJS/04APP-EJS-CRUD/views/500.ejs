@@ -1,0 +1,26 @@
+<%- include('partials/header.ejs')  %> 
+
+    <!-- content -->
+    <main class="py-5">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+                <div class="card-header card-title">
+                  <div class="d-flex align-items-center">
+                    <h2 class="mb-0">500 Error</h2>
+                  </div>
+                </div>
+              <div class="card-body">
+               <% if(message){ %> 
+                <h1><%= message  %> </h1>
+               <% }else{ %> 
+                <h1>Internal Server Error.</h1>
+               <% } %> 
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <%- include('partials/footer.ejs')  %> 

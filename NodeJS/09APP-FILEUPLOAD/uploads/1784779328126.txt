@@ -1,0 +1,38 @@
+Design a scalable backend architecture for a Bug Tracking System using the MERN stack (MongoDB, Express.js, and Node.js).
+The backend should follow the MVC (Model-View-Controller) architecture and use industry best practices for project structure, code organization, and scalability.
+Tech Stack
+MongoDB (Database)
+Mongoose (ODM)
+Express.js (Backend Framework)
+Node.js (Runtime)
+Requirements
+Follow the MVC pattern strictly.
+Use RESTful API design.
+Create well-structured Mongoose models with proper relationships.
+Separate business logic into controllers (or services where appropriate).
+Implement centralized error handling.
+Add authentication and authorization using JWT.
+Use role-based access control (Admin, Developer, Tester, Project Manager).
+Include request validation using Express Validator or Joi.
+Use environment variables with .env.
+Write reusable middleware for authentication, authorization, validation, and error handling.
+Design the backend to be modular and scalable for future expansion.
+Core Modules
+User Management
+Project Management
+Bug Management
+Comments
+Attachments
+Notifications
+Dashboard APIs
+Deliverables
+Complete folder structure
+Database schema (Mongoose models)
+API routes
+Controllers
+Middleware
+Authentication flow
+Role-based permissions
+Sample API endpoints
+Best practices for production-ready code
+Explanation of how each folder and component interacts within the MVC architecture.

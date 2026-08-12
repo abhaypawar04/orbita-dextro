@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=], initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>here is a from</h1>
+
+    <form action="/submitform" method="post" enctype="multipart/form-data">
+      <div>
+        <label for="nameinput">name</label>
+        <input type="text" name="username" />
+      </div>
+
+      <div>
+        <label for="fileinput">upload file multiple</label>
+        <input type="file" multiple="multiple" name="userfile" />
+      </div>
+
+      <div>
+        <label for="fileinput2">upload file 1 </label>
+        <input type="file" name="userfile2" />
+      </div>
+      <div>
+        <input type="submit" />
+      </div>
+    </form>
+  </body>
+</html>

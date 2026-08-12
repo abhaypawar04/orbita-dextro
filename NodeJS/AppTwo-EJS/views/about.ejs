@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title%></title>
+  </head>
+  <body>
+    <h1><%= title%></h1>
+
+
+ <% if(message){ %>
+ <p><%=message%></p>
+ <%}  else {%>
+    <span>there is no message from server side </span>
+    <%}%>
+
+<ul>
+   <% items.forEach((item,index)=>{%>
+        <li><%= item%></li>
+   <% })%>
+</ul>
+
+
+
+<table border="1" width="300px">
+    <tr>
+        <th>name</th>
+        <th>age</th>
+    </tr>
+   <% usersdata.forEach((item,index)=>{%>
+    <tr>
+        <td><%= item.name%></td>
+        <td><%= item.age%></td>
+    </tr>
+   <% })%>
+    
+</table>
+
+</body>
+</html>

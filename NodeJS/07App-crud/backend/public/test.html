@@ -1,0 +1,123 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Test API</title>
+    <style>
+      body {
+        font-family: Arial;
+        padding: 20px;
+      }
+      button {
+        margin: 5px;
+        padding: 10px;
+      }
+      pre {
+        background: #f4f4f4;
+        padding: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>CRUD API Test</h1>
+
+    <h3>Create User</h3>
+    <input id="name" placeholder="Name" value="John Doe" />
+    <input id="email" placeholder="Email" value="john@example.com" />
+    <input id="age" placeholder="Age" value="25" />
+    <button onclick="createUser()">Create</button>
+
+    <h3>Get Users</h3>
+    <button onclick="getUsers()">Get All Users</button>
+    <button onclick="getUser()">Get Single User (ID: 1)</button>
+
+    <h3>Update User</h3>
+    <input id="updateId" placeholder="User ID" />
+    <input id="updateName" placeholder="New Name" />
+    <button onclick="updateUser()">Update</button>
+
+    <h3>Delete User</h3>
+    <input id="deleteId" placeholder="User ID" />
+    <button onclick="deleteUser()">Delete</button>
+
+    <h3>Response:</h3>
+    <pre id="response">Response will appear here...</pre>
+
+    <script>
+      const API_BASE = "http://localhost:5000/api/users";
+
+      async function createUser() {
+        const data = {
+          name: document.getElementById("name").value,
+          email: document.getElementById("email").value,
+          age: parseInt(document.getElementById("age").value),
+        };
+
+        const res = await fetch(API_BASE, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        });
+        const json = await res.json();
+        document.getElementById("response").textContent = JSON.stringify(
+          json,
+          null,
+          2,
+        );
+      }
+
+      async function getUsers() {
+        const res = await fetch(API_BASE);
+        const json = await res.json();
+        document.getElementById("response").textContent = JSON.stringify(
+          json,
+          null,
+          2,
+        );
+      }
+
+      async function getUser() {
+        const id = prompt("Enter User ID:");
+        if (!id) return;
+        const res = await fetch(`${API_BASE}/${id}`);
+        const json = await res.json();
+        document.getElementById("response").textContent = JSON.stringify(
+          json,
+          null,
+          2,
+        );
+      }
+
+      async function updateUser() {
+        const id = document.getElementById("updateId").value;
+        const name = document.getElementById("updateName").value;
+
+        const res = await fetch(`${API_BASE}/${id}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name }),
+        });
+        const json = await res.json();
+        document.getElementById("response").textContent = JSON.stringify(
+          json,
+          null,
+          2,
+        );
+      }
+
+      async function deleteUser() {
+        const id = document.getElementById("deleteId").value;
+        if (!confirm("Delete user?")) return;
+
+        const res = await fetch(`${API_BASE}/${id}`, {
+          method: "DELETE",
+        });
+        const json = await res.json();
+        document.getElementById("response").textContent = JSON.stringify(
+          json,
+          null,
+          2,
+        );
+      }
+    </script>
+  </body>
+</html>

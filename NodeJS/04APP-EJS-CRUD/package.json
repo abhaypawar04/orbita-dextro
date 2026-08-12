@@ -1,0 +1,23 @@
+{
+  "name": "appfour-ejs-crud",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "nodemon server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bootstrap": "^5.3.8",
+    "dotenv": "^17.4.2",
+    "ejs": "^3.1.10",
+    "express": "^5.2.1",
+    "mongoose": "^9.7.4",
+    "mongoose-paginate-v2": "^1.9.5",
+    "nodemon": "^3.1.14"
+  }
+}

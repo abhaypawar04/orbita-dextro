@@ -1,0 +1,75 @@
+<%- include('partials/header.ejs')  %> 
+
+    <!-- content -->
+    <main class="py-5">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+                <div class="card-header card-title">
+                  <div class="d-flex align-items-center">
+                    <h2 class="mb-0">All Contacts</h2>
+                    <div class="ml-auto">
+                      <a href="/add-contact" class="btn btn-success"><i class="fa fa-plus-circle"></i> Add New</a>
+                    </div>
+                  </div>
+                </div>
+              <div class="card-body">
+                <table class="table table-striped table-hover">
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">First Name</th>
+                      <th scope="col">Last Name</th>
+                      <th scope="col">Email</th>
+                      <th scope="col">Phone</th>
+                      <th scope="col">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% var srno = counter %>
+                    <% contacts.forEach(contact => { %>
+                      <tr>
+                        <td><%= srno++ %></td>
+                        <td><%= contact.first_name %></td>
+                        <td><%= contact.last_name %></td>
+                        <td><%= contact.email %></td>
+                        <td><%= contact.phone %></td>
+                        <td width="150">
+                          <a href="/show-contact/<%= contact._id %>" class="btn btn-sm btn-circle btn-outline-info" title="Show"><i class="fa fa-eye"></i></a>
+                          <a href="/update-contact/<%= contact._id %>" class="btn btn-sm btn-circle btn-outline-secondary" title="Edit"><i class="fa fa-edit"></i></a>
+                          <a href="/delete-contact/<%= contact._id %>" class="btn btn-sm btn-circle btn-outline-danger" title="Delete"><i class="fa fa-times"></i></a>
+                        </td>
+                      </tr>
+                    <% }); %> 
+                  </tbody>
+                </table> 
+
+                <nav>
+                  <ul class="pagination justify-content-center">
+                    <% let disableClass = hasPrevPage ? "" : "disabled" %>
+                    <li class="page-item <%= disableClass %>">
+                      <a class="page-link" href="/?page=<%= prevPage %>">Previous</a>
+                    </li>
+
+                    <% for(let i=1; i <= totalPages; i++){
+                      
+                      let activeClass = currentPage == i ? "active" : ""
+                      
+                      %>
+                     <li class="page-item <%= activeClass %>"><a class="page-link" href="/?page=<%= i %>"><%= i %></a></li>
+                    <% } %>
+
+                    <% let disableClass2 = hasNextPage ? "" : "disabled" %>
+                    <li class="page-item <%= disableClass2 %>">
+                      <a class="page-link" href="/?page=<%= nextPage %>">Next</a>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <%- include('partials/footer.ejs')  %> 

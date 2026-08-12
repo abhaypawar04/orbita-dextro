@@ -1,0 +1,37 @@
+if i am on a main branch and i type git checkout main then
+If you are already on the main branch and you type git checkout main, Git will display a message stating Already on 'main'
+--
+what will do git pull origin main
+Running git pull origin main fetches changes from your remote repository and immediately merges them into your current local branch.
+--
+what will git checkout -b develop do
+The command git checkout -b develop creates a new branch named develop and immediately switches you to it.
+-- 
+what will git push -u origin develop do
+The command git push -u origin develop uploads your local develop branch to the remote repository (origin) and links them together.
+-- 
+Now you should avoid coding directly on develop
+git checkout develop
+git pull
+git checkout -b feature/navbar-redesign
+
+Work there:
+
+git add .
+git commit -m "feat(navbar): redesign navbar"
+git push -u origin feature/navbar-redesign
+
+Then:
+
+feature/navbar-redesign
+          ↓
+       develop
+
+After testing:
+
+develop
+   ↓
+ main
+---
+
+-- 
