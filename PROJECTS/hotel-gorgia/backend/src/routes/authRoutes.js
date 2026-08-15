@@ -1,4 +1,4 @@
-// this is a hotel georgia file
+// this is a hotel georgia file not deployed yet.
 const express = require("express");
 const router = express.Router();
 const { body } = require("express-validator");
