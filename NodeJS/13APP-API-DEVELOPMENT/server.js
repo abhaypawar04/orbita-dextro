@@ -1,6 +1,12 @@
 import express from "express";
 import mongoose from "mongoose";
 const app = express();
+import router from "./routes/students.routes.js";
+const studentRoutes = router;
+
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+app.use("/api/students", studentRoutes);
 
 mongoose
   .connect("mongodb://localhost:27017/api-crud")
