@@ -24,3 +24,5 @@ app.get("/", (req, res) => {
 app.listen(process.env.PORT, () => {
   console.log("backend is running on a port 3000");
 });
+
+//all okay all up to date
