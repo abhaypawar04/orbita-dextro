@@ -1,0 +1,94 @@
+@import "tailwindcss";
+
+@layer components {
+  /* Page Layout & Background */
+  .page-wrapper {
+    @apply min-h-[calc(100vh-128px)] relative overflow-hidden bg-gradient-to-br from-gray-100 via-gray-50 to-gray-200 py-8;
+  }
+
+  /* Glassmorphism Cards */
+  .glass-card {
+    @apply relative overflow-hidden rounded-[24px] border border-white/70 bg-white/55 p-6 backdrop-blur-xl backdrop-saturate-150 shadow-[0_10px_35px_rgba(0,0,0,0.06)];
+  }
+
+  .glass-card-sm {
+    @apply relative overflow-hidden rounded-[22px] border border-white/70 bg-white/55 p-5 backdrop-blur-xl backdrop-saturate-150 shadow-[0_10px_35px_rgba(0,0,0,0.06)];
+  }
+
+  .glass-card-lg {
+    @apply relative overflow-hidden rounded-[28px] border border-white/70 bg-white/55 shadow-[0_15px_50px_rgba(0,0,0,0.07)] backdrop-blur-2xl backdrop-saturate-150;
+  }
+
+  .glass-card-hover {
+    @apply transition-all duration-300 hover:-translate-y-1 hover:bg-white/70 hover:shadow-[0_18px_45px_rgba(0,0,0,0.09)];
+  }
+
+  .glass-reflection {
+    @apply pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-white/60 to-transparent;
+  }
+
+  .glass-reflection-lg {
+    @apply pointer-events-none absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-white/60 to-transparent;
+  }
+
+  /* Buttons */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-gray-900 px-5 py-2.5 text-sm font-medium text-white shadow-[0_6px_18px_rgba(0,0,0,0.12)] transition-all hover:bg-gray-800 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white/60 px-5 py-2.5 text-sm font-medium text-gray-700 shadow-sm backdrop-blur-sm transition-all hover:bg-white hover:text-gray-900 active:scale-[0.98];
+  }
+
+  .btn-icon {
+    @apply flex h-9 w-9 items-center justify-center rounded-xl border border-transparent text-gray-500 transition-all duration-200 hover:border-white/80 hover:bg-white/80 hover:text-gray-900 hover:shadow-sm;
+  }
+
+  .btn-icon-danger {
+    @apply flex h-9 w-9 items-center justify-center rounded-xl border border-transparent text-gray-400 transition-all duration-200 hover:border-red-100 hover:bg-red-50 hover:text-red-500;
+  }
+
+  /* Form Elements */
+  .form-label {
+    @apply mb-1.5 block text-sm font-medium text-gray-700;
+  }
+
+  .form-input {
+    @apply w-full rounded-xl border border-gray-200/80 bg-white/55 px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 shadow-sm outline-none backdrop-blur-sm transition-all duration-200 hover:bg-white/70 focus:border-gray-400 focus:bg-white/80 focus:ring-4 focus:ring-gray-900/5;
+  }
+
+  .form-input-lg {
+    @apply w-full rounded-2xl border border-white/80 bg-white/45 py-3.5 pl-12 pr-4 text-gray-900 outline-none placeholder:text-gray-400 backdrop-blur-xl transition-all duration-200 focus:border-gray-300 focus:bg-white/65 focus:ring-2 focus:ring-gray-200;
+  }
+
+  .form-input-error {
+    @apply border-red-300 bg-red-50/40 focus:ring-red-100;
+  }
+
+  .form-error-msg {
+    @apply mt-1.5 text-xs font-medium text-red-500;
+  }
+
+  /* Badges & Pills */
+  .badge-pill {
+    @apply inline-flex items-center rounded-full border border-white/80 bg-white/60 px-3 py-1 text-xs font-medium text-gray-600 shadow-sm capitalize;
+  }
+
+  /* Dashboard Quick Action Cards */
+  .quick-action-card {
+    @apply flex items-center gap-4 rounded-2xl border border-white/70 bg-white/40 p-3 transition-all duration-200 hover:bg-white/70 hover:shadow-sm;
+  }
+
+  .quick-action-icon {
+    @apply flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-gray-900 text-white shadow-sm transition-transform;
+  }
+
+  .quick-action-icon-light {
+    @apply flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-white bg-white/70 text-gray-700 shadow-sm transition-transform;
+  }
+
+  .quick-action-card:hover .quick-action-icon,
+  .quick-action-card:hover .quick-action-icon-light {
+    transform: scale(1.05);
+  }
+}
