@@ -13,6 +13,6 @@ llm = GoogleGenerativeAI(
     google_api_key=api
 )
 
-result = llm.invoke("What is the capital of India?")
+result = llm.invoke("What is the capital of india?")
 
 print(result)
