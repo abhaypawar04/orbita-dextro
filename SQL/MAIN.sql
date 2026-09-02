@@ -19,7 +19,7 @@ id int,
 -- 
 show databases;
 drop database school_db;
---  ----------------------------------------------------------
+--  ---------------------------------------------------------
 create database student_details;
 
 use student_details;
