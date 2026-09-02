@@ -4,7 +4,7 @@ drop database employee_details;
 drop database school_db;
 drop database student_details;
 -- 
--- creating and using on a school db -----------------------
+-- creating and using on a school db ----------------------
 create database school_db;
 use school_db;
 -- 
