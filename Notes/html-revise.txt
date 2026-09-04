@@ -1,0 +1,755 @@
+================================================================================
+                        COMPLETE HTML REVISION HANDBOOK
+                          (Beginner to Interview Level)
+================================================================================
+
+TABLE OF CONTENTS
+-----------------
+1. HTML Fundamentals
+2. Important HTML Tags
+3. Semantic HTML
+4. Forms
+5. HTML5
+6. Accessibility (A11y)
+7. SEO & HTML
+8. HTML Best Practices
+9. HTML with CSS & JavaScript
+10. Advanced HTML Concepts
+11. HTML Interview Questions (Beginner to Advanced)
+12. Quick Revision Section (Cheat Sheet)
+13. Interview Preparation (Top Questions & Tips)
+
+================================================================================
+1. HTML FUNDAMENTALS
+================================================================================
+
+WHAT IS HTML?
+-------------
+- HTML = HyperText Markup Language.
+- It is the standard markup language for creating web pages.
+- It describes the *structure* of a web page using elements.
+- NOT a programming language (it's a markup language).
+
+HTML DOCUMENT STRUCTURE
+-----------------------
+```html
+<!DOCTYPE html>   <!-- Declares the document type and HTML version (HTML5) -->
+<html lang="en">  <!-- Root element. 'lang' attribute is important for accessibility and SEO -->
+<head>            <!-- Contains meta-information about the document -->
+  <meta charset="UTF-8">  <!-- Character encoding (UTF-8 is standard) -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Responsive design -->
+  <title>My Page Title</title>  <!-- Title shown in browser tab -->
+</head>
+<body>            <!-- Contains the visible page content -->
+  <h1>Hello, World!</h1>
+  <p>This is a paragraph.</p>
+</body>
+</html>
+```
+
+ELEMENTS, TAGS, AND ATTRIBUTES
+-------------------------------
+- **Element**: A complete structure, e.g., `<p>Text</p>`.
+- **Tag**: The markup used, e.g., `<p>` (opening) and `</p>` (closing).
+  - Some tags are self-closing (void elements), e.g., `<img>`, `<input>`, `<br>`.
+- **Attribute**: Provides additional information about an element.
+  - Format: `attribute="value"`.
+  - e.g., `<a href="https://example.com">Link</a>` (href is an attribute).
+
+COMMON ELEMENTS
+---------------
+- **Headings**: `<h1>` to `<h6>` (h1 is most important, h6 is least).
+- **Paragraphs**: `<p>`.
+- **Links**: `<a href="...">`.
+- **Images**: `<img src="..." alt="...">`.
+- **Lists**:
+  - Unordered: `<ul><li>Item 1</li></ul>`
+  - Ordered: `<ol><li>Item 1</li></ol>`
+- **Tables**:
+```html
+<table>
+  <thead>
+    <tr><th>Header 1</th><th>Header 2</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Data 1</td><td>Data 2</td></tr>
+  </tbody>
+</table>
+```
+- **Div**: `<div>` - A block-level generic container.
+- **Span**: `<span>` - An inline generic container.
+
+================================================================================
+2. IMPORTANT HTML TAGS
+================================================================================
+
+Here’s a breakdown of commonly used tags, their purpose, and important attributes.
+
+| Tag         | Purpose                                       | Key Attributes                                |
+|-------------|-----------------------------------------------|-----------------------------------------------|
+| `<html>`    | Root of the HTML document.                    | `lang` (language of the document)             |
+| `<head>`    | Container for metadata.                       | N/A                                           |
+| `<title>`   | Defines the document's title (in browser tab)| N/A                                           |
+| `<meta>`    | Provides metadata (charset, viewport, SEO).  | `charset`, `name`, `content`, `http-equiv`    |
+| `<link>`    | Links external resources (CSS, icons).       | `rel`, `href`, `type`                         |
+| `<style>`   | Embeds CSS directly in the HTML.             | `media`                                       |
+| `<body>`    | Container for all visible content.           | N/A                                           |
+| `<header>`  | Represents introductory content or nav.      | N/A                                           |
+| `<main>`    | Main content of the document (unique).       | N/A                                           |
+| `<footer>`  | Represents footer (author, copyright).       | N/A                                           |
+| `<section>` | Defines a thematic section of content.       | N/A                                           |
+| `<article>` | Represents a self-contained composition.     | N/A                                           |
+| `<nav>`     | Defines a navigation section.                | N/A                                           |
+| `<aside>`   | Content indirectly related to main content.  | N/A                                           |
+| `<h1>`-`<h6>`| Headings, with h1 being the highest level.  | N/A                                           |
+| `<p>`       | Paragraph.                                   | N/A                                           |
+| `<br>`      | Line break (self-closing).                   | N/A                                           |
+| `<hr>`      | Thematic break (horizontal rule).            | N/A                                           |
+| `<a>`       | Hyperlink.                                   | `href`, `target`, `rel`, `download`           |
+| `<img>`     | Embeds an image.                             | `src`, `alt` (crucial!), `width`, `height`    |
+| `<ul>`      | Unordered (bulleted) list.                   | N/A                                           |
+| `<ol>`      | Ordered (numbered) list.                     | `type`, `start`, `reversed`                   |
+| `<li>`      | List item.                                   | `value` (for ordered lists)                   |
+| `<dl>`      | Description list.                            | N/A                                           |
+| `<dt>`      | Term in a description list.                  | N/A                                           |
+| `<dd>`      | Description/definition of a term.            | N/A                                           |
+| `<table>`   | Table container.                             | `border`, `cellspacing`, `cellpadding`        |
+| `<thead>`   | Table header group.                          | N/A                                           |
+| `<tbody>`   | Table body group.                            | N/A                                           |
+| `<tfoot>`   | Table footer group.                          | N/A                                           |
+| `<tr>`      | Table row.                                   | N/A                                           |
+| `<th>`      | Table header cell.                           | `scope`, `colspan`, `rowspan`                 |
+| `<td>`      | Table data cell.                             | `colspan`, `rowspan`                          |
+| `<form>`    | Defines an HTML form.                        | `action`, `method`, `enctype`, `name`, `target`|
+| `<input>`   | Input field (self-closing).                  | `type`, `name`, `value`, `placeholder`, `required`, `min`, `max`, `pattern`, `id` |
+| `<label>`   | Label for an input.                          | `for` (matches the `id` of the input)         |
+| `<select>`  | Dropdown list.                               | `name`, `id`, `multiple`, `required`          |
+| `<option>`  | Option in a `<select>`.                      | `value`, `selected`                           |
+| `<textarea>`| Multi-line text input.                       | `name`, `id`, `rows`, `cols`, `placeholder`   |
+| `<button>`  | Clickable button.                            | `type` (`submit`, `reset`, `button`), `id`    |
+| `<fieldset>`| Groups related form controls.                | `disabled`, `name`, `form`                    |
+| `<legend>`  | Caption for a `<fieldset>`.                  | N/A                                           |
+| `<datalist>`| Defines a list of pre-defined options.       | `id`                                          |
+| `<div>`     | Generic block-level container.               | `id`, `class`, `data-*`                       |
+| `<span>`    | Generic inline container.                    | `id`, `class`, `data-*`                       |
+
+================================================================================
+3. SEMANTIC HTML
+================================================================================
+
+SEMANTIC VS. NON-SEMANTIC ELEMENTS
+-----------------------------------
+- **Semantic Elements**: Clearly describe their meaning to the browser and developer.
+  - E.g., `<article>`, `<header>`, `<footer>`, `<nav>`, `<main>`, `<section>`, `<aside>`.
+- **Non-Semantic Elements**: Tell you nothing about their content.
+  - E.g., `<div>` and `<span>`.
+
+WHY SEMANTIC HTML MATTERS
+--------------------------
+1.  **Accessibility**: Screen readers rely on semantic structure to navigate content.
+2.  **SEO**: Search engines use semantic tags to understand the content's hierarchy and relevance.
+3.  **Maintainability**: Clean, meaningful code is easier to read and maintain.
+4.  **Better Default Styling**: Some semantic elements have default browser styles that make sense.
+
+IMPORTANT SEMANTIC TAGS
+------------------------
+- **`<header>`**: Defines a header for a document or section.
+- **`<nav>`**: Defines a set of navigation links.
+- **<main>**: Specifies the main content of a document (only one per page).
+- **`<article>`**: Defines independent, self-contained content (blog post, forum post).
+- **`<section>`**: Defines a section of content (thematic grouping).
+- **`<aside>`**: Defines content aside from the main content (sidebar).
+- **`<footer>`**: Defines a footer for a document or section.
+- **`<figure>` & `<figcaption>`**: Groups media and its caption.
+- **`<time>`**: Defines a specific time (or datetime).
+- **`<mark>`**: Defines highlighted text.
+- **`<details>` & `<summary>`**: Creates a collapsible widget.
+- **`<address>`**: Provides contact information.
+
+================================================================================
+4. FORMS
+================================================================================
+
+FORMS ARE CRUCIAL FOR USER INTERACTION AND INTERVIEWS.
+
+BASIC FORM STRUCTURE
+--------------------
+```html
+<form action="/submit" method="POST">
+  <div>
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" required>
+  </div>
+  <div>
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+  </div>
+  <div>
+    <label for="category">Category:</label>
+    <select id="category" name="category">
+      <option value="1">Option 1</option>
+      <option value="2" selected>Option 2</option>
+    </select>
+  </div>
+  <button type="submit">Submit</button>
+</form>
+```
+
+KEY FORM ATTRIBUTES
+--------------------
+- **`action`**: URL where form data is sent.
+- **`method`**: HTTP method (`GET` or `POST`).
+- **`enctype`**: Encoding type (important for file uploads: `multipart/form-data`).
+- **`target`**: Where to display the response (`_self`, `_blank`, etc.).
+- **`novalidate`**: Disables browser validation.
+
+IMPORTANT INPUT TYPES
+---------------------
+- `text`, `password`, `email`, `number`, `tel`, `url`
+- `checkbox`, `radio`
+- `file`, `date`, `datetime-local`, `month`, `week`, `time`
+- `submit`, `reset`, `button`
+- `hidden`, `range`, `color`, `search`
+
+FORM VALIDATION
+---------------
+- **HTML5 Validation Attributes**:
+  - `required`: Field must be filled.
+  - `min`, `max`: For numbers and dates.
+  - `maxlength`, `minlength`: For text.
+  - `pattern`: Regular expression pattern.
+  - `type`: Email, url, etc., provide built-in validation.
+- **Constraint Validation API**: Allows for custom validation logic and styling (`:valid`, `:invalid`).
+
+COMMON INTERVIEW QUESTIONS ON FORMS
+-----------------------------------
+- What is the difference between `GET` and `POST` methods?
+  - **GET**: Appends data to URL, visible, cached, limited length, used for idempotent operations.
+  - **POST**: Sends data in the request body, not visible, not cached, no size limit, used for non-idempotent operations (e.g., submitting sensitive data).
+- What are the different `enctype` attributes for forms?
+  - `application/x-www-form-urlencoded`: Default.
+  - `multipart/form-data`: Used when uploading files.
+  - `text/plain`: For debugging.
+- What is the purpose of the `for` attribute in a `<label>`?
+  - It explicitly links the label to an input element via the input's `id`. This improves accessibility and usability (clicking the label focuses the input).
+- How do you create a multi-select dropdown?
+  - Add the `multiple` attribute to the `<select>` element. Users can then select multiple options by holding Ctrl/Cmd.
+- What is the difference between `fieldset` and `legend`?
+  - `<fieldset>` groups related form controls, and `<legend>` provides a caption for the fieldset.
+
+================================================================================
+5. HTML5
+================================================================================
+
+HTML5 INTRODUCED SIGNIFICANT NEW ELEMENTS AND APIS.
+
+NEW STRUCTURAL/SEMANTIC ELEMENTS
+--------------------------------
+- `<header>`, `<nav>`, `<main>`, `<article>`, `<section>`, `<aside>`, `<footer>`
+- `<figure>`, `<figcaption>`, `<mark>`, `<time>`, `<details>`, `<summary>`
+- `<dialog>`: Represents a dialog box or window.
+
+NEW MEDIA ELEMENTS
+------------------
+- **`<audio>`**: Embeds audio content.
+  ```html
+  <audio controls>
+    <source src="audio.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+  ```
+- **`<video>`**: Embeds video content.
+  ```html
+  <video width="320" height="240" controls>
+    <source src="movie.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+  ```
+- **`<picture>` & `<source>`**: For responsive images.
+  ```html
+  <picture>
+    <source media="(min-width: 650px)" srcset="img_large.jpg">
+    <source media="(min-width: 465px)" srcset="img_medium.jpg">
+    <img src="img_small.jpg" alt="An example image">
+  </picture>
+  ```
+- **`<canvas>`**: Used for drawing graphics via JavaScript.
+- **`<svg>`**: Used for scalable vector graphics.
+
+IMPORTANT HTML5 APIS/ FEATURES (INTERVIEW RELEVANT)
+----------------------------------------------------
+1.  **Canvas API**: Used for 2D rendering, animations, and games.
+2.  **SVG**: Scalable Vector Graphics for resolution-independent images.
+3.  **Web Storage (LocalStorage & SessionStorage)**:
+    - `localStorage`: Persistent data with no expiration.
+    - `sessionStorage`: Data is cleared when the page session ends.
+4.  **Geolocation API**: Access the user's location.
+    ```javascript
+    navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
+    ```
+5.  **Drag and Drop API**: Native drag-and-drop functionality.
+6.  **Form APIs**:
+    - New input types (email, url, search, tel, date, etc.).
+    - The `pattern`, `required`, `placeholder`, and `autofocus` attributes.
+    - Datalists (`<datalist>`).
+7.  **Web Workers**: Allow scripts to run in background threads.
+8.  **WebSocket API**: Provides full-duplex communication channels over a single TCP connection.
+9.  **History API**: Manipulate the browser history (`pushState`, `replaceState`).
+
+================================================================================
+6. ACCESSIBILITY (A11y)
+================================================================================
+
+ACCESSIBILITY IS CRITICAL AND OFTEN TESTED IN INTERVIEWS.
+
+ARIA BASICS (Accessible Rich Internet Applications)
+---------------------------------------------------
+- ARIA is a set of attributes that define ways to make web content and applications more accessible.
+- **Roles**: Define what an element is.
+  - `role="button"`, `role="navigation"`, `role="banner"`, `role="main"`.
+- **Properties**: Define characteristics of elements.
+  - `aria-label`: Provides a label for an element.
+  - `aria-labelledby`: Points to the ID of another element that provides a label.
+  - `aria-describedby`: Provides a more detailed description.
+- **States**: Represent the current condition of an element.
+  - `aria-checked="true/false"`, `aria-disabled="true/false"`, `aria-expanded="true/false"`.
+
+**Golden Rule:** Use semantic HTML first. Only use ARIA when you can't use a native semantic element.
+
+KEY ACCESSIBILITY FEATURES
+---------------------------
+- **`alt` attribute**: For images. Essential for screen readers.
+  ```html
+  <img src="logo.png" alt="Company Logo">
+  ```
+- **Proper Labeling**: Always use `<label for="...">` or `aria-label` for form inputs.
+- **Semantic HTML**: Use `<h1>`-`<h6>` for headings, `<nav>` for navigation, `<main>` for main content, etc.
+- **Keyboard Accessibility**:
+  - Ensure all interactive elements can be reached and activated via the Tab key.
+  - Use `tabindex` cautiously.
+  - Manage focus for dynamic content (e.g., modals).
+- **Color Contrast**: Ensure sufficient contrast between text and background.
+- **`lang` Attribute**: Specify the language of the page (`<html lang="en">`) to help screen readers pronounce text correctly.
+
+COMMON ACCESSIBILITY INTERVIEW QUESTIONS
+----------------------------------------
+- What is ARIA and when should you use it?
+  - ARIA provides additional semantics for assistive technologies. Use it when you cannot use a native HTML element or when you are building complex custom widgets (like a custom slider or accordion).
+- What is the difference between `aria-label` and `aria-labelledby`?
+  - `aria-label` defines a string value as a label. `aria-labelledby` points to the ID of another element that serves as the label.
+- Why is semantic HTML important for accessibility?
+  - Screen readers rely on the inherent meaning of semantic elements to navigate and interpret content. A `<nav>` is immediately identified as navigation, while a `<div>` is just a generic block.
+- What is the `alt` attribute for and why is it important?
+  - It provides a textual description of an image. It is crucial for screen readers and also displays if the image fails to load.
+
+================================================================================
+7. SEO & HTML
+================================================================================
+
+SEO (Search Engine Optimization) IS HEAVILY INFLUENCED BY HTML.
+
+META TAGS
+---------
+```html
+<!-- Character Encoding -->
+<meta charset="UTF-8">
+<!-- Viewport for Responsive Design -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- SEO Meta Tags -->
+<meta name="description" content="A concise description of the page content.">
+<meta name="keywords" content="HTML, CSS, JavaScript, Web Development">
+<meta name="robots" content="index, follow"> <!-- Instructions for search engine crawlers -->
+<meta name="author" content="Author Name">
+```
+
+TITLE AND DESCRIPTION
+----------------------
+- **`<title>`**: The title displayed in the browser tab and as the headline in search results. It should be concise, descriptive, and contain relevant keywords.
+- **`<meta name="description">`**: Provides a brief summary of the page content. This often appears as the snippet in search results. It's crucial for click-through rates.
+
+HEADINGS
+---------
+- Use a clear hierarchy with `<h1>` to `<h6>`.
+- `<h1>` is the most important heading and should represent the main topic of the page.
+- Only one `<h1>` per page is best practice.
+- Use headings to structure content logically.
+
+STRUCTURED DATA (Schema Markup)
+-------------------------------
+- Helps search engines understand the content more accurately (e.g., reviews, events, products).
+- Usually implemented using JSON-LD (JavaScript Object Notation for Linked Data) in the `<head>`.
+- Example:
+```html
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Article Title",
+  "author": {
+    "@type": "Person",
+    "name": "John Doe"
+  }
+}
+</script>
+```
+
+SEO BEST PRACTICES IN HTML
+---------------------------
+- Use semantic elements (they help search engines understand the page structure).
+- Provide descriptive, keyword-rich `alt` text for images.
+- Use meaningful link text (`<a href="...">Click here</a>` is bad; `<a href="...">Read more about HTML</a>` is good).
+- Ensure the site is mobile-friendly (using the viewport meta tag).
+- Good page performance (impacted by resource loading).
+
+================================================================================
+8. HTML BEST PRACTICES
+================================================================================
+
+WRITING CLEAN, MAINTAINABLE HTML
+
+1.  **Proper Nesting**: Close tags in the reverse order they were opened. Avoid overlapping.
+    ```html
+    <!-- Good -->
+    <p><strong>Bold Text</strong></p>
+    <!-- Bad -->
+    <p><strong>Bold Text</p></strong>
+    ```
+
+2.  **Use Lowercase for Tags and Attributes**: It's a standard convention.
+    ```html
+    <!-- Good -->
+    <div id="main">
+    <!-- Bad -->
+    <DIV ID="main">
+    ```
+
+3.  **Indentation**: Properly indent nested elements to improve readability.
+
+4.  **Use Double Quotes for Attributes**: It's the most common and recommended style.
+
+5.  **Add `alt` Attributes for Images**: Essential for accessibility and SEO.
+
+6.  **Separate Structure from Style and Behavior**:
+    - Use CSS for styling (external stylesheets).
+    - Use JavaScript for behavior (external scripts).
+    - Avoid inline styles (`style="..."`) and inline event handlers (`onclick="..."`) whenever possible.
+
+7.  **Use Semantic Elements**: Avoid `div`-soup. Use `<header>`, `<nav>`, `<main>`, etc.
+
+8.  **Minimize DOM Depth**: A shallow DOM is faster to render and easier to maintain.
+
+9.  **Avoid Duplicate IDs**: IDs must be unique on the page.
+
+10. **Organization**: Group related elements logically.
+
+PERFORMANCE CONSIDERATIONS
+---------------------------
+- **Minimize HTTP Requests**: Combine CSS/JS files where possible.
+- **Optimize Images**: Use the right format (WebP, JPEG, PNG) and compress them.
+- **Lazy Loading**: Use `loading="lazy"` on images and iframes.
+- **Defer Non-Critical JavaScript**: Use `async` or `defer`.
+
+COMMON MISTAKES TO AVOID
+-------------------------
+- Missing `alt` attribute on images.
+- Using `<div>` for everything instead of semantic elements.
+- Forgetting to close tags.
+- Using inline styles/scripts excessively.
+- Not setting `charset` and `viewport`.
+- Improper heading hierarchy (e.g., skipping from `<h1>` to `<h3>`).
+- Duplicate IDs.
+- Using `<br>` for spacing or layout.
+
+================================================================================
+9. HTML WITH CSS & JAVASCRIPT
+================================================================================
+
+HOW HTML CONNECTS WITH CSS
+--------------------------
+- **Inline Styles**: `style="color: red;"` (not recommended).
+- **Internal Stylesheet**: `<style>` in the `<head>`.
+- **External Stylesheet**: `<link rel="stylesheet" href="styles.css">` (recommended).
+- **CSS Selectors**: Target HTML elements by tag, class (`.`), id (`#`), attribute, etc.
+
+HOW HTML CONNECTS WITH JAVASCRIPT
+---------------------------------
+- **Inline**: `onclick="doSomething()"` (not recommended).
+- **Internal**: `<script>` in the `<head>` or before the closing `</body>`.
+- **External**: `<script src="script.js"></script>`.
+
+CLASS VS ID
+------------
+| Feature      | Class                              | ID                                 |
+|--------------|------------------------------------|------------------------------------|
+| Uniqueness   | Multiple elements can share a class| ID must be unique on the page.     |
+| CSS Specificity| Lower specificity (0,0,1,0).     | Higher specificity (0,1,0,0).      |
+| JavaScript   | Used for selecting groups.         | Used for selecting a single element.|
+| Usage        | For styling and behavior groups.   | For unique elements (e.g., anchor).|
+
+SCRIPT LOADING: ASYNC VS DEFER
+-------------------------------
+- **Normal (`<script src="...">`)**: HTML parsing pauses to fetch and execute the script. Blocks rendering.
+- **`async`**: Script is fetched asynchronously while HTML parsing continues. Executes as soon as it's fetched. Can block rendering. Order of execution is not guaranteed.
+- **`defer`**: Script is fetched asynchronously while HTML parsing continues. Executes only after the HTML parsing is complete. Order of execution is guaranteed.
+
+DOM BASICS
+-----------
+- DOM = Document Object Model.
+- It is a programming interface for web documents. It represents the page so that programs can change the document structure, style, and content.
+- The DOM is a tree-like representation of the HTML document.
+- **JavaScript and the DOM**: JS can access and modify the DOM using methods like:
+  - `document.getElementById()`, `document.querySelector()`.
+  - `document.createElement()`, `element.appendChild()`.
+  - `element.innerHTML`, `element.textContent`.
+
+IMPORTANT FRONTEND CONCEPTS
+----------------------------
+- **Progressive Enhancement**: Build the core experience with HTML and CSS, then add JavaScript for enhanced functionality.
+- **Graceful Degradation**: Build for modern browsers but ensure the basic functionality works on older browsers.
+- **Critical Rendering Path**: The steps the browser takes to convert HTML, CSS, and JavaScript into pixels on the screen.
+
+================================================================================
+10. ADVANCED HTML CONCEPTS
+================================================================================
+
+DATA ATTRIBUTES
+---------------
+- Used to store custom data on HTML elements.
+- Format: `data-*`, where * can be any name.
+- Can be accessed in JavaScript via `element.dataset`.
+```html
+<div id="user-card" data-user-id="123" data-role="admin">User</div>
+<script>
+  const card = document.getElementById('user-card');
+  console.log(card.dataset.userId); // "123"
+  console.log(card.dataset.role);   // "admin"
+</script>
+```
+
+GLOBAL ATTRIBUTES
+------------------
+Attributes that can be used on any HTML element:
+- `id`, `class`, `style`
+- `title` (tooltip text)
+- `lang`, `dir` (text direction)
+- `tabindex` (for keyboard navigation)
+- `hidden` (hides the element)
+- `contenteditable` (makes element editable)
+- `data-*` (custom data)
+- `spellcheck`, `translate`
+- `draggable` (for drag-and-drop)
+
+CONTENTEDITABLE
+---------------
+- Makes any HTML element editable by the user.
+```html
+<div contenteditable="true">
+  This text can be edited by the user.
+</div>
+```
+
+IFRAME
+------
+- Embeds another HTML page within the current page.
+```html
+<iframe src="https://example.com" width="600" height="400" title="Embedded Page"></iframe>
+```
+- **Security**: `sandbox` attribute restricts actions in the iframe.
+- **`srcdoc`**: Allows you to specify the HTML content directly.
+
+WEB COMPONENTS (BASICS)
+------------------------
+- A set of web platform APIs that allow you to create reusable custom elements.
+- **Custom Elements**: Define new HTML tags.
+- **Shadow DOM**: Encapsulates styles and markup within a component.
+- **HTML Templates (`<template>`)**: Declares fragments of HTML that are not rendered when the page loads but can be instantiated later.
+```html
+<template id="my-template">
+  <p>This content is not rendered until cloned.</p>
+</template>
+```
+- **Slots (`<slot>`)**: Allows you to pass content into a custom element.
+
+SHADOW DOM BASICS
+-----------------
+- A way to create a separate, isolated DOM tree for a web component.
+- Styles defined inside the Shadow DOM do not leak out, and styles from the outer DOM do not affect the Shadow DOM.
+- This provides encapsulation and is crucial for building reusable components.
+
+OTHER IMPORTANT CONCEPTS
+-------------------------
+- **Doctype**: `<!DOCTYPE html>` triggers standards mode in browsers.
+- **`<base>`**: Defines a base URL for all relative URLs in the document.
+- **`<map>` and `<area>`**: Define an image map (clickable areas on an image).
+- **`<noscript>`**: Displays content if the browser does not support JavaScript.
+
+================================================================================
+11. HTML INTERVIEW QUESTIONS (Beginner to Advanced)
+================================================================================
+
+BEGINNER LEVEL
+--------------
+1.  **What is HTML?** Answer: HyperText Markup Language; the standard markup language for creating web pages.
+2.  **What is the difference between HTML and XHTML?** Answer: XHTML is stricter, based on XML. It requires closing all tags, quotes around attributes, and is case-sensitive.
+3.  **What is the `<DOCTYPE>` declaration?** Answer: It tells the browser which version of HTML to expect.
+4.  **What are the basic building blocks of an HTML page?** Answer: `<html>`, `<head>`, and `<body>`.
+5.  **What are semantic HTML elements?** Answer: Elements that clearly describe their meaning to both the browser and the developer (e.g., `<article>`, `<header>`).
+6.  **What is the difference between `<div>` and `<span>`?** Answer: `<div>` is a block-level container, `<span>` is an inline container.
+7.  **What is the `<a>` tag and what are its important attributes?** Answer: Anchor tag for hyperlinks. Important attributes: `href`, `target`, `rel`.
+8.  **Why do we use `alt` attribute in images?** Answer: For accessibility (screen readers), and it is displayed if the image fails to load.
+9.  **What is the `href` attribute?** Answer: Specifies the URL of the page the link goes to.
+10. **What is the difference between `<ul>` and `<ol>`?** Answer: `<ul>` is for unordered (bulleted) lists, `<ol>` is for ordered (numbered) lists.
+
+INTERMEDIATE LEVEL
+------------------
+11. **What are HTML5 semantic elements? Give examples.** Answer: `<header>`, `<nav>`, `<main>`, `<article>`, `<section>`, `<aside>`, `<footer>`.
+12. **What is the `async` and `defer` attribute in `<script>`?** (Refer to Section 9).
+13. **Explain the differences between `sessionStorage`, `localStorage`, and `cookies`.** Answer: `localStorage` persists until deleted, `sessionStorage` persists until the tab is closed, and cookies are small pieces of data with an expiration date that are sent to the server with each request.
+14. **What is the `<picture>` element and when would you use it?** Answer: It provides responsive images. You can specify different images for different screen sizes/conditions.
+15. **How can you make a website accessible to screen readers?** Answer: Use semantic HTML, provide `alt` text for images, use ARIA roles where necessary, ensure keyboard navigability.
+16. **What is the `for` attribute in `<label>` used for?** Answer: It links a label to its corresponding input element using the input's `id` attribute.
+17. **What is the difference between `GET` and `POST` in HTML forms?** (Refer to Section 4).
+18. **How do you create a dropdown in HTML?** Answer: Using the `<select>` and `<option>` tags.
+19. **What is the `target` attribute in the `<a>` tag?** Answer: It specifies where to open the linked document (`_blank`, `_self`, `_parent`, `_top`).
+20. **What are data attributes? How do you access them?** (Refer to Section 10).
+
+ADVANCED/ CONCEPTUAL LEVEL
+---------------------------
+21. **What is the DOM?** Answer: The Document Object Model is a tree-like representation of the HTML document. It is an API for interacting with the document.
+22. **What is the difference between `event.preventDefault()` and `event.stopPropagation()`?** Answer: `preventDefault()` prevents the default browser behavior (e.g., form submission, link navigation). `stopPropagation()` prevents the event from bubbling up the DOM tree.
+23. **What is the `sandbox` attribute in an `<iframe>`?** Answer: It enforces extra restrictions on the content in the iframe (e.g., disallowing scripts, forms, or popups).
+24. **What is the Shadow DOM?** Answer: A way to create a scoped, encapsulated DOM tree for a web component, keeping its styles and behavior isolated from the rest of the page.
+25. **What are Web Components?** Answer: A suite of technologies allowing you to create reusable custom elements. They consist of Custom Elements, Shadow DOM, and HTML Templates.
+26. **What is the `rel` attribute in `<link>` tags?** Answer: Specifies the relationship between the current document and the linked resource (e.g., `stylesheet`, `icon`, `preload`, `prefetch`).
+27. **What is the importance of the `lang` attribute in the `<html>` tag?** Answer: It specifies the language of the document, aiding accessibility (screen readers) and SEO.
+28. **What is the difference between a `<button>` and an `<input type="submit">`?** Answer: `<button>` is more flexible (can contain HTML and styling). `<input type="submit">` is a self-closing, value-based button.
+29. **What is the `contenteditable` attribute?** Answer: It makes an HTML element editable by the user.
+30. **Explain progressive enhancement and graceful degradation.** (Refer to Section 9).
+
+================================================================================
+12. QUICK REVISION SECTION (CHEAT SHEET)
+================================================================================
+
+IMPORTANT HTML TAGS CHEAT SHEET
+-------------------------------
+- **Structure**: `<!DOCTYPE>`, `<html>`, `<head>`, `<body>`
+- **Metadata**: `<title>`, `<meta>`, `<link>`, `<base>`
+- **Content Sectioning**: `<header>`, `<nav>`, `<main>`, `<aside>`, `<section>`, `<article>`, `<footer>`
+- **Text**: `<h1>`-`<h6>`, `<p>`, `<br>`, `<hr>`, `<span>`, `<div>`
+- **Hyperlinks**: `<a>`
+- **Media**: `<img>`, `<audio>`, `<video>`, `<canvas>`, `<svg>`, `<picture>`, `<source>`, `<figure>`, `<figcaption>`
+- **Lists**: `<ul>`, `<ol>`, `<li>`, `<dl>`, `<dt>`, `<dd>`
+- **Tables**: `<table>`, `<thead>`, `<tbody>`, `<tfoot>`, `<tr>`, `<th>`, `<td>`
+- **Forms**: `<form>`, `<input>`, `<label>`, `<select>`, `<option>`, `<textarea>`, `<button>`, `<fieldset>`, `<legend>`, `<datalist>`
+- **Interactive**: `<details>`, `<summary>`, `<dialog>`
+- **Scripting**: `<script>`, `<noscript>`, `<template>`
+
+IMPORTANT ATTRIBUTES CHEAT SHEET
+--------------------------------
+- **Global**: `id`, `class`, `style`, `title`, `lang`, `dir`, `data-*`, `tabindex`, `hidden`, `contenteditable`
+- **Links (`<a>`)**: `href`, `target`, `rel`, `download`
+- **Images (`<img>`)**: `src`, `alt`, `width`, `height`, `loading="lazy"`
+- **Forms (`<input>`)**: `type`, `name`, `value`, `placeholder`, `required`, `min`, `max`, `pattern`, `autofocus`, `checked`
+- **Forms (General)**: `action`, `method`, `enctype`, `for` (label)
+- **Scripts**: `src`, `async`, `defer`
+
+IMPORTANT DIFFERENCES / COMPARISONS
+-----------------------------------
+| Concept A          | Concept B              | Key Difference                                                   |
+|--------------------|------------------------|------------------------------------------------------------------|
+| Semantic HTML      | Non-Semantic HTML      | Semantic tags convey meaning (e.g., `<article>`); non-semantic don't (`<div>`). |
+| `class`            | `id`                   | `id` must be unique; `class` can be used multiple times.        |
+| `GET`              | `POST`                 | `GET` appends to URL, visible, cached; `POST` sends in body, secure, not cached.|
+| `async`            | `defer`                | `async` executes as soon as fetched; `defer` executes after HTML parsing. |
+| `localStorage`     | `sessionStorage`       | `localStorage` persists; `sessionStorage` is cleared on tab close. |
+| `<div>`            | `<span>`               | `<div>` is block-level; `<span>` is inline.                     |
+| `<input>`          | `<textarea>`           | `<input>` is for single-line; `<textarea>` for multi-line text.  |
+
+COMMONLY FORGOTTEN CONCEPTS
+---------------------------
+- `<!DOCTYPE html>` is case-insensitive.
+- The `lang` attribute must be set on the `<html>` tag.
+- `<img>` tag is self-closing.
+- The `for` attribute in `<label>` matches the `id` of the `<input>`.
+- `tabindex="0"` makes an element focusable; `tabindex="-1"` makes it programmatically focusable but removes it from the tab order.
+- `rel="noopener noreferrer"` in links improves security and performance.
+- The `title` attribute provides tooltips.
+
+ONE-LINE DEFINITIONS FOR FAST REVISION
+--------------------------------------
+- **HTML**: The standard markup language for web page structure.
+- **Semantic HTML**: HTML that uses elements to clearly describe their meaning.
+- **DOM**: The API representation of the HTML document as a tree of objects.
+- **ARIA**: A set of attributes that makes web content more accessible.
+- **`async`**: Script loads in parallel to HTML parsing and executes when ready.
+- **`defer`**: Script loads in parallel but executes after HTML parsing is complete.
+- **`data-*`**: Custom attributes for storing extra information in HTML elements.
+- **Web Components**: Reusable custom elements created using standard web technologies.
+- **Shadow DOM**: Encapsulated DOM structure for web components.
+
+================================================================================
+13. INTERVIEW PREPARATION (TOP QUESTIONS & TIPS)
+================================================================================
+
+TOP 50-100 HTML INTERVIEW QUESTIONS (Concise Answers)
+-----------------------------------------------------
+(All the questions listed in Section 11 are a great starting point. Aim to be able to explain each one clearly in 2-3 sentences. For example:
+
+Q: What is the difference between `async` and `defer`?
+A: Both are used for loading external JavaScript. `async` fetches and executes the script as soon as it is ready, which can block rendering. `defer` fetches the script in the background but delays execution until after the HTML parsing is complete. `defer` also maintains the order of scripts, while `async` does not.
+
+Q: What is the purpose of the `action` attribute in a form?
+A: It specifies the URL of the server-side script or application that will process the form data when the form is submitted.
+
+Q: What is the `target` attribute in a form?
+A: It specifies where to display the response after submitting the form. Common values are `_blank` (new window/tab) and `_self` (current window).
+
+Q: How do you handle disabled JavaScript users?
+A: Use the `<noscript>` tag to display fallback content or a message to users who have JavaScript disabled in their browsers.
+
+Q: What is the difference between `hidden` and `aria-hidden`?
+A: `hidden` removes the element from the accessibility tree and visual representation. `aria-hidden="true"` only removes it from the accessibility tree but keeps it visible. Use `aria-hidden` for decorative content that should be ignored by screen readers.
+
+Q: What is the `scope` attribute in a table?
+A: It identifies whether a `<th>` element is a header for a column, row, or group of columns/rows. `scope="col"`, `scope="row"`, `scope="colgroup"`, `scope="rowgroup"`.
+
+Q: What is the `autocomplete` attribute in forms?
+A: It helps browsers automatically fill in form fields. It can be set to `on` or `off`.
+
+Q: What is the `rel="canonical"` link?
+A: It helps search engines identify the preferred version of a URL to prevent duplicate content issues.
+)
+
+QUESTIONS THAT TEST PRACTICAL UNDERSTANDING
+-------------------------------------------
+- **Scenario**: Build a simple HTML form that takes a user's name, email, and a message. It should use a textarea for the message and a submit button.
+- **Scenario**: Create a navigation menu using HTML semantics.
+- **Scenario**: How would you embed a YouTube video on your page? (Use `<iframe>`).
+- **Scenario**: Explain how you would structure a blog post page using HTML.
+
+COMMON MISTAKES CANDIDATES MAKE
+--------------------------------
+- Not knowing the difference between `class` and `id`.
+- Confusing `async` and `defer`.
+- Forgetting to add `alt` text for images.
+- Not knowing semantic tags (only using `div`).
+- Failing to explain the DOM clearly.
+- Not understanding form submission methods (`GET` vs `POST`).
+- Not mentioning accessibility considerations.
+
+TIPS FOR ANSWERING HTML INTERVIEW QUESTIONS CONFIDENTLY
+--------------------------------------------------------
+1.  **Be Concise**: Start with a clear, one-sentence definition, then expand if needed.
+2.  **Use Examples**: Simple examples make your answer more practical and relatable.
+3.  **Show Best Practices**: Always mention best practices like accessibility, SEO, and clean code.
+4.  **Connect to CSS/JS**: If possible, show how HTML relates to CSS and JavaScript, demonstrating a full-stack/frontend understanding.
+5.  **Admit When You Don't Know**: It's okay to say "I'm not entirely sure, but I would use..." or "I'd need to research that, but my guess is...". Then follow up with a logical answer.
+6.  **Ask for Clarification**: If the question is vague, ask the interviewer for more context.
+7.  **Demonstrate Practical Knowledge**: Mention real-world tools and scenarios (e.g., using a specific `enctype` for file uploads).
+8.  **Highlight Accessibility**: Bringing up A11y shows you are a conscientious developer.
+9.  **Structure Your Thoughts**: Use words like "First," "Second," "Finally" to structure your answer.
+10. **Stay Calm**: This is a conversation, not an interrogation.
+
+================================================================================
+                                END OF NOTES
+================================================================================
