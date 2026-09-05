@@ -1,0 +1,4041 @@
+================================================================================
+                     COMPLETE CSS REVISION HANDBOOK
+              (Beginner to Advanced / Interview Level)
+================================================================================
+
+TABLE OF CONTENTS
+-----------------
+1.  CSS Fundamentals
+2.  CSS Selectors
+3.  Cascade, Specificity & Inheritance
+4.  CSS Box Model
+5.  CSS Units & Values
+6.  Colors & Backgrounds
+7.  Typography
+8.  CSS Display
+9.  Positioning
+10. Flexbox
+11. CSS Grid
+12. Responsive Design
+13. Media & Feature Queries
+14. Pseudo-classes & Pseudo-elements
+15. CSS Variables (Custom Properties)
+16. CSS Functions
+17. Transitions
+18. Transforms
+19. Animations
+20. Overflow & Scrolling
+21. Shadows, Borders & Effects
+22. CSS Gradients
+23. Layout Concepts
+24. Stacking Context & z-index
+25. CSS Architecture
+26. Modern CSS
+27. Logical CSS Properties
+28. Images & Replaced Elements
+29. CSS Accessibility
+30. CSS Performance
+31. CSS Rendering & Browser Internals
+32. CSS with HTML
+33. CSS with JavaScript
+34. Forms & CSS
+35. Advanced Selector Concepts
+36. CSS Debugging
+37. Common CSS Layout Problems
+38. CSS Interview Questions (50+)
+39. Practical CSS Interview Challenges
+40. Tricky CSS Concepts
+41. CSS Best Practices
+42. Common CSS Mistakes
+43. Quick Revision Section (Cheat Sheet)
+44. Last-Minute CSS Revision
+
+================================================================================
+1. CSS FUNDAMENTALS
+================================================================================
+
+WHAT IS CSS?
+-------------
+- CSS = Cascading Style Sheets.
+- It is a stylesheet language used to describe the presentation of a document written in HTML.
+- It controls layout, colors, fonts, spacing, and overall visual appearance.
+- CSS is not a programming language; it's a declarative style sheet language.
+
+WHY CSS IS USED
+---------------
+- Separates content (HTML) from presentation (CSS).
+- Enables consistent styling across multiple pages.
+- Reduces code duplication.
+- Makes websites responsive and adaptable.
+- Allows complex, visually rich designs.
+- Improves maintainability and scalability.
+
+HOW CSS WORKS WITH HTML
+-----------------------
+1. Browser fetches HTML document.
+2. Browser parses HTML and builds the DOM (Document Object Model).
+3. Browser fetches CSS (external stylesheets) and parses it into the CSSOM (CSS Object Model).
+4. Browser combines DOM and CSSOM to form the Render Tree.
+5. Browser calculates layout and paints the page.
+
+CSS SYNTAX
+----------
+- A CSS rule consists of a selector and a declaration block.
+
+```css
+selector {
+  property: value;
+  property: value;
+}
+```
+
+Example:
+```css
+h1 {
+  color: blue;
+  font-size: 24px;
+}
+```
+
+WAYS TO ADD CSS
+---------------
+1. **Inline CSS**: Applied directly to an HTML element using the `style` attribute.
+   ```html
+   <p style="color: red;">Red text</p>
+   ```
+   - HIGHEST specificity (except !important).
+   - NOT recommended for large projects.
+
+2. **Internal CSS**: Defined within the `<style>` tag in the `<head>` section.
+   ```html
+   <head>
+     <style>
+       p { color: red; }
+     </style>
+   </head>
+   ```
+   - Good for single-page styles.
+   - Has higher specificity than external but lower than inline.
+
+3. **External CSS**: Defined in a separate `.css` file and linked via `<link>`.
+   ```html
+   <head>
+     <link rel="stylesheet" href="styles.css">
+   </head>
+   ```
+   - BEST PRACTICE for most projects.
+   - Allows caching and reusability.
+   - Lower specificity than internal/inline.
+
+CSS COMMENTS
+------------
+```css
+/* This is a CSS comment */
+```
+
+BASIC CSS EXAMPLE
+-----------------
+```css
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+  margin: 0;
+  padding: 20px;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.button {
+  display: inline-block;
+  padding: 10px 20px;
+  background: #007bff;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+}
+```
+
+THE CSS CASCADE (BASICS)
+------------------------
+- The cascade determines which styles apply when multiple rules target the same element.
+- It resolves conflicts using order and importance.
+- Principles: Importance, Specificity, Source Order.
+
+BROWSER DEFAULT STYLES
+----------------------
+- Browsers apply default styles (user agent stylesheet) to HTML elements.
+- For example, `<h1>` is large and bold, `<p>` has margin.
+- Different browsers may have slightly different default styles.
+- Many developers use a "CSS reset" or "normalize.css" to override these defaults.
+
+================================================================================
+2. CSS SELECTORS
+================================================================================
+
+SELECTORS ARE HOW CSS TARGETS HTML ELEMENTS.
+
+SELECTOR TYPES
+--------------
+
+1. **Universal Selector (`*`)**
+   - Targets ALL elements.
+   - Low specificity (0,0,0,0).
+   - Often used for resets.
+   ```css
+   * {
+     margin: 0;
+     padding: 0;
+     box-sizing: border-box;
+   }
+   ```
+
+2. **Element/Type Selector (`element`)**
+   - Targets all elements of a given type.
+   - Specificity: (0,0,0,1).
+   ```css
+   p {
+     color: #333;
+   }
+   ```
+
+3. **Class Selector (`.classname`)**
+   - Targets elements with a specific class attribute.
+   - Most commonly used for styling.
+   - Specificity: (0,0,1,0).
+   ```css
+   .button {
+     background: blue;
+   }
+   ```
+
+4. **ID Selector (`#idname`)**
+   - Targets a single element with a specific ID.
+   - Should be unique on the page.
+   - Specificity: (0,1,0,0) – HIGH.
+   ```css
+   #header {
+     background: black;
+   }
+   ```
+
+5. **Attribute Selectors**
+   - Targets elements based on attributes.
+   - Specificity: (0,0,1,0) (same as class).
+   ```css
+   /* Exact match */
+   input[type="text"] { border: 1px solid #ccc; }
+
+   /* Contains */
+   a[href*="example.com"] { color: red; }
+
+   /* Starts with */
+   img[src^="https"] { border: 2px solid green; }
+
+   /* Ends with */
+   a[href$=".pdf"] { background: url(pdf-icon.png); }
+
+   /* Space-separated list */
+   [class~="highlight"] { background: yellow; }
+
+   /* Hyphen-separated */
+   [lang|="en"] { font-style: italic; }
+   ```
+
+6. **Descendant Selector (` `)**
+   - Targets an element that is a descendant of another.
+   - Specificity: Sum of both selectors.
+   ```css
+   .container p {
+     margin-bottom: 10px;
+   }
+   ```
+
+7. **Child Selector (`>`)**
+   - Targets only direct children.
+   ```css
+   .container > p {
+     margin-bottom: 10px;
+   }
+   ```
+
+8. **Adjacent Sibling Selector (`+`)**
+   - Targets the immediately following sibling.
+   ```css
+   h1 + p {
+     margin-top: 0;
+   }
+   ```
+
+9. **General Sibling Selector (`~`)**
+   - Targets all following siblings.
+   ```css
+   h1 ~ p {
+     color: #666;
+   }
+   ```
+
+10. **Grouping Selectors (`,`)**
+    - Applies same styles to multiple selectors.
+    ```css
+    h1, h2, h3 {
+      font-weight: bold;
+    }
+    ```
+
+11. **Pseudo-classes (`:`)**
+    - Targets an element based on a state or condition.
+    - Specificity: (0,0,1,0).
+    ```css
+    a:hover { color: red; }
+    input:focus { outline: 2px solid blue; }
+    li:first-child { font-weight: bold; }
+    ```
+
+12. **Pseudo-elements (`::`)**
+    - Targets a specific part of an element.
+    - Specificity: (0,0,0,1) (same as type).
+    ```css
+    p::first-line { font-weight: bold; }
+    .button::before { content: "→ "; }
+    ```
+
+ADVANCED PSEUDO-CLASSES
+-----------------------
+
+- **`:not(selector)`**
+  - Selects elements that DO NOT match the given selector.
+  - Specificity: The selector inside the parentheses.
+  ```css
+  .menu-item:not(:last-child) {
+    border-right: 1px solid #ccc;
+  }
+  ```
+
+- **`:is(selector, selector)`**
+  - Forgiving selector list. Selects elements that match ANY selector in the list.
+  - Specificity: The highest specificity in the list.
+  ```css
+  :is(h1, h2, h3) {
+    font-weight: bold;
+  }
+  /* Equivalent to: h1, h2, h3 { ... } */
+  ```
+
+- **`:where(selector, selector)`**
+  - Similar to `:is()`, but specificity is ALWAYS 0.
+  - Great for resetting styles.
+  ```css
+  :where(.button, .btn) {
+    padding: 10px 20px;
+  }
+  /* Specificity: 0,0,0,0 */
+  ```
+
+- **`:has(selector)`**
+  - The "parent selector". Selects elements that CONTAIN a matching child.
+  - Specificity: The selector inside `:has()`.
+  ```css
+  .card:has(img) {
+    padding: 20px;
+  }
+  /* Cards that contain an image get padding */
+  ```
+
+- **`nth-child()` and `nth-of-type()`**
+  - `:nth-child(an+b)` – selects child based on position among ALL siblings.
+  - `:nth-of-type(an+b)` – selects child based on position among siblings of the SAME type.
+  ```css
+  li:nth-child(odd) { background: #f9f9f9; }
+  li:nth-child(3n+1) { color: red; } /* 1st, 4th, 7th, ... */
+  p:nth-of-type(2) { font-weight: bold; } /* 2nd <p> */
+  ```
+
+- **`:first-child` / `:last-child`**
+  - Targets the first/last child element.
+  ```css
+  .menu li:first-child { border-radius: 4px 0 0 4px; }
+  .menu li:last-child { border-radius: 0 4px 4px 0; }
+  ```
+
+- **`:empty`**
+  - Targets elements with no children or text content.
+  ```css
+  .alert:empty { display: none; }
+  ```
+
+- **`:checked`, `:disabled`, `:enabled`, `:required`, `:valid`, `:invalid`**
+  - Used for form styling based on state.
+  ```css
+  input:checked + label { color: green; }
+  input:invalid { border-color: red; }
+  ```
+
+SELECTOR SPECIFICITY IMPLICATIONS (Summary)
+-------------------------------------------
+| Selector Type              | Specificity (a,b,c,d) | Example                     |
+|----------------------------|-----------------------|-----------------------------|
+| Universal                  | (0,0,0,0)             | `*`                         |
+| Type / Pseudo-element      | (0,0,0,1)             | `p`, `::before`             |
+| Class / Attribute / Pseudo | (0,0,1,0)             | `.class`, `[type]`, `:hover`|
+| ID                         | (0,1,0,0)             | `#id`                       |
+| Inline                     | (1,0,0,0)             | `style="..."`              |
+| !important                 | Overrides everything   | `property: value !important;`|
+
+COMMON INTERVIEW QUESTIONS ON SELECTORS
+---------------------------------------
+1.  **What is the difference between `:nth-child()` and `:nth-of-type()`?**
+    - `:nth-child()` selects based on position among all siblings.
+    - `:nth-of-type()` selects based on position among siblings of the same type.
+
+2.  **What is the difference between `:first-child` and `:first-of-type`?**
+    - `:first-child` selects the first child element regardless of type.
+    - `:first-of-type` selects the first child of a specific type.
+
+3.  **What is the `:not()` pseudo-class and how does it affect specificity?**
+    - It negates a selector. Its specificity is the specificity of the selector inside.
+
+4.  **What is `:is()` and how is it different from `:where()`?**
+    - Both accept a list of selectors. `:is()` takes the highest specificity from the list, while `:where()` always has a specificity of 0.
+
+5.  **What is the `:has()` pseudo-class?**
+    - It selects an element if it contains a specific child or descendant. It's often called the "parent selector".
+
+6.  **What is the difference between `[class="value"]` and `[class~="value"]`?**
+    - `=` matches the exact class string. `~=` matches if the class is part of a space-separated list.
+
+7.  **What is the difference between a `class` selector and an `id` selector?**
+    - `id` must be unique and has a higher specificity. `class` can be reused and is more maintainable.
+
+8.  **Why should you generally avoid using IDs for styling?**
+    - High specificity makes them hard to override, reducing maintainability and flexibility.
+
+================================================================================
+3. CASCADE, SPECIFICITY & INHERITANCE
+================================================================================
+
+THE CASCADE
+-----------
+- The cascade is the process that resolves conflicts between different CSS rules.
+- It determines which style rule takes precedence.
+- It uses a priority system: Importance -> Specificity -> Source Order.
+
+CASCADE ORDER (From HIGHEST to LOWEST)
+--------------------------------------
+1.  Transitions
+2.  Important user-agent styles
+3.  Important user styles
+4.  Important author styles
+5.  Animations
+6.  Normal author styles
+7.  Normal user styles
+8.  Normal user-agent styles
+
+(For normal (non-important) author styles, the order is Specificity -> Source Order).
+
+SPECIFICITY
+-----------
+- Specificity is the algorithm browsers use to determine which CSS declaration is applied.
+- It is calculated based on the types of selectors used.
+- More specific selectors override less specific ones.
+
+HOW SPECIFICITY IS CALCULATED
+-----------------------------
+Specificity is often represented as a 4-part number: (a, b, c, d)
+- **a**: Inline styles (style attribute).
+- **b**: Number of ID selectors (`#id`).
+- **c**: Number of class selectors (`.class`), attribute selectors (`[type="text"]`), and pseudo-classes (`:hover`).
+- **d**: Number of type selectors (`h1`, `p`) and pseudo-elements (`::before`).
+
+```css
+/* Specificity: (0,0,0,1) */
+p { color: black; }
+
+/* Specificity: (0,0,1,0) */
+.text { color: red; }
+
+/* Specificity: (0,1,0,0) */
+#main { color: blue; }
+
+/* Specificity: (0,1,1,1) */
+#main .text p { color: green; }
+
+/* Specificity: (0,0,2,0) */
+.nav .menu-item.active { color: orange; }
+```
+
+INLINE STYLES
+-------------
+- Inline styles (`style="..."`) are the most specific author styles.
+- They get a specificity of (1,0,0,0).
+
+`!IMPORTANT`
+------------
+- Overrides ALL other author styles.
+- Using it excessively is considered a bad practice.
+- It breaks the natural cascade, making debugging harder.
+- Rule of thumb: Only use it for utility classes or critical fallbacks.
+
+INHERITANCE
+-----------
+- Some CSS properties are inherited from parent to child.
+- Text-related properties are usually inherited (color, font-family, font-size, line-height, etc.).
+- Layout-related properties are usually NOT inherited (margin, padding, border, width, height, etc.).
+- You can force inheritance with `inherit` or prevent it with `initial`.
+
+KEYWORDS: `INITIAL`, `INHERIT`, `UNSET`, `REVERT`, `REVERT-LAYER`
+-----------------------------------------------------------------
+- **`initial`**: Resets to the browser's default value.
+- **`inherit`**: Forces inheritance from the parent.
+- **`unset`**: Behaves as `inherit` for inherited properties, and `initial` for non-inherited properties.
+- **`revert`**: Reverts to the value set by the user-agent or user stylesheet.
+- **`revert-layer`**: Reverts to the previous cascade layer.
+
+SOURCE ORDER
+------------
+- If two CSS rules have the same specificity, the one declared LAST wins.
+```css
+h1 { color: red; }
+h1 { color: blue; } /* Wins (blue) */
+```
+
+LAYERS (`@LAYER`)
+-----------------
+- Cascade layers allow you to control the order of style declarations.
+- Later layers override earlier layers.
+- Great for managing third-party CSS and framework overrides.
+```css
+@layer framework, components, utilities;
+
+@layer framework {
+  .button { background: blue; }
+}
+
+@layer utilities {
+  .button { background: red; } /* Wins (red) */
+}
+```
+
+HOW BROWSERS DECIDE WHICH CSS RULE WINS
+---------------------------------------
+1.  Check for `!important`. The rule with `!important` wins.
+2.  Check the cascade layer. Later layers win.
+3.  Check specificity. Higher specificity wins.
+4.  Check source order. The last declaration wins.
+
+PRACTICAL EXAMPLES OF CONFLICT RESOLUTION
+-----------------------------------------
+```html
+<div id="main" class="container">
+  <p class="text" style="color: green;">Hello</p>
+</div>
+```
+
+```css
+/* Specificity: (0,0,0,1) */
+p { color: black; }
+
+/* Specificity: (0,0,1,0) */
+.text { color: blue; }
+
+/* Specificity: (0,1,1,0) */
+#main .text { color: red; }
+
+/* Inline style: (1,0,0,0) WINS (green) */
+```
+
+COMMON INTERVIEW QUESTIONS ON CASCADE & SPECIFICITY
+---------------------------------------------------
+1.  **What is the CSS cascade?**
+    - The algorithm browsers use to resolve conflicting style declarations.
+
+2.  **How is specificity calculated?**
+    - (Inline, ID, Class/Attribute/Pseudo, Type/Pseudo-element).
+
+3.  **Which has higher specificity: a class or an ID?**
+    - ID.
+
+4.  **What is the specificity of `:is()` and `:where()`?**
+    - `:is()` takes the highest specificity in its list. `:where()` always has a specificity of 0.
+
+5.  **What happens when two rules have the same specificity?**
+    - The last one in the source code wins.
+
+6.  **Why is using `!important` considered bad practice?**
+    - It breaks the cascade, makes debugging difficult, and prevents easy overrides.
+
+7.  **What are cascade layers?**
+    - A way to manage the order of stylesheets. Later layers override earlier layers.
+
+8.  **What is the difference between `initial`, `inherit`, and `unset`?**
+    - `initial` resets to the default, `inherit` inherits from the parent, and `unset` does one of the two depending on the property.
+
+================================================================================
+4. CSS BOX MODEL
+================================================================================
+
+THE BOX MODEL DESCRIBES HOW ELEMENTS ARE RENDERED.
+
+BOX MODEL COMPONENTS
+--------------------
+1.  **Content**: The actual content (text, images, etc.).
+2.  **Padding**: Space between the content and the border.
+3.  **Border**: The border surrounding the padding.
+4.  **Margin**: Space outside the border.
+
+TOTAL ELEMENT WIDTH / HEIGHT (content-box)
+-------------------------------------------
+- Total Width = Width + Padding (left + right) + Border (left + right) + Margin (left + right)
+- Total Height = Height + Padding (top + bottom) + Border (top + bottom) + Margin (top + bottom)
+
+`BOX-SIZING`
+------------
+- **`content-box`** (default): Width/height only apply to the content.
+  - Padding and border are ADDED to the width/height.
+- **`border-box`**: Width/height include padding and border.
+  - Makes sizing much more predictable and intuitive.
+```css
+*, *::before, *::after {
+  box-sizing: border-box; /* Best practice! */
+}
+```
+
+WIDTH & HEIGHT
+--------------
+- `width` and `height` set the dimensions of the box.
+- `min-width`, `max-width`, `min-height`, `max-height` set constraints.
+- `auto` lets the browser calculate the size based on content and constraints.
+
+MARGIN COLLAPSING
+-----------------
+- Vertical margins between adjacent block elements collapse (overlap).
+- The larger margin wins.
+- Margin collapsing does NOT happen for:
+  - Floated elements.
+  - Absolutely positioned elements.
+  - Inline-block elements.
+  - Elements with `overflow` not `visible`.
+  - Flex/Grid items (by default).
+
+OVERFLOW
+--------
+- Controls what happens when content exceeds the box.
+- Values: `visible` (default), `hidden`, `scroll`, `auto`, `clip`.
+
+BOX MODEL CALCULATIONS (Example)
+--------------------------------
+```html
+<div style="width: 300px; padding: 20px; border: 5px solid black; box-sizing: content-box;">
+  Content
+</div>
+```
+- **content-box**: Total width = 300 + 20+20 + 5+5 = 350px
+- **border-box**: Total width = 300px (content is 250px, padding and border are inside)
+
+COMMON INTERVIEW QUESTIONS ON BOX MODEL
+---------------------------------------
+1.  **What is the difference between `content-box` and `border-box`?**
+    - `content-box` adds padding and border to the width/height. `border-box` includes them within the width/height.
+
+2.  **What is the box model?**
+    - The box model describes how padding, border, and margin affect the size of an element.
+
+3.  **What is margin collapsing?**
+    - When vertical margins of adjacent block elements combine into a single margin.
+
+4.  **How do you prevent margin collapsing?**
+    - Use flex/grid, add a border, use `overflow: hidden`, or use padding.
+
+5.  **Why is `box-sizing: border-box` commonly used?**
+    - It makes sizing predictable and easier to manage, as padding and border don't increase the element's declared size.
+
+6.  **What happens when an element's content is larger than its container with `overflow: hidden`?**
+    - The overflowing content is clipped and hidden.
+
+================================================================================
+5. CSS UNITS & VALUES
+================================================================================
+
+RELATIVE VS ABSOLUTE UNITS
+--------------------------
+- **Absolute**: Fixed size (px, pt, cm, in). `px` is the most common absolute unit.
+- **Relative**: Size relative to something else (%, em, rem, vw, vh, etc.).
+
+COMMON UNITS
+------------
+
+| Unit  | Description                                         | Type     |
+|-------|-----------------------------------------------------|----------|
+| `px`  | Pixels. Fixed unit.                                 | Absolute |
+| `%`   | Percentage of the parent's size.                    | Relative |
+| `em`  | Relative to the font-size of the parent element.    | Relative |
+| `rem` | Relative to the font-size of the root element (`<html>`). | Relative |
+| `vh`  | 1% of the viewport height.                          | Relative |
+| `vw`  | 1% of the viewport width.                           | Relative |
+| `vmin`| Smaller of `vh` or `vw`.                            | Relative |
+| `vmax`| Larger of `vh` or `vw`.                             | Relative |
+| `dvh` | Dynamic viewport height (accounts for UI changes).  | Relative |
+| `svh` | Small viewport height (minimum possible).           | Relative |
+| `lvh` | Large viewport height (maximum possible).           | Relative |
+| `ch`  | Width of the '0' (zero) character.                  | Relative |
+| `ex`  | Height of the 'x' character.                        | Relative |
+| `fr`  | Fractional unit in CSS Grid.                        | Relative |
+| `auto`| Browser calculates the size.                        | Relative |
+| `min-content` | Size based on the minimum content size.        | Relative |
+| `max-content` | Size based on the maximum content size.        | Relative |
+| `fit-content` | Size between `min-content` and `max-content`.  | Relative |
+
+WHEN TO USE `PX` VS `REM` VS `EM`
+---------------------------------
+- **`px`**: Used for precise, non-scalable sizing (borders, shadows). Should be avoided for typography.
+- **`rem`**: Used for typography (font-size) and spacing. Scales with the root font-size, making it accessible.
+- **`em`**: Used for component-relative sizing (e.g., padding within a component). Can lead to compounding effects.
+
+RESPONSIVE SIZING
+-----------------
+- Use relative units (`%`, `vw`, `vh`, `rem`, `em`) to create fluid layouts.
+- Combine with `clamp()`, `min()`, and `max()` for responsive values.
+
+FLUID TYPOGRAPHY
+----------------
+- Use `clamp()` to create font sizes that scale fluidly.
+```css
+h1 {
+  font-size: clamp(2rem, 5vw, 4rem);
+}
+/* Minimum: 2rem, Preferred: 5vw, Maximum: 4rem */
+```
+
+COMMON INTERVIEW QUESTIONS ON UNITS
+-----------------------------------
+1.  **What is the difference between `em` and `rem`?**
+    - `em` is relative to the parent's font-size. `rem` is relative to the root font-size.
+2.  **What is the difference between `vw` and `vh`?**
+    - `vw` is relative to viewport width; `vh` is relative to viewport height.
+3.  **What is the difference between `px` and `rem`?**
+    - `px` is a fixed unit; `rem` scales with the root font-size, making it accessible.
+4.  **What are `vmin` and `vmax`?**
+    - `vmin` is the smaller of `vw` and `vh`; `vmax` is the larger of the two.
+5.  **When should you use `%` vs `vw`?**
+    - `%` is relative to the parent's dimension; `vw` is relative to the viewport width.
+6.  **What are the new viewport units (`dvh`, `svh`, `lvh`)?**
+    - They account for dynamic changes in viewport size (like mobile address bars).
+
+================================================================================
+6. COLORS & BACKGROUNDS
+================================================================================
+
+COLOR REPRESENTATIONS
+---------------------
+- **Named Colors**: `red`, `blue`, `transparent`, `currentColor` (over 140 named colors).
+- **HEX**: `#ff0000` (or `#f00`).
+- **RGB**: `rgb(255, 0, 0)`.
+- **RGBA**: `rgba(255, 0, 0, 0.5)` – alpha for transparency.
+- **HSL**: `hsl(0, 100%, 50%)` (Hue, Saturation, Lightness).
+- **HSLA**: `hsla(0, 100%, 50%, 0.5)`.
+
+`CURRENTCOLOR`
+--------------
+- Represents the current value of the `color` property.
+- Useful for consistency.
+```css
+.button {
+  color: blue;
+  border: 2px solid currentColor; /* Border will be blue */
+}
+```
+
+`OPACITY`
+---------
+- Controls the transparency of an entire element (and its children).
+- `opacity: 0.5` means 50% transparent.
+
+BACKGROUND PROPERTIES
+---------------------
+- **`background-color`**: Sets the background color.
+- **`background-image`**: Sets an image as the background.
+- **`background-size`**: Controls the size of the background image (`cover`, `contain`, lengths).
+- **`background-position`**: Positions the background image (`center`, `top`, `left`, etc.).
+- **`background-repeat`**: Controls repetition (`no-repeat`, `repeat-x`, `repeat-y`).
+- **`background-attachment`**: Controls scrolling behavior (`scroll`, `fixed`, `local`).
+- **Multiple Backgrounds**: Combine multiple backgrounds with commas.
+
+GRADIENTS
+---------
+- **Linear**: `linear-gradient(to right, red, blue)`
+- **Radial**: `radial-gradient(circle, red, blue)`
+- **Conic**: `conic-gradient(red, blue, red)`
+- Can be used as `background-image`.
+
+```css
+.bg {
+  background: linear-gradient(to bottom, #f0f0f0, #ffffff);
+}
+
+.gradient {
+  background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1);
+}
+```
+
+COMMON INTERVIEW QUESTIONS ON COLORS & BACKGROUNDS
+--------------------------------------------------
+1.  **What is the difference between `background` and `background-color`?**
+    - `background` is a shorthand that can set multiple properties.
+2.  **What is `currentColor`?**
+    - A special CSS keyword representing the current value of the `color` property.
+3.  **What is the difference between `opacity` and `rgba()`?**
+    - `opacity` affects the entire element and its children. `rgba()` only affects the background color.
+4.  **What is `HSL`?**
+    - A color model that represents colors using Hue, Saturation, and Lightness.
+5.  **How do you create a gradient?**
+    - Using `linear-gradient()`, `radial-gradient()`, or `conic-gradient()`.
+
+================================================================================
+7. TYPOGRAPHY
+================================================================================
+
+FONT PROPERTIES
+---------------
+- **`font-family`**: Sets the typeface for an element.
+  - Use a comma-separated list of fallback fonts.
+  - Best practice: End with a generic font family (`sans-serif`, `serif`, `monospace`).
+- **`font-size`**: Sets the size of the font.
+- **`font-weight`**: Sets the thickness of the font (`normal`, `bold`, `lighter`, `bolder`, `100`-`900`).
+- **`font-style`**: Sets the style (`normal`, `italic`, `oblique`).
+- **`font-variant`**: Controls small-caps (`normal`, `small-caps`).
+
+`LINE-HEIGHT`
+-------------
+- Space between lines of text.
+- Should be relative to `font-size` (e.g., `1.5` is common).
+- Accessibility: Line-height should be at least 1.5 for readability.
+
+`LETTER-SPACING` & `WORD-SPACING`
+---------------------------------
+- `letter-spacing`: Space between characters.
+- `word-spacing`: Space between words.
+
+TEXT PROPERTIES
+---------------
+- **`text-align`**: Horizontal alignment (`left`, `right`, `center`, `justify`).
+- **`text-decoration`**: Adds decoration (`underline`, `overline`, `line-through`, `none`).
+- **`text-transform`**: Changes case (`uppercase`, `lowercase`, `capitalize`, `none`).
+- **`text-indent`**: Indents the first line of text.
+- **`text-overflow`**: Controls how overflowed text is displayed (`ellipsis`, `clip`).
+- **`white-space`**: Controls how whitespace is handled (`normal`, `nowrap`, `pre`, `pre-wrap`, `pre-line`).
+- **`word-break`**: Controls how words break (`normal`, `break-all`, `keep-all`).
+- **`overflow-wrap`**: Controls whether words can break (`normal`, `break-word`).
+- **`hyphens`**: Controls hyphenation (`auto`, `manual`, `none`).
+
+WEB FONTS (`@FONT-FACE`)
+------------------------
+- Allows you to use custom fonts on your website.
+```css
+@font-face {
+  font-family: 'MyCustomFont';
+  src: url('myfont.woff2') format('woff2'),
+       url('myfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  font-family: 'MyCustomFont', sans-serif;
+}
+```
+
+SYSTEM FONT STACKS
+------------------
+- Use system fonts for better performance.
+```css
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+```
+
+COMMON INTERVIEW QUESTIONS ON TYPOGRAPHY
+----------------------------------------
+1.  **What is the difference between `font-size: 1rem` and `font-size: 1em`?**
+    - `1rem` is relative to the root font-size. `1em` is relative to the parent's font-size.
+2.  **What is a system font stack?**
+    - A list of fonts that correspond to the native fonts of the operating system.
+3.  **How do you use custom fonts?**
+    - Use `@font-face` to define the font and then apply it with `font-family`.
+4.  **What is `line-height` and why is it important?**
+    - It sets the space between lines of text. Important for readability and accessibility.
+5.  **How do you truncate text with an ellipsis?**
+    ```css
+    .truncate {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    ```
+
+================================================================================
+8. CSS DISPLAY
+================================================================================
+
+`DISPLAY` PROPERTY
+------------------
+- Defines how an element is rendered in the layout.
+
+| Value          | Description                                                                 |
+|----------------|-----------------------------------------------------------------------------|
+| `block`        | Takes the full width, starts on a new line. E.g., `<div>`, `<p>`.           |
+| `inline`       | Takes only as much width as needed, does not start a new line. E.g., `<span>`.|
+| `inline-block` | Inline flow, but can have width and height set.                             |
+| `none`         | Removes the element from the document flow.                                 |
+| `contents`     | The element's box is removed, but its children are rendered.                |
+| `flex`         | Enables Flexbox layout for the container.                                   |
+| `grid`         | Enables Grid layout for the container.                                      |
+| `table`, `table-cell`, etc. | Behaves like HTML table elements. |
+
+IMPORTANT DISTINCTIONS
+----------------------
+- **`display: none`**: Removes the element from the layout. It's as if it doesn't exist.
+- **`visibility: hidden`**: Hides the element visually, but it still occupies space in the layout.
+- **`opacity: 0`**: Makes the element fully transparent. It still occupies space and is interactive (can be clicked if not `pointer-events: none`).
+
+COMMON INTERVIEW QUESTIONS ON DISPLAY
+-------------------------------------
+1.  **What is the difference between `block`, `inline`, and `inline-block`?**
+    - `block`: Full width, new line.
+    - `inline`: Only as wide as content, no new line.
+    - `inline-block`: Inline flow but can have dimensions.
+
+2.  **What is the difference between `display: none` and `visibility: hidden`?**
+    - `display: none` removes the element from the layout. `visibility: hidden` hides it but preserves its space.
+
+3.  **What is the difference between `display: none` and `opacity: 0`?**
+    - `display: none` removes the element from the layout. `opacity: 0` makes it transparent but it's still in the layout and can be interacted with.
+
+4.  **What does `display: contents` do?**
+    - The element's box is removed, but its children are rendered as if they were direct children of the parent.
+
+5.  **What is the purpose of `display: flex`?**
+    - To enable Flexbox layout on a container.
+
+6.  **What is the purpose of `display: grid`?**
+    - To enable Grid layout on a container.
+
+================================================================================
+9. POSITIONING
+================================================================================
+
+POSITIONING ALLOWS YOU TO CONTROL THE LOCATION OF ELEMENTS.
+
+`POSITION` VALUES
+-----------------
+- **`static` (default)**: The element follows the normal document flow.
+- **`relative`**: Positioned relative to its normal position. Does not affect other elements.
+- **`absolute`**: Removed from the flow. Positioned relative to its nearest positioned ancestor (non-static).
+- **`fixed`**: Removed from the flow. Positioned relative to the viewport. Stays fixed during scroll.
+- **`sticky`**: Hybrid of `relative` and `fixed`. Stays in flow until a scroll threshold is met, then becomes fixed.
+
+`TOP`, `RIGHT`, `BOTTOM`, `LEFT`, `INSET`
+-----------------------------------------
+- `top/right/bottom/left` offset the element from its containing block.
+- `inset` is a shorthand for `top/right/bottom/left` (e.g., `inset: 0`).
+
+CONTAINING BLOCK
+----------------
+- The element that an absolutely positioned element is positioned relative to.
+- If no ancestor has `position: relative/absolute/fixed/sticky`, the containing block is the initial containing block (usually the viewport).
+- For `fixed` positioning, the containing block is the viewport.
+- For `sticky` positioning, the containing block is the scrollable ancestor.
+
+`Z-INDEX`
+---------
+- Controls the vertical stacking order of positioned elements.
+- Only works on positioned elements (`position` not `static`).
+- Higher `z-index` = closer to the user.
+
+STACKING CONTEXT
+----------------
+- A 3D conceptual layer where elements are stacked.
+- Creates a new stacking context when:
+  - `position` is not `static` and `z-index` is not `auto`.
+  - `opacity` is less than 1.
+  - `transform` is not `none`.
+  - `will-change` is set.
+  - `isolation: isolate`.
+  - And many other properties.
+
+WHY `Z-INDEX` SOMETIMES DOES NOT WORK
+-------------------------------------
+1.  The element is not positioned (`position: static`).
+2.  The element is inside a different stacking context.
+3.  The `z-index` of the ancestor is lower.
+4.  The element has `opacity` or `transform` creating a new stacking context.
+
+POSITIONING ELEMENTS RELATIVE TO PARENTS
+----------------------------------------
+```css
+.parent {
+  position: relative; /* Establishes a containing block */
+}
+
+.child {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Perfect centering */
+}
+```
+
+`STICKY` POSITIONING REQUIREMENTS
+---------------------------------
+1.  The element must have `position: sticky`.
+2.  At least one of `top`, `right`, `bottom`, or `left` must be defined.
+3.  The parent container must have enough height to allow scrolling.
+
+PRACTICAL EXAMPLES
+------------------
+- **Sticky Header**: `position: sticky; top: 0;`
+- **Modal Overlay**: `position: fixed; top: 0; left: 0; width: 100%; height: 100%;`
+- **Tooltip**: `position: absolute;` relative to a `position: relative` parent.
+
+COMMON INTERVIEW QUESTIONS ON POSITIONING
+-----------------------------------------
+1.  **What is the difference between `relative`, `absolute`, and `fixed`?**
+    - `relative` is positioned relative to itself; `absolute` is relative to the nearest positioned ancestor; `fixed` is relative to the viewport.
+2.  **What is the difference between `fixed` and `sticky`?**
+    - `fixed` is always relative to the viewport. `sticky` behaves like `relative` until it hits a threshold, then it becomes `fixed`.
+3.  **What is a containing block?**
+    - The element that an absolutely positioned element is positioned relative to.
+4.  **When does `z-index` not work?**
+    - When the element is not positioned, or when it's inside a different stacking context with a lower `z-index`.
+5.  **What creates a new stacking context?**
+    - Positioning with `z-index`, `opacity < 1`, `transform`, `isolation`, etc.
+6.  **How do you center an absolutely positioned element?**
+    ```css
+    .centered {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    ```
+
+================================================================================
+10. FLEXBOX
+================================================================================
+
+FLEXBOX IS A ONE-DIMENSIONAL LAYOUT MODEL.
+
+WHAT IS FLEXBOX?
+----------------
+- A layout module designed for efficient arrangement of items in a single row or column.
+- Handles alignment, distribution, and sizing of items.
+- Excellent for UI components (navigation, cards, buttons).
+
+MAIN AXIS & CROSS AXIS
+----------------------
+- **Main Axis**: The primary direction (horizontal for `row`, vertical for `column`).
+- **Cross Axis**: Perpendicular to the main axis.
+
+FLEX CONTAINER PROPERTIES
+-------------------------
+- **`display: flex;`** – Enables Flexbox.
+- **`flex-direction`**: Sets the main axis direction (`row`, `row-reverse`, `column`, `column-reverse`).
+- **`flex-wrap`**: Controls whether items wrap (`nowrap`, `wrap`, `wrap-reverse`).
+- **`flex-flow`**: Shorthand for `flex-direction` and `flex-wrap`.
+- **`justify-content`**: Aligns items along the main axis (`flex-start`, `flex-end`, `center`, `space-between`, `space-around`, `space-evenly`).
+- **`align-items`**: Aligns items along the cross axis (`flex-start`, `flex-end`, `center`, `baseline`, `stretch`).
+- **`align-content`**: Aligns multiple lines of items along the cross axis (works with `wrap`).
+- **`gap`, `row-gap`, `column-gap`**: Space between items.
+
+FLEX ITEM PROPERTIES
+--------------------
+- **`order`**: Controls the display order of items (default 0).
+- **`flex-grow`**: Ability for an item to grow if space is available (default 0).
+- **`flex-shrink`**: Ability for an item to shrink if space is limited (default 1).
+- **`flex-basis`**: The initial size of an item before distributing space (default `auto`).
+- **`flex`**: Shorthand for `flex-grow`, `flex-shrink`, `flex-basis`.
+- **`align-self`**: Overrides `align-items` for a single item.
+
+UNDERSTANDING FLEX GROW/SHRINK/BASIS
+------------------------------------
+- **`flex: 1`** = `flex-grow: 1; flex-shrink: 1; flex-basis: 0;`
+- **`flex: auto`** = `flex-grow: 1; flex-shrink: 1; flex-basis: auto;`
+- **`flex: none`** = `flex-grow: 0; flex-shrink: 0; flex-basis: auto;`
+
+`JUSTIFY-CONTENT` VS `ALIGN-ITEMS`
+----------------------------------
+- `justify-content`: Aligns along the main axis.
+- `align-items`: Aligns along the cross axis.
+
+`ALIGN-ITEMS` VS `ALIGN-CONTENT`
+---------------------------------
+- `align-items`: Aligns single-line items.
+- `align-content`: Aligns multiple lines (when `flex-wrap: wrap`).
+
+`FLEX-BASIS` VS `WIDTH`
+-----------------------
+- `flex-basis` is the initial size of an item before the remaining space is distributed.
+- `width` is the absolute width.
+- When `flex-basis` is `auto`, it uses the `width` (or `height` for column) as the basis.
+
+CENTERING WITH FLEXBOX
+----------------------
+```css
+.container {
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center;    /* Center vertically */
+  height: 100vh;
+}
+```
+
+COMMON FLEXBOX LAYOUTS
+----------------------
+1.  **Navigation Bar**:
+    ```css
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    ```
+2.  **Card Grid**:
+    ```css
+    .card-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .card {
+      flex: 1 1 300px; /* Grow, shrink, basis */
+    }
+    ```
+3.  **Sticky Footer**:
+    ```css
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    main {
+      flex: 1;
+    }
+    footer {
+      background: #333;
+    }
+    ```
+
+COMMON INTERVIEW QUESTIONS ON FLEXBOX
+-------------------------------------
+1.  **What is Flexbox and when would you use it?**
+    - One-dimensional layout model for arranging items in a row or column.
+2.  **What is the difference between `justify-content` and `align-items`?**
+    - `justify-content` aligns along the main axis; `align-items` aligns along the cross axis.
+3.  **What is the difference between `align-items` and `align-content`?**
+    - `align-items` is for single-line items; `align-content` is for multi-line items.
+4.  **What does `flex: 1` mean?**
+    - `flex-grow: 1; flex-shrink: 1; flex-basis: 0;`. It allows the item to grow and shrink, starting from a base of 0.
+5.  **What is the difference between `flex-basis` and `width`?**
+    - `flex-basis` is the initial size before space distribution; `width` is the absolute size.
+6.  **How do you center an element in Flexbox?**
+    - `display: flex; justify-content: center; align-items: center;`
+7.  **What is the `order` property?**
+    - It controls the display order of flex items. Default is 0.
+8.  **What does `flex-wrap: wrap` do?**
+    - It allows flex items to wrap onto multiple lines when they don't fit.
+9.  **What is the `gap` property?**
+    - It defines the space between flex items (row-gap and column-gap).
+10. **What is the difference between `space-around` and `space-between`?**
+    - `space-between`: Items are evenly distributed; first item at start, last at end.
+    - `space-around`: Items are evenly distributed with equal space around them.
+
+================================================================================
+11. CSS GRID
+================================================================================
+
+CSS GRID IS A TWO-DIMENSIONAL LAYOUT MODEL.
+
+WHAT IS CSS GRID?
+-----------------
+- A powerful layout system for creating complex, two-dimensional layouts.
+- Handles both rows and columns simultaneously.
+- Excellent for page layouts (dashboard, gallery, magazine-style layouts).
+
+GRID CONTAINER PROPERTIES
+-------------------------
+- **`display: grid;`** – Enables Grid.
+- **`grid-template-columns`**: Defines the number and size of columns.
+- **`grid-template-rows`**: Defines the number and size of rows.
+- **`grid-template-areas`**: Defines named grid areas.
+- **`gap`, `row-gap`, `column-gap`**: Space between grid items.
+
+GRID ITEM PROPERTIES
+--------------------
+- **`grid-column`**: Shorthand for `grid-column-start` and `grid-column-end`.
+- **`grid-row`**: Shorthand for `grid-row-start` and `grid-row-end`.
+- **`grid-area`**: Shorthand for `grid-row/column start/end` or references a named area.
+
+IMPORTANT GRID FUNCTIONS & UNITS
+--------------------------------
+- **`repeat()`**: Repeats a pattern of columns/rows.
+- **`minmax()`**: Sets a size range (minimum and maximum).
+- **`fr`**: Fractional unit (distributes remaining space).
+- **`auto-fit`**: Fits as many columns as will fit, then stretches them.
+- **`auto-fill`**: Fills the row with as many columns as possible.
+
+`GRID-TEMPLATE-AREAS`
+---------------------
+```css
+.grid-container {
+  display: grid;
+  grid-template-columns: 200px 1fr 200px;
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas:
+    "header header header"
+    "sidebar main content"
+    "footer footer footer";
+}
+
+.header { grid-area: header; }
+.sidebar { grid-area: sidebar; }
+.main { grid-area: main; }
+.content { grid-area: content; }
+.footer { grid-area: footer; }
+```
+
+IMPLICIT VS EXPLICIT GRID
+-------------------------
+- **Explicit Grid**: Defined with `grid-template-rows` and `grid-template-columns`.
+- **Implicit Grid**: Auto-generated when items exceed the explicit grid.
+- **`grid-auto-columns` / `grid-auto-rows`**: Sets sizes for implicit tracks.
+
+`AUTO-FIT` VS `AUTO-FILL`
+-------------------------
+- **`auto-fill`**: Fills the row with as many columns as possible, leaving empty columns if needed.
+- **`auto-fit`**: Fits as many columns as will fit, and then stretches them to fill the remaining space.
+
+GRID VS FLEXBOX
+---------------
+| Feature               | Grid                                     | Flexbox                                 |
+|-----------------------|------------------------------------------|-----------------------------------------|
+| Dimensionality        | Two-dimensional (rows & columns)         | One-dimensional (row or column)         |
+| Use Case              | Page layouts, complex grids              | UI components, navigation, cards        |
+| Item Placement        | Explicit placement using lines/areas     | Automatic flow with order               |
+| Responsiveness        | Excellent for large-scale layouts        | Excellent for component-level layouts   |
+
+PRACTICAL GRID EXAMPLES
+-----------------------
+1.  **Responsive Card Grid**:
+    ```css
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+    ```
+
+2.  **Dashboard Layout**:
+    ```css
+    .dashboard {
+      display: grid;
+      grid-template-columns: 250px 1fr 250px;
+      grid-template-rows: auto 1fr auto;
+      gap: 10px;
+      min-height: 100vh;
+    }
+    ```
+
+3.  **Holy Grail Layout**:
+    ```css
+    .layout {
+      display: grid;
+      grid-template-columns: 200px 1fr 200px;
+      grid-template-rows: auto 1fr auto;
+    }
+    ```
+
+COMMON INTERVIEW QUESTIONS ON GRID
+----------------------------------
+1.  **What is CSS Grid and when would you use it?**
+    - Two-dimensional layout system for complex page layouts.
+2.  **What is the difference between Flexbox and Grid?**
+    - Flexbox is one-dimensional; Grid is two-dimensional.
+3.  **What are `auto-fit` and `auto-fill` in Grid?**
+    - `auto-fill` fills with as many columns as possible. `auto-fit` fills and stretches to fill the space.
+4.  **What is the `fr` unit in CSS Grid?**
+    - Fractional unit for distributing remaining space.
+5.  **What does `grid-template-areas` do?**
+    - Creates a visual grid by using named areas.
+6.  **What is the difference between explicit and implicit grid?**
+    - Explicit grid is defined with `grid-template-*`; implicit is auto-generated.
+7.  **How do you create a responsive grid?**
+    - Use `repeat(auto-fit, minmax(250px, 1fr))`.
+8.  **What is `minmax()` used for?**
+    - To set a size range (minimum and maximum) for a column/row.
+9.  **What is `grid-area`?**
+    - A shorthand for placing an item in a specific grid area.
+10. **What is the `gap` property?**
+    - Defines the space between grid items (row-gap and column-gap).
+
+================================================================================
+12. RESPONSIVE DESIGN
+================================================================================
+
+WHAT IS RESPONSIVE WEB DESIGN?
+------------------------------
+- An approach to web design that makes web pages render well on a variety of devices and screen sizes.
+- Uses flexible layouts, fluid grids, and media queries.
+
+MOBILE-FIRST APPROACH
+---------------------
+- Design for mobile screens first, then add styles for larger screens.
+- Uses `min-width` in media queries.
+- Benefits: Better performance, improved user experience, cleaner code.
+
+DESKTOP-FIRST APPROACH
+----------------------
+- Design for desktop screens first, then adapt for smaller screens.
+- Uses `max-width` in media queries.
+
+MEDIA QUERIES
+-------------
+- A CSS feature that allows you to apply styles based on device characteristics.
+```css
+/* Mobile-first (min-width) */
+@media (min-width: 768px) {
+  .container { max-width: 720px; }
+}
+@media (min-width: 1024px) {
+  .container { max-width: 960px; }
+}
+
+/* Desktop-first (max-width) */
+@media (max-width: 1024px) {
+  .container { max-width: 960px; }
+}
+@media (max-width: 768px) {
+  .container { max-width: 720px; }
+}
+```
+
+BREAKPOINTS
+-----------
+- Points where the layout changes to adapt to the screen size.
+- Common breakpoints:
+  - Small (phones): < 768px
+  - Medium (tablets): 768px - 1024px
+  - Large (desktops): > 1024px
+
+RESPONSIVE UNITS
+----------------
+- Use `%`, `vw`, `vh`, `rem`, `em`, `clamp()`, `min()`, `max()`.
+
+FLUID LAYOUTS
+-------------
+- Layouts that flow and adapt to the screen size.
+- Achieved with percentages, `vw`, `vh`, and `fr` units.
+
+FLUID TYPOGRAPHY
+----------------
+- Font sizes that scale smoothly across screen sizes.
+```css
+h1 {
+  font-size: clamp(2rem, 5vw, 4rem);
+}
+```
+
+RESPONSIVE IMAGES
+-----------------
+- Use the `<picture>` element with `srcset` and `sizes`.
+```html
+<picture>
+  <source media="(min-width: 768px)" srcset="large.jpg">
+  <source media="(min-width: 480px)" srcset="medium.jpg">
+  <img src="small.jpg" alt="Responsive image">
+</picture>
+```
+
+CONTAINER QUERIES
+-----------------
+- Styles can respond to the size of the container, not just the viewport.
+```css
+@container (min-width: 500px) {
+  .card {
+    display: flex;
+    flex-direction: row;
+  }
+}
+```
+
+HOW TO CHOOSE BREAKPOINTS
+-------------------------
+- Base breakpoints on content, not devices.
+- Let the content determine when the layout needs to change.
+
+COMMON RESPONSIVE DESIGN MISTAKES
+---------------------------------
+- Using fixed pixel widths.
+- Not testing on actual devices.
+- Ignoring touch interactions.
+- Using `px` for font sizes instead of `rem`.
+- Not using `max-width: 100%` on images.
+
+COMMON INTERVIEW QUESTIONS ON RESPONSIVE DESIGN
+-----------------------------------------------
+1.  **What is responsive web design?**
+    - Designing websites that adapt to different screen sizes and devices.
+2.  **What is the difference between mobile-first and desktop-first?**
+    - Mobile-first uses `min-width` and starts with mobile styles; desktop-first uses `max-width`.
+3.  **What are media queries?**
+    - CSS rules that apply styles based on device characteristics.
+4.  **What are common breakpoints?**
+    - 768px (tablets), 1024px (desktops), but they should be based on content.
+5.  **What is fluid typography?**
+    - Font sizes that scale smoothly with `clamp()` or viewport units.
+6.  **What are container queries?**
+    - Styles that respond to the size of a container rather than the viewport.
+7.  **Why is `max-width: 100%` important for images?**
+    - It prevents images from overflowing their container.
+8.  **What is the difference between `vw` and `%`?**
+    - `vw` is relative to the viewport; `%` is relative to the parent container.
+
+================================================================================
+13. CSS MEDIA & FEATURE QUERIES
+================================================================================
+
+`@MEDIA` QUERIES
+----------------
+- Allow you to apply styles based on device characteristics.
+
+MEDIA TYPES
+-----------
+- `all` (default), `print`, `screen`, `speech`.
+
+COMMON MEDIA QUERIES
+--------------------
+```css
+/* Width */
+@media (min-width: 768px) { ... }
+@media (max-width: 1024px) { ... }
+
+/* Height */
+@media (min-height: 600px) { ... }
+
+/* Orientation */
+@media (orientation: landscape) { ... }
+@media (orientation: portrait) { ... }
+
+/* Color Scheme */
+@media (prefers-color-scheme: dark) { ... }
+@media (prefers-color-scheme: light) { ... }
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.01ms !important; }
+}
+
+/* Contrast */
+@media (prefers-contrast: high) { ... }
+@media (prefers-contrast: low) { ... }
+
+/* Hover Support */
+@media (hover: hover) { ... } /* Has hover (desktop) */
+@media (hover: none) { ... }  /* No hover (mobile) */
+
+/* Pointer Accuracy */
+@media (pointer: fine) { ... } /* Mouse */
+@media (pointer: coarse) { ... } /* Touch */
+
+/* Resolution */
+@media (min-resolution: 2dppx) { ... } /* Retina displays */
+```
+
+`@SUPPORTS` (FEATURE QUERIES)
+-----------------------------
+- Checks if the browser supports a specific CSS feature.
+```css
+@supports (display: grid) {
+  .grid { display: grid; }
+}
+
+@supports not (display: grid) {
+  .grid { display: flex; }
+}
+
+@supports (color: color-mix(in hsl, red 50%, blue)) {
+  .text { color: color-mix(in hsl, red 50%, blue); }
+}
+```
+
+COMMON INTERVIEW QUESTIONS ON MEDIA QUERIES
+-------------------------------------------
+1.  **What is `@media`?**
+    - A CSS rule for applying styles based on device characteristics.
+2.  **What is the difference between `min-width` and `max-width`?**
+    - `min-width` applies styles when the viewport is at least that size. `max-width` applies when it's at most that size.
+3.  **What is `prefers-color-scheme` used for?**
+    - To implement light and dark mode support.
+4.  **What is `prefers-reduced-motion`?**
+    - A query that detects if the user has requested reduced motion, used for accessibility.
+5.  **What is `@supports` used for?**
+    - To apply styles only if the browser supports a specific CSS property/feature.
+6.  **What is the difference between `hover` and `pointer` queries?**
+    - `hover` detects if the device supports hovering; `pointer` detects the accuracy of the pointing device.
+
+================================================================================
+14. PSEUDO-CLASSES & PSEUDO-ELEMENTS
+================================================================================
+
+PSEUDO-CLASSES (`:`)
+--------------------
+- Target elements based on a state or condition.
+
+| Pseudo-class       | Description                                           |
+|--------------------|-------------------------------------------------------|
+| `:hover`           | When the mouse hovers over an element.                |
+| `:focus`           | When an element has focus.                            |
+| `:focus-visible`   | When an element has focus and should be visible.      |
+| `:active`          | When an element is being activated (e.g., clicked).   |
+| `:visited`         | When a link has been visited.                         |
+| `:checked`         | When a checkbox/radio is checked.                     |
+| `:disabled`        | When a form control is disabled.                      |
+| `:enabled`         | When a form control is enabled.                       |
+| `:required`        | When a form field is required.                        |
+| `:valid`           | When a form field is valid.                           |
+| `:invalid`         | When a form field is invalid.                         |
+| `:first-child`     | The first child of a parent.                          |
+| `:last-child`      | The last child of a parent.                           |
+| `:nth-child(n)`    | The nth child of a parent.                            |
+| `:nth-of-type(n)`  | The nth child of a specific type.                     |
+| `:not(selector)`   | Elements that do NOT match the selector.              |
+| `:is(selectors)`   | Matches any selector in the list.                     |
+| `:where(selectors)`| Matches any selector in the list (specificity 0).     |
+| `:has(selector)`   | Parent selector – if it contains a matching element.  |
+| `:empty`           | Elements with no children/text.                       |
+| `:only-child`      | The only child of a parent.                           |
+| `:first-of-type`   | The first child of a specific type.                   |
+| `:last-of-type`    | The last child of a specific type.                    |
+| `:placeholder-shown`| When an input's placeholder is shown.                |
+| `:target`          | The target of a URL fragment.                         |
+| `:root`            | The root element of the document (`<html>`).          |
+
+PSEUDO-ELEMENTS (`::`)
+----------------------
+- Target a specific part of an element.
+
+| Pseudo-element     | Description                                           |
+|--------------------|-------------------------------------------------------|
+| `::before`         | Inserts content BEFORE the element.                   |
+| `::after`          | Inserts content AFTER the element.                    |
+| `::first-letter`   | The first letter of an element.                       |
+| `::first-line`     | The first line of an element.                         |
+| `::selection`      | The selected portion of the document.                 |
+| `::marker`         | The marker of a list item.                            |
+| `::placeholder`    | The placeholder text in an input.                     |
+
+DIFFERENCE BETWEEN PSEUDO-CLASSES AND PSEUDO-ELEMENTS
+-----------------------------------------------------
+- **Pseudo-classes (`:`)** target a state or condition of an element (e.g., `:hover`, `:focus`).
+- **Pseudo-elements (`::`)** target a specific part of an element (e.g., `::before`, `::first-letter`).
+
+PRACTICAL EXAMPLES
+------------------
+```css
+/* Add a decorative icon before a link */
+a[href$=".pdf"]::before {
+  content: "📄 ";
+}
+
+/* Style the first letter of a paragraph */
+p::first-letter {
+  font-size: 3em;
+  font-weight: bold;
+  float: left;
+  margin-right: 5px;
+}
+
+/* Custom checkbox style */
+input[type="checkbox"]:checked + label {
+  color: green;
+}
+
+/* Clearfix */
+.clearfix::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+```
+
+COMMON INTERVIEW QUESTIONS ON PSEUDO-CLASSES & ELEMENTS
+-------------------------------------------------------
+1.  **What is the difference between `:hover` and `:focus`?**
+    - `:hover` is triggered when the mouse is over the element. `:focus` is triggered when the element is selected (keyboard/tab or click).
+2.  **What is `:focus-visible`?**
+    - It styles an element only when it is focused via keyboard, not by mouse click.
+3.  **What is the difference between a pseudo-class and a pseudo-element?**
+    - A pseudo-class targets a state (e.g., `:hover`). A pseudo-element targets a specific part of an element (e.g., `::before`).
+4.  **What is `::before` and `::after` used for?**
+    - They insert content before or after an element's content. Great for icons, decorations, and clearfix.
+5.  **What is `:has()`?**
+    - A parent selector that applies styles if the element contains a certain child.
+6.  **What is the difference between `:is()` and `:where()`?**
+    - `:is()` takes the highest specificity from its list. `:where()` always has a specificity of 0.
+7.  **What is `:not()`?**
+    - Negates a selector. It selects elements that do not match the given selector.
+8.  **What is `:nth-child()`?**
+    - Selects elements based on their position among their siblings.
+9.  **What is `:placeholder-shown`?**
+    - Targets an input when its placeholder text is visible.
+
+================================================================================
+15. CSS VARIABLES (CUSTOM PROPERTIES)
+================================================================================
+
+WHAT ARE CSS CUSTOM PROPERTIES?
+-------------------------------
+- CSS variables that hold values to be reused throughout your CSS.
+- They are defined by the user (custom properties).
+- They are dynamic and can be updated at runtime.
+
+SYNTAX
+------
+- **Define**: `--variable-name: value;`
+- **Use**: `var(--variable-name)`
+- **Fallback**: `var(--variable-name, fallback-value)`
+
+GLOBAL VARIABLES (Using `:root`)
+--------------------------------
+```css
+:root {
+  --primary-color: #007bff;
+  --font-size-base: 16px;
+  --spacing-unit: 8px;
+}
+
+.button {
+  background-color: var(--primary-color);
+  font-size: var(--font-size-base);
+  padding: var(--spacing-unit) calc(var(--spacing-unit) * 2);
+}
+```
+
+COMPONENT-LEVEL VARIABLES
+-------------------------
+```css
+.card {
+  --padding: 20px;
+  --border-color: #ccc;
+  padding: var(--padding);
+  border: 1px solid var(--border-color);
+}
+```
+
+INHERITANCE OF CUSTOM PROPERTIES
+--------------------------------
+- CSS variables are inherited from parent to child.
+- Child elements can override parent variables.
+
+DYNAMIC THEMING & DARK MODE
+---------------------------
+```css
+:root {
+  --bg: white;
+  --text: black;
+}
+
+[data-theme="dark"] {
+  --bg: black;
+  --text: white;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+}
+```
+
+JAVASCRIPT INTERACTION
+----------------------
+```javascript
+// Get a CSS variable
+const root = document.documentElement;
+const primaryColor = getComputedStyle(root).getPropertyValue('--primary-color').trim();
+
+// Set a CSS variable
+root.style.setProperty('--primary-color', 'red');
+```
+
+PRACTICAL EXAMPLES
+------------------
+```css
+:root {
+  --spacing: 1rem;
+  --radius: 8px;
+  --font: 'Inter', sans-serif;
+}
+
+.container {
+  padding: var(--spacing);
+  border-radius: var(--radius);
+  font-family: var(--font);
+}
+```
+
+COMMON INTERVIEW QUESTIONS ON CSS VARIABLES
+-------------------------------------------
+1.  **What are CSS variables (custom properties)?**
+    - User-defined variables that store CSS values for reuse.
+2.  **What is the syntax for CSS variables?**
+    - `--variable-name: value;` and `var(--variable-name)`.
+3.  **What is the `:root` selector used for?**
+    - It targets the `<html>` element and is often used to define global variables.
+4.  **How do you use CSS variables for theming?**
+    - Define variables with different values for different themes (e.g., `[data-theme="dark"]`).
+5.  **How do you access CSS variables with JavaScript?**
+    - Using `getComputedStyle().getPropertyValue()` and `style.setProperty()`.
+6.  **What is a fallback value in `var()`?**
+    - A default value used if the variable is not defined.
+7.  **Are CSS variables inherited?**
+    - Yes, they are inherited from parent to child.
+
+================================================================================
+16. CSS FUNCTIONS
+================================================================================
+
+CSS FUNCTIONS PROVIDE DYNAMIC VALUES.
+
+| Function           | Description                                                   |
+|--------------------|---------------------------------------------------------------|
+| `calc()`           | Performs calculations with different units.                   |
+| `min()`            | Uses the smallest value from a list.                          |
+| `max()`            | Uses the largest value from a list.                           |
+| `clamp()`          | Clamps a value between a minimum, preferred, and maximum.     |
+| `var()`            | References a CSS variable.                                    |
+| `rgb()`, `hsl()`   | Defines colors.                                               |
+| `color-mix()`      | Mixes two colors together.                                    |
+| `attr()`           | Gets the value of an HTML attribute.                          |
+| `url()`            | References a URL (e.g., in `background-image`).               |
+| `linear-gradient()`, `radial-gradient()`, `conic-gradient()` | Creates gradients.        |
+| `repeat()`         | Repeats a pattern in Grid.                                    |
+| `minmax()`         | Sets a size range in Grid.                                    |
+
+PRACTICAL EXAMPLES
+------------------
+```css
+/* calc() */
+.element {
+  width: calc(100% - 40px);
+  padding: calc(var(--spacing) * 2);
+}
+
+/* min() and max() */
+.element {
+  width: min(100%, 600px);
+  width: max(300px, 50%);
+}
+
+/* clamp() (responsive sizing) */
+h1 {
+  font-size: clamp(2rem, 5vw, 4rem);
+}
+
+/* attr() */
+a[data-tooltip]::after {
+  content: attr(data-tooltip);
+}
+
+/* color-mix() */
+.element {
+  color: color-mix(in hsl, red 50%, blue);
+}
+```
+
+COMMON INTERVIEW QUESTIONS ON CSS FUNCTIONS
+-------------------------------------------
+1.  **What is `calc()` used for?**
+    - To perform arithmetic calculations with different units.
+2.  **What is the difference between `min()`, `max()`, and `clamp()`?**
+    - `min()` uses the smallest; `max()` uses the largest; `clamp()` sets a range.
+3.  **What is `attr()` used for?**
+    - To retrieve the value of an HTML attribute.
+4.  **What is `color-mix()`?**
+    - A function that mixes two colors together.
+5.  **What is `minmax()` used for in Grid?**
+    - To define a size range (minimum and maximum) for a grid track.
+
+================================================================================
+17. CSS TRANSITIONS
+================================================================================
+
+TRANSITIONS ALLOW CSS PROPERTIES TO CHANGE SMOOTHLY OVER TIME.
+
+PROPERTIES
+----------
+- **`transition-property`**: The properties to transition (`all` or a list).
+- **`transition-duration`**: How long the transition takes (e.g., `0.3s`).
+- **`transition-timing-function`**: The speed curve (`ease`, `linear`, `ease-in`, `ease-out`, `ease-in-out`, `cubic-bezier()`).
+- **`transition-delay`**: Delay before the transition starts.
+
+SHORTHAND
+---------
+```css
+/* property duration timing-function delay */
+.button {
+  transition: background 0.3s ease 0s, transform 0.2s ease-out;
+}
+
+.button:hover {
+  background: blue;
+  transform: scale(1.05);
+}
+```
+
+WHAT CAN AND CANNOT BE TRANSITIONED
+-----------------------------------
+- **Can**: Values that are interpolatable (numbers, colors, length, percentage, etc.).
+- **Cannot**: `display`, `visibility` (but `opacity` can), `font-family`, etc.
+
+COMMON TIMING FUNCTIONS
+-----------------------
+- `ease`: Slow start, fast middle, slow end (default).
+- `linear`: Constant speed.
+- `ease-in`: Slow start, fast end.
+- `ease-out`: Fast start, slow end.
+- `ease-in-out`: Slow start and end, fast middle.
+- `cubic-bezier(n, n, n, n)`: Custom curve.
+
+PERFORMANCE CONSIDERATIONS
+--------------------------
+- Transition `transform` and `opacity` for best performance (GPU-accelerated).
+- Avoid transitioning `top`, `left`, `margin`, `padding` (causes reflow/layout).
+
+PRACTICAL EXAMPLES
+------------------
+```css
+/* Button hover */
+.button {
+  background: #007bff;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.button:hover {
+  background: #0056b3;
+  transform: scale(1.05);
+}
+
+/* Smooth collapse */
+.collapsible {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+}
+
+.collapsible.open {
+  max-height: 200px;
+}
+```
+
+COMMON INTERVIEW QUESTIONS ON TRANSITIONS
+-----------------------------------------
+1.  **What are CSS transitions?**
+    - They allow property changes to animate smoothly over time.
+2.  **What are the properties of a transition?**
+    - `transition-property`, `transition-duration`, `transition-timing-function`, `transition-delay`.
+3.  **What is the difference between `ease-in` and `ease-out`?**
+    - `ease-in` starts slow and ends fast; `ease-out` starts fast and ends slow.
+4.  **What properties can you not transition?**
+    - `display`, `visibility`, `font-family`, and other non-interpolatable properties.
+5.  **Why should you transition `transform` and `opacity`?**
+    - They are GPU-accelerated and don't cause layout reflows, resulting in smoother animations.
+
+================================================================================
+18. CSS TRANSFORMS
+================================================================================
+
+TRANSFORMS MODIFY THE SHAPE, SIZE, OR POSITION OF ELEMENTS.
+
+2D TRANSFORMS
+-------------
+- **`translate(x, y)`** or `translateX(x)`, `translateY(y)`: Moves the element.
+- **`scale(x, y)`** or `scaleX(x)`, `scaleY(y)`: Changes the size.
+- **`rotate(angle)`**: Rotates the element (e.g., `rotate(45deg)`).
+- **`skew(x, y)`** or `skewX(x)`, `skewY(y)`: Skews the element.
+
+3D TRANSFORMS
+-------------
+- **`translate3d(x, y, z)`**
+- **`scale3d(x, y, z)`**
+- **`rotateX(angle)`, `rotateY(angle)`, `rotateZ(angle)`**
+- **`perspective()`**: Adds 3D depth.
+
+`TRANSFORM-ORIGIN`
+------------------
+- Defines the point from which the transform is applied (e.g., `transform-origin: center;`).
+
+PRACTICAL EXAMPLES
+------------------
+```css
+/* Center an element using translate */
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Hover flip effect */
+.card {
+  transition: transform 0.3s ease;
+}
+.card:hover {
+  transform: scale(1.05) rotate(2deg);
+}
+
+/* 3D flip */
+.card {
+  transform-style: preserve-3d;
+  transition: transform 0.6s;
+}
+.card:hover {
+  transform: rotateY(180deg);
+}
+```
+
+COMMON INTERVIEW QUESTIONS ON TRANSFORMS
+----------------------------------------
+1.  **What does `transform` do?**
+    - It allows you to translate, scale, rotate, or skew an element.
+2.  **What is `transform-origin`?**
+    - The point from which the transform is applied (default is `center`).
+3.  **What is the difference between `translate()` and `position: relative` with `top/left`?**
+    - `translate()` uses GPU and doesn't cause layout reflows; `top/left` causes reflows.
+4.  **What is `perspective()` used for?**
+    - To give 3D elements depth.
+5.  **What is `transform-style: preserve-3d`?**
+    - Allows children to be positioned in 3D space.
+
+================================================================================
+19. CSS ANIMATIONS
+================================================================================
+
+ANIMATIONS ARE MORE COMPLEX AND CONTROLLABLE THAN TRANSITIONS.
+
+`@KEYFRAMES`
+------------
+- Defines the animation sequence.
+```css
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+```
+
+ANIMATION PROPERTIES
+--------------------
+- **`animation-name`**: The name of the `@keyframes` rule.
+- **`animation-duration`**: How long the animation lasts.
+- **`animation-delay`**: Delay before the animation starts.
+- **`animation-iteration-count`**: Number of times the animation plays (`1`, `infinite`).
+- **`animation-direction`**: Direction (`normal`, `reverse`, `alternate`, `alternate-reverse`).
+- **`animation-fill-mode`**: Styles applied before/after the animation (`none`, `forwards`, `backwards`, `both`).
+- **`animation-play-state`**: Pause or play (`running`, `paused`).
+- **`animation-timing-function`**: Speed curve (`ease`, `linear`, etc.).
+
+SHORTHAND
+---------
+```css
+/* name duration timing-function delay iteration-count direction fill-mode play-state */
+.element {
+  animation: slideIn 0.5s ease-out 0s 1 normal forwards running;
+}
+```
+
+TRANSITIONS VS ANIMATIONS
+-------------------------
+| Feature        | Transitions                          | Animations                           |
+|----------------|--------------------------------------|--------------------------------------|
+| Trigger        | Triggered by state change (hover)   | Can start automatically              |
+| Control        | Simple, two-state                    | Complex, multi-step                  |
+| Keyframes      | Not needed                           | Needed (`@keyframes`)                |
+| Loops          | Cannot loop                          | Can loop (`infinite`)                |
+| Use Case       | Simple hover effects                 | Complex, repeating animations        |
+
+PERFORMANCE
+-----------
+- Animate `transform` and `opacity` for best performance.
+- Use `will-change: transform` to hint to the browser.
+
+PREFERS-REDUCED-MOTION
+----------------------
+```css
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+```
+
+PRACTICAL EXAMPLES
+------------------
+```css
+/* Loading spinner */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+.spinner {
+  animation: spin 1s linear infinite;
+}
+
+/* Fade in on load */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+```
+
+COMMON INTERVIEW QUESTIONS ON ANIMATIONS
+----------------------------------------
+1.  **What is the difference between a transition and an animation?**
+    - Transitions are triggered by state changes; animations are more complex and can run automatically.
+2.  **What is `@keyframes`?**
+    - A rule that defines the animation sequence.
+3.  **What is `animation-fill-mode` used for?**
+    - It determines whether the styles are applied before or after the animation.
+4.  **What is `animation-play-state`?**
+    - Pauses or resumes the animation.
+5.  **What is the `alternate` value in `animation-direction`?**
+    - The animation plays forward, then backward.
+6.  **What is `prefers-reduced-motion`?**
+    - A media query for users who prefer reduced motion, used for accessibility.
+
+================================================================================
+20. CSS OVERFLOW & SCROLLING
+================================================================================
+
+`OVERFLOW`
+----------
+- Controls what happens when content exceeds the box.
+- **`visible`** (default): Content overflows the box.
+- **`hidden`**: Content is clipped.
+- **`scroll`**: Adds scrollbars (always visible).
+- **`auto`**: Adds scrollbars only when needed.
+- **`clip`**: Similar to `hidden`, but disables scrolling.
+- `overflow-x` and `overflow-y` control each axis separately.
+
+SCROLL CONTAINERS
+-----------------
+- Elements with `overflow: auto` or `overflow: scroll` act as scroll containers.
+- They create a containing block for `position: sticky`.
+
+SCROLLBARS
+----------
+- Can be styled with `::-webkit-scrollbar` (WebKit browsers).
+- For cross-browser support, use libraries or simple custom solutions.
+
+SMOOTH SCROLLING
+----------------
+```css
+html {
+  scroll-behavior: smooth;
+}
+```
+
+`OVERSCROLL-BEHAVIOR`
+--------------------
+- Controls what happens when you scroll past the boundary.
+```css
+.container {
+  overscroll-behavior: contain; /* Prevents parent from scrolling */
+}
+```
+
+SCROLL SNAPPING
+---------------
+- **`scroll-snap-type`**: Sets the snapping behavior.
+- **`scroll-snap-align`**: Sets where the snap point is.
+```css
+.container {
+  scroll-snap-type: y mandatory;
+  overflow-y: scroll;
+  height: 100vh;
+}
+
+.item {
+  scroll-snap-align: start;
+  height: 100vh;
+}
+```
+
+COMMON INTERVIEW QUESTIONS ON OVERFLOW & SCROLLING
+--------------------------------------------------
+1.  **What is the difference between `overflow: hidden`, `overflow: auto`, and `overflow: scroll`?**
+    - `hidden` clips content; `auto` adds scrollbars when needed; `scroll` always shows scrollbars.
+2.  **What is `scroll-behavior: smooth`?**
+    - Enables smooth scrolling behavior for anchor links.
+3.  **What is `overscroll-behavior`?**
+    - Controls what happens when you scroll past the boundary.
+4.  **What is scroll snapping?**
+    - A feature that makes scrolling "snap" to specific points.
+5.  **What are scroll containers?**
+    - Elements with `overflow` set to `auto` or `scroll`, creating a scrollable area.
+
+================================================================================
+21. CSS SHADOWS, BORDERS & EFFECTS
+================================================================================
+
+`BORDER`
+--------
+- Defines the border of an element.
+- Shorthand: `border: width style color;`
+- `border-radius`: Rounds the corners.
+
+`OUTLINE`
+---------
+- Similar to border but does not affect layout (not part of the box model).
+- Useful for focus indicators.
+- **Difference**: `outline` does not take up space; `border` does.
+
+`BOX-SHADOW`
+------------
+- Adds a shadow to the box.
+```css
+.box {
+  box-shadow: 5px 5px 10px rgba(0,0,0,0.5);
+  /* offset-x offset-y blur-radius spread-radius color */
+}
+```
+- Multiple shadows can be stacked.
+
+`TEXT-SHADOW`
+-------------
+- Adds a shadow to text.
+```css
+.text {
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+```
+
+`FILTER` & `BACKDROP-FILTER`
+----------------------------
+- Apply visual effects to an element.
+```css
+.element {
+  filter: blur(5px) brightness(0.8) contrast(1.2) drop-shadow(2px 2px 4px rgba(0,0,0,0.3));
+  backdrop-filter: blur(10px); /* Blur the background behind the element */
+}
+```
+
+`OPACITY`
+---------
+- Sets the transparency of an element.
+- Can create a new stacking context.
+
+PRACTICAL EXAMPLES
+------------------
+```css
+/* Button with shadow */
+.button {
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  border: none;
+  border-radius: 4px;
+}
+
+/* Glassmorphism */
+.glass {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+```
+
+COMMON INTERVIEW QUESTIONS ON SHADOWS & EFFECTS
+-----------------------------------------------
+1.  **What is the difference between `border` and `outline`?**
+    - `outline` does not affect layout; `border` does.
+2.  **What is the difference between `box-shadow` and `filter: drop-shadow()`?**
+    - `box-shadow` creates a shadow for the box; `drop-shadow()` creates a shadow for the content (including transparent areas).
+3.  **What is `backdrop-filter`?**
+    - Applies a filter to the background behind the element.
+4.  **What is `filter` used for?**
+    - Applies visual effects like blur, brightness, contrast, etc.
+5.  **What is `border-radius`?**
+    - Rounds the corners of an element.
+
+================================================================================
+22. CSS GRADIENTS
+================================================================================
+
+GRADIENTS ARE IMAGES WITH PROGRESSIVE COLOR TRANSITIONS.
+
+LINEAR GRADIENT
+---------------
+- **`linear-gradient(direction, color1, color2, ...)`**
+```css
+.linear {
+  background: linear-gradient(to right, #ff6b6b, #4ecdc4);
+  background: linear-gradient(45deg, red, blue, green);
+}
+```
+
+RADIAL GRADIENT
+---------------
+- **`radial-gradient(shape size at position, color1, color2, ...)`**
+```css
+.radial {
+  background: radial-gradient(circle, red, blue);
+  background: radial-gradient(circle at top left, red, blue);
+}
+```
+
+CONIC GRADIENT
+--------------
+- **`conic-gradient(color1, color2, ...)`**
+```css
+.conic {
+  background: conic-gradient(red, blue, green, red);
+  /* Pie chart effect */
+  background: conic-gradient(red 0% 25%, blue 25% 50%, green 50% 75%, yellow 75% 100%);
+}
+```
+
+GRADIENT STOPS
+--------------
+- Color stops define where colors start and end.
+```css
+.gradient {
+  background: linear-gradient(red 0%, blue 50%, green 100%);
+}
+```
+
+PRACTICAL EXAMPLES
+------------------
+```css
+/* Striped background */
+.stripes {
+  background: linear-gradient(45deg, #f0f0f0 25%, #e0e0e0 25%, #e0e0e0 50%, #f0f0f0 50%, #f0f0f0 75%, #e0e0e0 75%);
+  background-size: 40px 40px;
+}
+
+/* Card with gradient overlay */
+.card {
+  background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.8)), url('image.jpg');
+}
+```
+
+COMMON INTERVIEW QUESTIONS ON GRADIENTS
+---------------------------------------
+1.  **What is a linear gradient?**
+    - A gradient along a straight line.
+2.  **What is a radial gradient?**
+    - A gradient that radiates from a center point.
+3.  **What is a conic gradient?**
+    - A gradient around a center point (like a color wheel).
+4.  **What are color stops?**
+    - The points where the colors change.
+5.  **Can gradients be used with `background-image`?**
+    - Yes, they are considered images.
+
+================================================================================
+23. CSS LAYOUT CONCEPTS
+================================================================================
+
+NORMAL DOCUMENT FLOW
+--------------------
+- The default layout behavior of elements.
+- Block elements stack vertically. Inline elements flow horizontally.
+- Positioned elements (`absolute`, `fixed`) and `float` break the flow.
+
+FORMATTING CONTEXTS
+-------------------
+- **Block Formatting Context (BFC)**: Contains block-level elements. Prevents margin collapsing across contexts.
+- **Inline Formatting Context (IFC)**: Contains inline-level elements.
+- **Flex Formatting Context**: Created by `display: flex`.
+- **Grid Formatting Context**: Created by `display: grid`.
+
+CONTAINING BLOCKS
+-----------------
+- The element that an absolutely positioned element is positioned relative to.
+- For `absolute`, it's the nearest positioned ancestor (non-static).
+- For `fixed`, it's the viewport.
+
+FLOW VS OUT-OF-FLOW ELEMENTS
+----------------------------
+- **Flow**: Elements in normal document flow.
+- **Out-of-flow**: Elements removed from the flow (`absolute`, `fixed`, `float`).
+
+MARGIN COLLAPSING
+-----------------
+- Vertical margins of adjacent block elements collapse into one.
+- Collapsing does not happen for:
+  - Floated elements
+  - Absolutely positioned elements
+  - Inline-block elements
+  - Flex/Grid items
+  - Elements with `overflow` not `visible`
+
+OVERFLOW
+--------
+- Can create a new BFC if set to `hidden`, `auto`, or `scroll`.
+- This prevents margin collapsing and contains floats.
+
+COMMON INTERVIEW QUESTIONS ON LAYOUT CONCEPTS
+---------------------------------------------
+1.  **What is the document flow?**
+    - The default layout behavior of block and inline elements.
+2.  **What is a formatting context?**
+    - An environment where elements are laid out according to specific rules.
+3.  **What is a Block Formatting Context (BFC)?**
+    - A layout context for block-level elements. It prevents margin collapsing and contains floats.
+4.  **How do you create a BFC?**
+    - `overflow: hidden/auto/scroll`, `display: flex/grid`, `position: absolute/fixed`.
+5.  **What is margin collapsing?**
+    - When vertical margins of adjacent block elements combine into one.
+6.  **What is the difference between an in-flow and out-of-flow element?**
+    - In-flow elements are in the normal flow; out-of-flow elements are removed from it (`absolute`, `fixed`).
+
+================================================================================
+24. STACKING CONTEXT & Z-INDEX
+================================================================================
+
+WHAT IS A STACKING CONTEXT?
+---------------------------
+- A 3D conceptual layer where elements are stacked.
+- Forms a hierarchy that determines the painting order.
+- Each stacking context is independent.
+
+HOW STACKING CONTEXTS ARE CREATED
+---------------------------------
+1.  Positioned (`relative`, `absolute`, `fixed`, `sticky`) with `z-index` not `auto`.
+2.  `opacity` less than 1.
+3.  `transform`, `filter`, `perspective`, `clip-path`, `mask`, etc. not `none`.
+4.  `will-change` set to a property that creates a stacking context.
+5.  `isolation: isolate`.
+6.  `container-type` (for container queries).
+7.  `contain` with `layout` or `paint`.
+8.  `mix-blend-mode` not `normal`.
+
+`Z-INDEX`
+---------
+- Controls the stack order of positioned elements.
+- Higher `z-index` = closer to the user.
+- Only works within the same stacking context.
+
+WHY `Z-INDEX` MAY NOT WORK
+--------------------------
+1.  The element is not positioned (`position: static`).
+2.  The element is inside a different stacking context with a lower `z-index`.
+3.  The parent element has a lower `z-index` in its own stacking context.
+4.  The element is transparent (`opacity < 1`) or has `transform`, which creates a new stacking context.
+
+PRACTICAL EXAMPLES
+------------------
+```css
+/* Modal overlay */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  z-index: 1000;
+}
+
+/* Modal content */
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1001;
+}
+```
+
+COMMON INTERVIEW QUESTIONS ON STACKING CONTEXT & Z-INDEX
+--------------------------------------------------------
+1.  **What is a stacking context?**
+    - A 3D layer where elements are stacked.
+2.  **What creates a new stacking context?**
+    - Positioning with `z-index`, `opacity < 1`, `transform`, etc.
+3.  **Why does `z-index` sometimes not work?**
+    - The element might not be positioned, or it might be inside a different stacking context.
+4.  **What is `isolation: isolate` used for?**
+    - Creates a new stacking context, often used to contain `z-index` issues.
+5.  **What is the difference between `z-index` and a stacking context?**
+    - `z-index` is a property; a stacking context is a hierarchy of elements.
+6.  **How do you fix `z-index` issues?**
+    - Ensure elements are positioned and that they are in the same stacking context.
+
+================================================================================
+25. CSS ARCHITECTURE
+================================================================================
+
+WRITING CLEAN, MAINTAINABLE CSS
+
+NAMING CONVENTIONS
+------------------
+- Use descriptive, meaningful class names.
+- Follow a consistent naming pattern.
+
+BEM (Block, Element, Modifier)
+------------------------------
+- A popular methodology for naming CSS classes.
+- **Block**: The main component (e.g., `.card`).
+- **Element**: A part of the block (e.g., `.card__title`, `.card__content`).
+- **Modifier**: A variant of the block or element (e.g., `.card--large`, `.card__title--bold`).
+- **Example**:
+```css
+.card { ... }
+.card__title { ... }
+.card__content { ... }
+.card--featured { ... }
+```
+
+UTILITY CLASSES
+---------------
+- Single-purpose classes (e.g., `.text-center`, `.mb-2`, `.p-4`).
+- Can be combined to build components.
+- Great for rapid prototyping and consistency.
+- **Example** (from Tailwind CSS):
+```css
+.text-center { text-align: center; }
+.p-4 { padding: 1rem; }
+.mb-2 { margin-bottom: 0.5rem; }
+```
+
+COMPONENT-BASED CSS
+-------------------
+- Styles are scoped to components.
+- Reduces global conflicts.
+- Achieved with CSS Modules, styled-components, or BEM.
+
+CSS MODULES
+-----------
+- CSS files are locally scoped to the component.
+- Class names are hashed to prevent conflicts.
+```css
+/* Button.module.css */
+.button { background: blue; }
+```
+
+DESIGN TOKENS
+-------------
+- A set of reusable, named values (colors, spacing, fonts).
+- Often implemented with CSS variables.
+```css
+:root {
+  --color-primary: #007bff;
+  --spacing-base: 1rem;
+  --font-family: 'Inter', sans-serif;
+}
+```
+
+SCALABLE CSS ARCHITECTURE
+-------------------------
+1.  **Base**: Reset, normalize, variables.
+2.  **Layout**: Grid, container, layout components.
+3.  **Modules**: Reusable UI components.
+4.  **Utilities**: Single-purpose helper classes.
+
+PROS & CONS OF DIFFERENT APPROACHES
+-----------------------------------
+| Approach          | Pros                                 | Cons                                 |
+|-------------------|--------------------------------------|--------------------------------------|
+| BEM               | Clear, semantic, modular             | Verbose, can be tedious              |
+| Utility-first     | Fast, consistent, minimal CSS        | HTML can become cluttered            |
+| Component-based   | Scoped, maintainable                 | Requires build tools                 |
+
+COMMON INTERVIEW QUESTIONS ON CSS ARCHITECTURE
+----------------------------------------------
+1.  **What is BEM?**
+    - A naming convention that stands for Block, Element, Modifier.
+2.  **What are utility classes?**
+    - Single-purpose classes for common styles.
+3.  **What is the difference between utility-first and component-based CSS?**
+    - Utility-first uses many small classes; component-based uses scoped styles for components.
+4.  **What are CSS Modules?**
+    - CSS files that are locally scoped to a component.
+5.  **What are design tokens?**
+    - Reusable named values for colors, spacing, fonts, etc.
+
+================================================================================
+26. MODERN CSS
+================================================================================
+
+RECENT CSS FEATURES IMPORTANT FOR CURRENT INTERVIEWS
+
+CSS NESTING
+-----------
+- Allows nesting selectors inside others, like preprocessors.
+```css
+.card {
+  padding: 1rem;
+
+  & .title {
+    font-weight: bold;
+  }
+
+  &:hover {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  }
+}
+```
+
+CASCADE LAYERS
+--------------
+- Manage the order of stylesheets.
+```css
+@layer framework, components, utilities;
+
+@layer utilities {
+  .button { background: red; } /* Wins */
+}
+```
+
+CONTAINER QUERIES
+-----------------
+- Styles respond to the size of the container, not the viewport.
+```css
+@container (min-width: 500px) {
+  .card {
+    display: flex;
+    flex-direction: row;
+  }
+}
+```
+
+`:HAS()` PARENT SELECTOR
+------------------------
+```css
+.card:has(img) {
+  padding: 2rem;
+}
+
+.card:has(.featured) {
+  border-color: gold;
+}
+```
+
+`:IS()` & `:WHERE()`
+--------------------
+```css
+:is(h1, h2, h3) { font-weight: bold; } /* High specificity */
+:where(h1, h2, h3) { margin: 0; }      /* Zero specificity */
+```
+
+MODERN COLOR FUNCTIONS
+----------------------
+```css
+.element {
+  color: color-mix(in hsl, red 50%, blue);
+}
+```
+
+LOGICAL PROPERTIES
+------------------
+```css
+.element {
+  margin-inline: 1rem;
+  padding-block: 2rem;
+}
+```
+
+`ASPECT-RATIO`
+--------------
+```css
+.image {
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+```
+
+`OBJECT-FIT` & `OBJECT-POSITION`
+--------------------------------
+```css
+.image {
+  object-fit: cover;
+  object-position: center;
+  width: 100%;
+  height: 300px;
+}
+```
+
+`ACCENT-COLOR`
+--------------
+```css
+input[type="checkbox"] {
+  accent-color: blue;
+}
+```
+
+`APPEARANCE`
+------------
+```css
+input {
+  appearance: none; /* Remove default styling */
+}
+```
+
+`CONTENT-VISIBILITY`
+--------------------
+- Improves rendering performance by skipping off-screen content.
+```css
+.lazy-section {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 500px;
+}
+```
+
+`CONTAIN` & `WILL-CHANGE`
+-------------------------
+- `contain`: Isolates the element from the rest of the DOM for performance.
+- `will-change`: Hints that a property will change, optimizing the rendering.
+```css
+.element {
+  contain: layout paint;
+  will-change: transform;
+}
+```
+
+`SUBGRID`
+---------
+- Allows children to inherit the grid definition from the parent.
+```css
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.subgrid {
+  display: grid;
+  grid-template-columns: subgrid;
+}
+```
+
+MODERN VIEWPORT UNITS
+---------------------
+- `dvh`, `svh`, `lvh` (dynamic, small, large viewport heights).
+- They account for mobile browser UI changes.
+
+SCROLL-DRIVEN ANIMATIONS (Basics)
+---------------------------------
+- Animations triggered by scroll position (experimental).
+```css
+@keyframes reveal {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.scroll-reveal {
+  animation: reveal linear;
+  animation-timeline: view();
+}
+```
+
+COMMON INTERVIEW QUESTIONS ON MODERN CSS
+----------------------------------------
+1.  **What is CSS nesting?**
+    - The ability to nest selectors, improving readability and reducing repetition.
+2.  **What are cascade layers?**
+    - A way to control the order of stylesheets and manage specificity.
+3.  **What are container queries?**
+    - Styles that respond to the size of a container rather than the viewport.
+4.  **What is `:has()`?**
+    - A parent selector that matches elements containing a specific child.
+5.  **What is the difference between `:is()` and `:where()`?**
+    - `:is()` takes the highest specificity from its list; `:where()` always has a specificity of 0.
+6.  **What are logical properties?**
+    - Properties that are based on the writing direction (e.g., `margin-inline`, `padding-block`).
+7.  **What is `aspect-ratio`?**
+    - A property that sets the aspect ratio of an element.
+8.  **What is `object-fit`?**
+    - Controls how an image or video fits within its box.
+9.  **What is `accent-color`?**
+    - A property to style form controls with a single color.
+10. **What is `content-visibility`?**
+    - A performance optimization that skips rendering of off-screen content.
+
+================================================================================
+27. LOGICAL CSS PROPERTIES
+================================================================================
+
+LOGICAL PROPERTIES ADAPT TO THE WRITING DIRECTION.
+
+WHY USE LOGICAL PROPERTIES?
+---------------------------
+- They enable internationalization (RTL, LTR).
+- They make layouts more flexible and robust.
+- They are the modern standard.
+
+KEY LOGICAL PROPERTIES
+----------------------
+| Physical Property        | Logical Equivalent              |
+|--------------------------|---------------------------------|
+| `margin-top`             | `margin-block-start`            |
+| `margin-bottom`          | `margin-block-end`              |
+| `margin-left`            | `margin-inline-start`           |
+| `margin-right`           | `margin-inline-end`             |
+| `padding-top`            | `padding-block-start`           |
+| `padding-bottom`         | `padding-block-end`             |
+| `padding-left`           | `padding-inline-start`          |
+| `padding-right`          | `padding-inline-end`            |
+| `top`                    | `inset-block-start`             |
+| `bottom`                 | `inset-block-end`               |
+| `left`                   | `inset-inline-start`            |
+| `right`                  | `inset-inline-end`              |
+| `width`                  | `inline-size`                   |
+| `height`                 | `block-size`                    |
+| `border-top`             | `border-block-start`            |
+| `border-bottom`          | `border-block-end`              |
+| `border-left`            | `border-inline-start`           |
+| `border-right`           | `border-inline-end`             |
+| `text-align: left`       | `text-align: start`             |
+| `text-align: right`      | `text-align: end`               |
+
+SHORTHANDS
+----------
+- `margin-block`: Sets `margin-block-start` and `margin-block-end`.
+- `margin-inline`: Sets `margin-inline-start` and `margin-inline-end`.
+- `padding-block`: Sets `padding-block-start` and `padding-block-end`.
+- `padding-inline`: Sets `padding-inline-start` and `padding-inline-end`.
+- `inset-block`: Sets `inset-block-start` and `inset-block-end`.
+- `inset-inline`: Sets `inset-inline-start` and `inset-inline-end`.
+
+PRACTICAL EXAMPLE
+-----------------
+```css
+/* Logical properties for a card */
+.card {
+  padding-block: 1rem;
+  padding-inline: 2rem;
+  margin-block: 0.5rem;
+  border-inline-start: 4px solid blue;
+  inline-size: 100%;
+  block-size: auto;
+}
+```
+
+COMMON INTERVIEW QUESTIONS ON LOGICAL PROPERTIES
+------------------------------------------------
+1.  **What are logical CSS properties?**
+    - Properties that are based on the writing direction (`block` and `inline`).
+2.  **What is the difference between `margin-inline` and `margin-left/right`?**
+    - `margin-inline` adapts to the writing direction; `margin-left/right` is fixed.
+3.  **Why should you use logical properties?**
+    - For internationalization and RTL support.
+4.  **What is the `block` axis?**
+    - The axis perpendicular to the flow of text (e.g., top to bottom).
+5.  **What is the `inline` axis?**
+    - The axis along the flow of text (e.g., left to right).
+
+================================================================================
+28. IMAGES & REPLACED ELEMENTS
+================================================================================
+
+REPLACED ELEMENTS
+-----------------
+- Elements whose content is replaced by an external resource.
+- Examples: `<img>`, `<video>`, `<iframe>`, `<object>`.
+- Their intrinsic dimensions are determined by the media.
+
+`OBJECT-FIT`
+------------
+- Controls how an image or video fits within its box.
+- **`fill`**: Stretches to fill the box (default).
+- **`contain`**: Scales to fit within the box, preserving aspect ratio.
+- **`cover`**: Scales to cover the box, preserving aspect ratio.
+- **`none`**: Displays at its intrinsic size.
+- **`scale-down`**: Uses `none` or `contain` (whichever is smaller).
+
+`OBJECT-POSITION`
+-----------------
+- Positions the image/video within the box (similar to `background-position`).
+
+`ASPECT-RATIO`
+--------------
+- Explicitly sets the aspect ratio of an element.
+- Especially useful for images and videos.
+
+`MAX-WIDTH: 100%`
+-----------------
+- Prevents images from overflowing their container.
+
+RESPONSIVE IMAGES WITH HTML
+---------------------------
+```html
+<img srcset="small.jpg 480w, large.jpg 1080w" sizes="(max-width: 600px) 480px, 1080px" src="fallback.jpg" alt="Responsive image">
+```
+
+PRACTICAL EXAMPLES
+------------------
+```css
+/* Image cover */
+.image {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Responsive image with aspect ratio */
+.image {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+```
+
+COMMON INTERVIEW QUESTIONS ON IMAGES
+------------------------------------
+1.  **What is `object-fit`?**
+    - A property that controls how a replaced element (like an image) fits within its box.
+2.  **What are the values of `object-fit`?**
+    - `fill`, `contain`, `cover`, `none`, `scale-down`.
+3.  **What is `object-position`?**
+    - Positions the image within its box.
+4.  **What is `aspect-ratio`?**
+    - Sets the aspect ratio of an element.
+5.  **Why is `max-width: 100%` important for images?**
+    - Prevents images from overflowing their container.
+
+================================================================================
+29. CSS ACCESSIBILITY
+================================================================================
+
+ACCESSIBILITY IS CRITICAL.
+
+FOCUS STYLES
+------------
+- Ensure focusable elements have visible focus styles.
+```css
+/* Default browser focus, but customize */
+:focus {
+  outline: 2px solid blue;
+  outline-offset: 2px;
+}
+
+/* Only show focus when using keyboard */
+:focus-visible {
+  outline: 2px solid blue;
+  outline-offset: 2px;
+}
+```
+
+COLOR CONTRAST
+--------------
+- Ensure sufficient contrast between text and background.
+- Use tools to check contrast ratios (WCAG 2.1).
+
+PREFERS-REDUCED-MOTION
+----------------------
+```css
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+```
+
+HIDING CONTENT ACCESSIBLY
+-------------------------
+- **`display: none`**: Removes from layout and accessibility tree.
+- **`visibility: hidden`**: Hides visually but keeps in accessibility tree.
+- **`opacity: 0`**: Hides visually but keeps in accessibility tree.
+- **`clip-path: inset(100%)`**: Visually hides but keeps in accessibility tree.
+
+AVOIDING COLOR-ONLY COMMUNICATION
+---------------------------------
+- Do not rely solely on color to convey information (e.g., error messages, status).
+- Use icons, text, or patterns.
+
+ACCESSIBLE FORM STYLING
+-----------------------
+- Ensure labels are associated with inputs (`<label for="...">`).
+- Provide clear focus and validation styles.
+
+KEYBOARD USABILITY
+------------------
+- Ensure all interactive elements are keyboard-accessible.
+- Use `tabindex` appropriately.
+
+COMMON INTERVIEW QUESTIONS ON CSS ACCESSIBILITY
+-----------------------------------------------
+1.  **What is `:focus-visible`?**
+    - A pseudo-class that styles an element only when focused via keyboard.
+2.  **What is `prefers-reduced-motion`?**
+    - A media query for users who prefer reduced motion.
+3.  **What is the difference between `display: none` and `visibility: hidden` for accessibility?**
+    - `display: none` removes from accessibility tree; `visibility: hidden` does not.
+4.  **Why is color contrast important?**
+    - To ensure text is readable for people with low vision.
+5.  **How do you hide content accessibly?**
+    - Use `clip-path: inset(100%)` or visually hidden classes.
+
+================================================================================
+30. CSS PERFORMANCE
+================================================================================
+
+HOW CSS AFFECTS RENDERING
+-------------------------
+1.  **DOM + CSSOM = Render Tree**
+2.  **Style Calculation**: Applying CSS to elements.
+3.  **Layout**: Calculating positions and sizes.
+4.  **Paint**: Drawing pixels on the screen.
+5.  **Composite**: Layers are composited together.
+
+CSSOM BASICS
+------------
+- The CSS Object Model is a tree-like representation of the CSS styles.
+- It is built by the browser when parsing CSS.
+
+REFLOW VS REPAINT
+-----------------
+- **Reflow**: Recalculating layout (expensive).
+- **Repaint**: Redrawing pixels (less expensive).
+- Reflow triggers repaint, but repaint does not trigger reflow.
+
+`WILL-CHANGE`
+-------------
+- Hints to the browser that a property will change.
+- Optimizes by promoting the element to its own layer.
+```css
+.element {
+  will-change: transform, opacity;
+}
+```
+
+`CONTENT-VISIBILITY`
+--------------------
+- Skips rendering of off-screen content.
+```css
+.off-screen {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 500px;
+}
+```
+
+`CONTAIN`
+---------
+- Isolates the element from the rest of the DOM.
+- Values: `layout`, `paint`, `size`, `style`, `content`.
+
+RENDER-BLOCKING CSS
+-------------------
+- CSS is render-blocking by default.
+- The browser won't render the page until CSSOM is built.
+- Use `media` attributes to avoid blocking.
+
+CRITICAL CSS
+------------
+- Inline the critical CSS for above-the-fold content.
+- Defer non-critical CSS.
+
+UNUSED CSS
+----------
+- Remove unused CSS to reduce file size and parse time.
+- Use tools like PurgeCSS.
+
+PERFORMANCE BEST PRACTICES
+--------------------------
+1.  Minify CSS.
+2.  Use efficient selectors (avoid overly complex selectors).
+3.  Use CSS variables to reduce duplication.
+4.  Avoid animating properties that cause reflow (top, left, margin, padding).
+5.  Animate `transform` and `opacity`.
+6.  Use `will-change` sparingly.
+7.  Use `content-visibility` for off-screen content.
+8.  Use system fonts to reduce loading.
+9.  Use `@font-face` with `font-display: swap`.
+
+COMMON INTERVIEW QUESTIONS ON CSS PERFORMANCE
+---------------------------------------------
+1.  **What is the difference between reflow and repaint?**
+    - Reflow is recalculating layout; repaint is redrawing pixels.
+2.  **What is `will-change`?**
+    - A property that hints to the browser that a property will change, optimizing performance.
+3.  **What is `content-visibility`?**
+    - A property that skips rendering for off-screen content.
+4.  **What is `contain`?**
+    - A property that isolates an element from the rest of the DOM.
+5.  **What are render-blocking resources?**
+    - CSS and sometimes JavaScript that block page rendering.
+6.  **How do you optimize CSS performance?**
+    - Minify, remove unused CSS, use efficient selectors, animate performant properties.
+
+================================================================================
+31. CSS RENDERING & BROWSER INTERNALS
+================================================================================
+
+HOW BROWSERS RENDER HTML + CSS
+------------------------------
+1.  **Parse HTML** -> DOM
+2.  **Parse CSS** -> CSSOM
+3.  **Combine DOM and CSSOM** -> Render Tree
+4.  **Layout**: Calculate positions and sizes.
+5.  **Paint**: Draw pixels.
+6.  **Composite**: Layer compositing.
+
+DOM (Document Object Model)
+---------------------------
+- Tree representation of the HTML structure.
+
+CSSOM (CSS Object Model)
+------------------------
+- Tree representation of the CSS styles.
+
+RENDER TREE
+-----------
+- Combines DOM and CSSOM.
+- Only contains elements that will be rendered.
+- Excludes `display: none` elements.
+
+LAYOUT
+------
+- Calculates the exact position and size of each element.
+- Also known as "reflow".
+
+PAINT
+-----
+- Fills in pixels for text, colors, images, borders, shadows, etc.
+
+COMPOSITE
+---------
+- Layers are combined to produce the final image on the screen.
+
+REFLOW VS REPAINT
+-----------------
+- **Reflow**: Layout calculation. Expensive.
+- **Repaint**: Pixel drawing. Less expensive.
+- Reflow always triggers a repaint.
+
+WHAT CAUSES LAYOUT SHIFTS?
+--------------------------
+- Images without dimensions.
+- Ads, embeds, and iframes without dimensions.
+- Dynamic content injection.
+- Web fonts with `font-display: swap` (FOUT/FOIT).
+
+CORE WEB VITALS
+---------------
+1.  **LCP (Largest Contentful Paint)**: Loading performance.
+2.  **FID (First Input Delay)**: Interactivity.
+3.  **CLS (Cumulative Layout Shift)**: Visual stability.
+- CSS affects all three.
+
+COMMON INTERVIEW QUESTIONS ON RENDERING
+---------------------------------------
+1.  **What is the render tree?**
+    - The combination of DOM and CSSOM that contains only elements to be rendered.
+2.  **What is the difference between the DOM and the render tree?**
+    - The DOM includes all elements; the render tree only includes visible elements.
+3.  **What causes reflow?**
+    - Changes to layout (width, height, position, etc.).
+4.  **What causes repaint?**
+    - Changes to visual appearance (color, background, etc.).
+5.  **What is the difference between reflow and repaint?**
+    - Reflow is recalculating layout; repaint is redrawing pixels.
+6.  **What are Core Web Vitals?**
+    - LCP, FID, CLS. Metrics that measure performance and user experience.
+
+================================================================================
+32. CSS WITH HTML
+================================================================================
+
+HOW CSS TARGETS HTML
+--------------------
+- CSS uses selectors to target HTML elements:
+  - Type selectors (`h1`)
+  - Class selectors (`.class`)
+  - ID selectors (`#id`)
+  - Attribute selectors (`[type="text"]`)
+  - Combinators (` `, `>`, `+`, `~`)
+
+`CLASS` VS `ID`
+---------------
+- **Class**: Reusable, lower specificity, best for styling.
+- **ID**: Unique, higher specificity, best for JavaScript or anchor links.
+
+SEMANTIC HTML + CSS
+-------------------
+- Semantic HTML provides meaning, making CSS easier to write and maintain.
+- Example: `<nav>` for navigation, `<article>` for content.
+
+STYLING FORMS
+-------------
+```css
+input[type="text"] {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+input:focus {
+  border-color: blue;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(0, 0, 255, 0.25);
+}
+```
+
+STYLING TABLES
+--------------
+```css
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+tr:nth-child(even) {
+  background: #f9f9f9;
+}
+```
+
+STYLING LISTS
+-------------
+```css
+ul {
+  list-style: none;
+  padding: 0;
+}
+li {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #eee;
+}
+```
+
+LAYOUT PATTERNS
+---------------
+- Header, main, footer.
+- Sidebar layout.
+- Card layout.
+- Navigation.
+
+COMPONENT STYLING
+-----------------
+- Keep styles isolated to the component.
+- Use BEM, CSS Modules, or scoped styles.
+
+================================================================================
+33. CSS WITH JAVASCRIPT
+================================================================================
+
+DOM MANIPULATION AND CSS
+------------------------
+- JavaScript can modify the styles of HTML elements dynamically.
+
+`CLASS-LIST`
+------------
+- Provides methods to add, remove, toggle, and check classes.
+```javascript
+element.classList.add('active');
+element.classList.remove('inactive');
+element.classList.toggle('visible');
+element.classList.contains('hidden'); // returns boolean
+```
+
+`STYLE` PROPERTY
+----------------
+- Directly modifies inline styles.
+```javascript
+element.style.backgroundColor = 'red';
+element.style.padding = '10px';
+```
+
+CSS CUSTOM PROPERTIES WITH JAVASCRIPT
+-------------------------------------
+```javascript
+// Get variable
+const root = document.documentElement;
+const color = getComputedStyle(root).getPropertyValue('--primary-color').trim();
+
+// Set variable
+root.style.setProperty('--primary-color', 'blue');
+```
+
+`GETCOMPUTEDSTYLE()`
+--------------------
+- Gets the actual computed styles of an element.
+```javascript
+const styles = getComputedStyle(element);
+const color = styles.getPropertyValue('color');
+```
+
+CSS CLASSES VS INLINE STYLES
+----------------------------
+- **Classes**: More maintainable, reusable, and better for performance.
+- **Inline Styles**: Higher specificity, useful for dynamic values.
+
+DYNAMIC STYLING
+---------------
+- Use JavaScript to toggle classes, set custom properties, or update inline styles.
+
+PRACTICAL EXAMPLES
+------------------
+```javascript
+// Theme toggle
+const toggleTheme = () => {
+  document.documentElement.classList.toggle('dark-theme');
+};
+
+// Responsive font size
+const fontSize = window.innerWidth < 768 ? '14px' : '18px';
+document.documentElement.style.setProperty('--base-font-size', fontSize);
+```
+
+COMMON INTERVIEW QUESTIONS ON CSS WITH JS
+-----------------------------------------
+1.  **What is `classList`?**
+    - A DOM API for adding, removing, and toggling classes.
+2.  **What is the difference between `classList.add()` and `element.className = ...`?**
+    - `classList.add()` is more convenient and doesn't overwrite existing classes.
+3.  **What is `getComputedStyle()`?**
+    - A method that returns the computed styles of an element.
+4.  **What is the difference between `element.style` and `getComputedStyle()`?**
+    - `element.style` returns inline styles; `getComputedStyle()` returns all applied styles.
+5.  **How do you change CSS variables with JavaScript?**
+    - Using `style.setProperty('--variable', value)` on the root element.
+6.  **Should you use classes or inline styles with JavaScript?**
+    - Classes are generally preferred for maintainability and performance.
+
+================================================================================
+34. FORMS & CSS
+================================================================================
+
+STYLING FORM CONTROLS
+---------------------
+```css
+/* Input fields */
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+/* Buttons */
+button[type="submit"] {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button[type="submit"]:hover {
+  background: #0056b3;
+}
+
+/* Select dropdown */
+select {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: white;
+}
+
+/* Checkboxes and Radio buttons */
+input[type="checkbox"],
+input[type="radio"] {
+  accent-color: #007bff;
+  width: 1.2rem;
+  height: 1.2rem;
+}
+```
+
+VALIDATION STATES
+-----------------
+```css
+/* Valid input */
+input:valid {
+  border-color: green;
+}
+
+/* Invalid input */
+input:invalid {
+  border-color: red;
+}
+
+/* Required input */
+input:required {
+  border-color: orange;
+}
+
+/* Input with placeholder shown */
+input:placeholder-shown {
+  color: #999;
+}
+
+/* Focus state */
+input:focus-visible {
+  outline: 2px solid blue;
+  outline-offset: 2px;
+}
+
+/* Disabled state */
+input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+```
+
+CUSTOM FORM CONTROLS
+--------------------
+- Custom styling for checkboxes, radio buttons, and select dropdowns is common.
+- Use `appearance: none` to remove default styling, then add custom styles.
+
+ACCESSIBLE FORM STYLING
+-----------------------
+- Labels must be associated with inputs (`<label for="...">`).
+- Provide clear focus indicators.
+- Use `aria-describedby` for help text.
+
+COMMON INTERVIEW QUESTIONS ON FORM STYLING
+------------------------------------------
+1.  **How do you style a form with CSS?**
+    - By targeting form elements and using pseudo-classes like `:valid`, `:invalid`, `:focus`.
+2.  **What is `appearance: none` used for?**
+    - Removes the default browser styling on form controls.
+3.  **What is `accent-color` used for?**
+    - Styles checkboxes, radio buttons, and range sliders.
+4.  **What are the important pseudo-classes for form styling?**
+    - `:valid`, `:invalid`, `:required`, `:disabled`, `:checked`, `:focus`, `:placeholder-shown`.
+
+================================================================================
+35. ADVANCED SELECTOR CONCEPTS
+================================================================================
+
+SPECIFICITY CALCULATION PROBLEMS
+--------------------------------
+- Specificity is calculated as (a, b, c, d).
+- `:is()` and `:not()` take the specificity of the most specific selector inside.
+- `:where()` has a specificity of 0.
+
+COMPLEX SELECTOR MATCHING
+-------------------------
+- Be careful with complex combinators (` `, `>`, `+`, `~`).
+- Understand how they affect specificity and performance.
+
+`:HAS()` (Parent Selector)
+---------------------------
+- Allows you to select an element if it contains a specific child.
+```css
+.card:has(img) { padding: 20px; }
+.card:has(.featured) { border: 2px solid gold; }
+```
+
+`:IS()` AND `:WHERE()`
+----------------------
+- `:is()`: Matches any selector in the list; specificity = highest in list.
+- `:where()`: Matches any selector in the list; specificity = 0.
+
+`:NOT()`
+--------
+- Negates a selector.
+```css
+.menu-item:not(:last-child) { border-right: 1px solid #ccc; }
+```
+
+ATTRIBUTE SELECTOR EDGE CASES
+-----------------------------
+- `[class~="value"]`: Matches if the value is in the space-separated list.
+- `[class|="value"]`: Matches if the value is exactly `value` or starts with `value-`.
+- `[class^="value"]`: Starts with.
+- `[class$="value"]`: Ends with.
+- `[class*="value"]`: Contains.
+
+`NTH-CHILD()` PROBLEMS
+----------------------
+- Remember: `:nth-child()` counts all siblings; `:nth-of-type()` counts siblings of the same type.
+```css
+/* Selects the 2nd child, regardless of type */
+li:nth-child(2) { ... }
+
+/* Selects the 2nd <li> element */
+li:nth-of-type(2) { ... }
+```
+
+SELECTOR PERFORMANCE
+--------------------
+- Avoid overly complex selectors (e.g., `div > .container > ul > li:not(:last-child)`).
+- Use simple, specific classes where possible.
+- Prefer descendant combinators over child combinators for performance.
+
+CASCADE LAYERS
+--------------
+- Later layers override earlier layers.
+- Useful for managing third-party CSS.
+- `!important` inside a layer only applies to that layer.
+
+`!IMPORTANT` CONFLICTS
+----------------------
+- `!important` overrides all normal styles.
+- Multiple `!important` declarations are resolved by specificity and source order.
+
+COMMON INTERVIEW QUESTIONS ON ADVANCED SELECTORS
+------------------------------------------------
+1.  **What is the specificity of `:is()`?**
+    - The highest specificity among the selectors in its list.
+2.  **What is the specificity of `:where()`?**
+    - Always 0.
+3.  **What is `:has()` and why is it useful?**
+    - A parent selector that allows you to style an element based on its children.
+4.  **What is the difference between `:not()` and `:where()`?**
+    - `:not()` negates a selector; `:where()` is a forgiving selector list with 0 specificity.
+5.  **What is the difference between `:nth-child()` and `:nth-of-type()`?**
+    - `:nth-child()` selects based on position among all siblings; `:nth-of-type()` selects based on position among siblings of the same type.
+6.  **What are cascade layers?**
+    - A way to control the order of stylesheets and manage specificity.
+
+================================================================================
+36. CSS DEBUGGING
+================================================================================
+
+HOW TO DEBUG CSS
+----------------
+1.  Open Developer Tools (F12).
+2.  Use the "Inspect Element" tool to select an element.
+3.  Explore the "Styles" tab to see all applied CSS rules.
+4.  Look for crossed-out styles (overridden).
+5.  Check the "Computed" tab to see the final values.
+6.  Use the "Layout", "Flexbox", and "Grid" inspectors.
+
+BROWSER DEVTOOLS
+----------------
+- **Elements Panel**: Inspect and edit HTML and CSS.
+- **Styles Tab**: Shows all CSS rules for the selected element.
+- **Computed Styles**: Shows the final computed values.
+- **Box Model**: Visualizes the box model.
+- **Flexbox/Grid Inspector**: Visualizes Flexbox and Grid layouts.
+- **Sources**: Debug JavaScript.
+
+CHECKING INHERITED STYLES
+-------------------------
+- In the Styles tab, click the "Inherited from" bar to see inherited styles.
+
+FINDING OVERRIDDEN PROPERTIES
+-----------------------------
+- In the Styles tab, crossed-out properties have been overridden.
+- Check the specificity and source order to see why.
+
+DEBUGGING Z-INDEX
+-----------------
+- Use the "Elements" panel to inspect the stacking context.
+- Check for positioned elements and `z-index` values.
+
+DEBUGGING OVERFLOW
+------------------
+- Look for `overflow: hidden` or `overflow: auto`.
+- Use the Computed tab to see the element's dimensions and scroll dimensions.
+
+DEBUGGING RESPONSIVE LAYOUTS
+----------------------------
+- Use the Device Toolbar to emulate different screen sizes.
+- Use media query breakpoints in the Styles tab.
+
+COMMON CSS BUGS AND HOW TO FIX THEM
+-----------------------------------
+| Bug                                          | Solution                                                                 |
+|----------------------------------------------|--------------------------------------------------------------------------|
+| Element not centered                         | Use Flexbox/Grid: `display: flex; justify-content: center; align-items: center;` |
+| `height: 100%` not working                   | Ensure the parent has a defined height.                                  |
+| `z-index` not working                        | Make sure the element is positioned. Check stacking contexts.            |
+| Unexpected margins/padding                   | Use a CSS reset. Check margin collapsing.                                |
+| Image overflowing                            | Use `max-width: 100%` and `height: auto`.                                |
+| Flex items not wrapping                      | Add `flex-wrap: wrap`.                                                   |
+| Grid items not aligning                      | Check `justify-content` and `align-items`.                               |
+| Specificity issues                           | Use more specific selectors or use `!important` sparingly.               |
+| Sticky positioning not working               | Ensure `top`, `bottom`, `left`, or `right` is set. Check the parent's height. |
+
+================================================================================
+37. COMMON CSS LAYOUT PROBLEMS
+================================================================================
+
+PRACTICAL SOLUTIONS TO COMMON LAYOUT CHALLENGES
+
+1.  **Center an Element Horizontally**
+    - If block-level: `margin: 0 auto;`
+    - If flex/grid: `justify-content: center;`
+    - If text: `text-align: center;`
+
+2.  **Center Vertically**
+    - Flex: `align-items: center;`
+    - Grid: `align-items: center;`
+    - Absolute + Transform: `position: absolute; top: 50%; transform: translateY(-50%);`
+    - Table: `display: table-cell; vertical-align: middle;`
+
+3.  **Center Both Horizontally and Vertically**
+    - Flex: `display: flex; justify-content: center; align-items: center;`
+    - Grid: `display: grid; place-items: center;`
+    - Absolute + Transform: `position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);`
+
+4.  **Two-Column Layout**
+    - Flex: `display: flex; gap: 20px;` with children `flex: 1;`
+    - Grid: `display: grid; grid-template-columns: 1fr 1fr; gap: 20px;`
+
+5.  **Three-Column Layout**
+    - Flex: `display: flex; gap: 20px;` with children `flex: 1;`
+    - Grid: `display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;`
+
+6.  **Sticky Header**
+    - `position: sticky; top: 0; z-index: 100;`
+
+7.  **Sticky Sidebar**
+    - `position: sticky; top: 20px;`
+
+8.  **Footer at Bottom (Sticky Footer)**
+    - Flex: `body { display: flex; flex-direction: column; min-height: 100vh; } main { flex: 1; }`
+
+9.  **Equal-Height Cards**
+    - Flex: `display: flex; align-items: stretch;` (default behavior)
+    - Grid: `display: grid; grid-auto-rows: 1fr;`
+
+10. **Responsive Navbar**
+    - Flex: `display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;`
+    - For mobile: use a hamburger menu (JavaScript toggles `display: none`).
+
+11. **Responsive Grid**
+    - `display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;`
+
+12. **Image Cropping**
+    - `width: 100%; height: 300px; object-fit: cover; object-position: center;`
+
+13. **Text Truncation (Ellipsis)**
+    ```css
+    .ellipsis {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    ```
+
+14. **Full-Screen Section**
+    - `height: 100vh;`
+
+15. **Modal Overlay**
+    - `position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: flex; justify-content: center; align-items: center;`
+
+16. **Tooltip**
+    - Relative parent + absolute child. `position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%);`
+
+17. **Dropdown**
+    - Relative parent + absolute child. Hide with `display: none;` and show on hover.
+
+18. **Card Layout**
+    - `display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;`
+
+19. **Holy Grail Layout**
+    - `display: grid; grid-template-columns: 200px 1fr 200px; grid-template-rows: auto 1fr auto;`
+
+20. **Dashboard Layout**
+    - `display: grid; grid-template-columns: 250px 1fr; grid-template-rows: auto 1fr auto;`
+
+================================================================================
+38. CSS INTERVIEW QUESTIONS (50+)
+================================================================================
+
+BEGINNER QUESTIONS
+------------------
+1.  **What is CSS?**
+    - Cascading Style Sheets, used for styling HTML documents.
+2.  **What is the difference between CSS and HTML?**
+    - HTML is for structure; CSS is for presentation.
+3.  **What are the different ways to add CSS to an HTML page?**
+    - Inline, internal, external.
+4.  **What is the difference between `class` and `id`?**
+    - `class` is reusable; `id` is unique.
+5.  **What is the box model?**
+    - Content, padding, border, margin.
+6.  **What is `box-sizing`?**
+    - Controls how `width` and `height` are calculated (`content-box` vs `border-box`).
+7.  **What is the difference between `display: block` and `display: inline`?**
+    - `block` takes full width; `inline` takes only as much as needed.
+8.  **What is the difference between `inline` and `inline-block`?**
+    - `inline-block` allows width/height to be set.
+9.  **What is the difference between `display: none` and `visibility: hidden`?**
+    - `display: none` removes from layout; `visibility: hidden` preserves space.
+10. **What is the `position` property?**
+    - Defines how an element is positioned in the document.
+11. **What is the difference between `relative` and `absolute`?**
+    - `relative` is positioned relative to itself; `absolute` is relative to its nearest positioned ancestor.
+12. **What is `z-index`?**
+    - Controls stack order of positioned elements.
+13. **What are pseudo-classes?**
+    - Target elements in a specific state (e.g., `:hover`).
+14. **What are pseudo-elements?**
+    - Target a specific part of an element (e.g., `::before`).
+15. **What is the difference between a pseudo-class and a pseudo-element?**
+    - Pseudo-classes target states (`:hover`); pseudo-elements target parts (`::before`).
+
+INTERMEDIATE QUESTIONS
+----------------------
+16. **What is specificity?**
+    - The algorithm that determines which CSS rule wins.
+17. **How do you calculate specificity?**
+    - (Inline, ID, Class/Attribute/Pseudo, Type/Pseudo-element).
+18. **What is the cascade?**
+    - The process of resolving conflicting styles.
+19. **What is inheritance?**
+    - The passing of styles from parent to child.
+20. **What is margin collapsing?**
+    - When vertical margins of adjacent elements combine.
+21. **What is Flexbox?**
+    - A one-dimensional layout model.
+22. **What is the difference between `justify-content` and `align-items`?**
+    - `justify-content` aligns along the main axis; `align-items` aligns along the cross axis.
+23. **What is the `flex` shorthand?**
+    - `flex-grow`, `flex-shrink`, `flex-basis`.
+24. **What is CSS Grid?**
+    - A two-dimensional layout model.
+25. **What is the difference between `auto-fit` and `auto-fill`?**
+    - `auto-fill` fills with as many as possible; `auto-fit` fills and stretches.
+26. **What is the `fr` unit?**
+    - Fractional unit for Grid.
+27. **What is the `gap` property?**
+    - Space between flex/grid items.
+28. **What are media queries?**
+    - Apply styles based on device characteristics.
+29. **What is responsive design?**
+    - Designing websites that adapt to different screen sizes.
+30. **What is the difference between `em` and `rem`?**
+    - `em` is relative to the parent; `rem` is relative to the root.
+
+ADVANCED QUESTIONS
+------------------
+31. **What is a stacking context?**
+    - A 3D layer where elements are stacked.
+32. **What creates a new stacking context?**
+    - Positioning with `z-index`, `opacity < 1`, `transform`, etc.
+33. **What is `:has()`?**
+    - A parent selector that matches elements containing a specific child.
+34. **What is the difference between `:is()` and `:where()`?**
+    - `:is()` takes the highest specificity; `:where()` has 0 specificity.
+35. **What are cascade layers?**
+    - A way to control the order of stylesheets.
+36. **What are container queries?**
+    - Styles that respond to the size of the container.
+37. **What is the difference between `reflow` and `repaint`?**
+    - Reflow is recalculating layout; repaint is redrawing pixels.
+38. **What is `will-change`?**
+    - Hints to the browser that a property will change.
+39. **What is `content-visibility`?**
+    - Skips rendering for off-screen content.
+40. **What are logical properties?**
+    - Properties based on writing direction (`margin-inline`, `padding-block`).
+
+TRICKY & CONCEPTUAL QUESTIONS
+-----------------------------
+41. **Why does `z-index` sometimes not work?**
+    - Element is not positioned, or it's in a different stacking context.
+42. **Why does `position: sticky` sometimes not work?**
+    - `top/right/bottom/left` is not set, or the parent doesn't have enough height.
+43. **Why does `height: 100%` not work on an element?**
+    - The parent doesn't have a defined height.
+44. **Why does `margin: auto` not work for vertical centering?**
+    - It only works horizontally by default. Use Flexbox or Grid for vertical centering.
+45. **Why do flex items shrink unexpectedly?**
+    - Default `flex-shrink: 1`; use `flex-shrink: 0` to prevent shrinking.
+46. **What is the difference between `width` and `flex-basis`?**
+    - `flex-basis` is the initial size before space distribution.
+47. **Why does `overflow: hidden` fix layout issues?**
+    - It creates a new Block Formatting Context (BFC).
+48. **What is the difference between `border` and `outline`?**
+    - `outline` does not affect layout.
+49. **What is the difference between `visibility: hidden` and `opacity: 0`?**
+    - `visibility: hidden` prevents interaction; `opacity: 0` does not.
+50. **What is the `attr()` function used for?**
+    - To retrieve the value of an HTML attribute.
+
+================================================================================
+39. PRACTICAL CSS INTERVIEW CHALLENGES
+================================================================================
+
+CHALLENGE 1: CREATE A RESPONSIVE NAVBAR
+---------------------------------------
+**Requirements:** A navigation bar with a logo, menu links, and a hamburger menu for mobile.
+**Solution:**
+```css
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background: #333;
+  color: white;
+}
+.nav-links {
+  display: flex;
+  gap: 1rem;
+  list-style: none;
+}
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+}
+.hamburger span {
+  width: 25px;
+  height: 3px;
+  background: white;
+}
+
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+  }
+  .nav-links.open {
+    display: flex;
+  }
+  .hamburger {
+    display: flex;
+  }
+}
+```
+
+CHALLENGE 2: CREATE A RESPONSIVE CARD GRID
+------------------------------------------
+**Requirements:** Cards that display in a grid and stack on smaller screens.
+**Solution:**
+```css
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+```
+
+CHALLENGE 3: CENTER A DIV
+-------------------------
+**Requirements:** Center a div both horizontally and vertically.
+**Solution (Flexbox):**
+```css
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+```
+
+CHALLENGE 4: CREATE A MODAL
+---------------------------
+**Requirements:** A modal that overlays the entire page.
+**Solution:**
+```css
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+.modal-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  max-width: 500px;
+  width: 90%;
+}
+```
+
+CHALLENGE 5: CREATE A CSS-ONLY LOADER
+-------------------------------------
+**Requirements:** A spinning loading indicator.
+**Solution:**
+```css
+.loader {
+  width: 50px;
+  height: 50px;
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #007bff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+```
+
+================================================================================
+40. TRICKY CSS CONCEPTS
+================================================================================
+
+1.  **Why `margin: auto` sometimes works and sometimes doesn't**
+    - `margin: 0 auto` works on block-level elements with a defined width.
+    - For vertical centering, use Flexbox or Grid.
+
+2.  **Why `height: 100%` doesn't always work**
+    - The parent's height must be defined (or the element's position must be absolute/fixed).
+
+3.  **Why `width: 100%` can cause overflow**
+    - Because padding and border are added to the width (`content-box`). Use `border-box`.
+
+4.  **Why `z-index` doesn't work**
+    - The element may not be positioned, or it's in a different stacking context.
+
+5.  **Why `position: sticky` doesn't work**
+    - `top`, `right`, `bottom`, or `left` must be set. The parent must have enough height.
+
+6.  **Why flex items shrink unexpectedly**
+    - `flex-shrink: 1` by default. Set `flex-shrink: 0` to prevent shrinking.
+
+7.  **Why `flex-basis` behaves differently from `width`**
+    - `flex-basis` is the initial size before space distribution. Use `width` for absolute sizing.
+
+8.  **Why percentage heights can fail**
+    - The parent's height must be defined. Use `vh` or `rem` as an alternative.
+
+9.  **Why margin collapsing happens**
+    - Vertical margins of adjacent block elements collapse. Use padding or create a BFC.
+
+10. **Why overflow causes unexpected behavior**
+    - `overflow: hidden/auto/scroll` creates a new BFC, which can affect layout.
+
+11. **Why transforms can affect positioning**
+    - `transform` creates a new stacking context, which can affect `z-index`.
+
+12. **Why `opacity` creates a stacking context**
+    - `opacity` less than 1 creates a new stacking context.
+
+13. **Why `display: none` removes an element from layout**
+    - It completely removes the element from the document flow.
+
+14. **Why `visibility: hidden` preserves layout**
+    - It hides the element but keeps its space.
+
+15. **Why `overflow: hidden` can affect sticky positioning**
+    - `overflow: hidden` creates a new containing block for `sticky`.
+
+16. **Why CSS specificity causes unexpected results**
+    - High specificity selectors override lower ones. Use classes and avoid IDs.
+
+================================================================================
+41. CSS BEST PRACTICES
+================================================================================
+
+1.  **Use meaningful class names** (not `.box1`, `.container2`).
+2.  **Prefer classes over IDs for styling** (lower specificity, more reusable).
+3.  **Avoid excessive nesting** (e.g., `.nav .menu .item .link`).
+4.  **Avoid unnecessary specificity** (use `!important` sparingly).
+5.  **Use consistent formatting** (indentation, alphabetical order, etc.).
+6.  **Use CSS variables for reusable values** (colors, spacing, fonts).
+7.  **Use logical properties** (`margin-inline`, `padding-block`).
+8.  **Use mobile-first responsive design** (`min-width` media queries).
+9.  **Keep components isolated** (BEM, CSS Modules, scoped styles).
+10. **Prefer reusable patterns** (avoid duplicating code).
+11. **Keep accessibility in mind** (focus styles, contrast, reduced motion).
+12. **Optimize critical styles** (inline critical CSS, defer non-critical).
+13. **Remove unused CSS** (use PurgeCSS or similar tools).
+14. **Use modern CSS when appropriate** (`:has()`, container queries, nesting).
+15. **Comment your CSS** when necessary, but let the code speak for itself.
+16. **Avoid using `!important`** as a quick fix. It's a sign of specific issues.
+17. **Use `rem` for font sizes**, `px` for borders, and `%` for layouts.
+18. **Test on multiple browsers** for compatibility.
+19. **Write CSS for the future**, but consider legacy support if needed.
+
+================================================================================
+42. COMMON CSS MISTAKES
+================================================================================
+
+1.  **Incorrect specificity assumptions** – Using IDs unnecessarily.
+2.  **Overusing `!important`** – Makes debugging difficult.
+3.  **Using IDs everywhere** – High specificity reduces reusability.
+4.  **Excessive absolute positioning** – Breaks the flow and causes layout issues.
+5.  **Not using `box-sizing: border-box`** – Sizing becomes unpredictable.
+6.  **Forgetting responsive design** – Not using media queries.
+7.  **Hardcoding too many dimensions** – Use flexible units (`%`, `vw`, `vh`, `fr`).
+8.  **Ignoring overflow** – Content overflows without `overflow` handling.
+9.  **Poor `z-index` management** – Not understanding stacking contexts.
+10. **Missing focus styles** – Accessibility is ignored.
+11. **Poor color contrast** – Text becomes unreadable.
+12. **Animating expensive properties** – Using `top/left` instead of `transform`.
+13. **Overusing JavaScript for styling** – Let CSS handle styling.
+14. **Writing unnecessarily complex selectors** – Performance and readability suffers.
+15. **Not understanding flex shrinking** – `flex-shrink: 1` causes unexpected behavior.
+16. **Not understanding margin collapsing** – Unexpected spacing.
+17. **Using `px` for font sizes** – Accessibility issues.
+18. **Using `!important` for everything** – The cascade is broken.
+19. **Not using a CSS reset** – Cross-browser inconsistencies.
+20. **Forgetting `alt` text for images** – Accessibility issue.
+
+================================================================================
+43. QUICK REVISION SECTION (CHEAT SHEET)
+================================================================================
+
+CSS CHEAT SHEET: SELECTORS
+--------------------------
+| Selector           | Example               | Description                                   |
+|--------------------|-----------------------|-----------------------------------------------|
+| Universal          | `*`                   | All elements                                  |
+| Type               | `h1`                  | All `<h1>` elements                           |
+| Class              | `.class`              | All elements with `class="class"`             |
+| ID                 | `#id`                 | Element with `id="id"`                        |
+| Attribute          | `[type="text"]`       | Elements with `type="text"`                   |
+| Descendant         | `.parent .child`      | `.child` inside `.parent`                     |
+| Child              | `.parent > .child`    | Direct child of `.parent`                     |
+| Adjacent Sibling   | `h1 + p`              | `<p>` immediately after `<h1>`                |
+| General Sibling    | `h1 ~ p`              | All `<p>` siblings after `<h1>`               |
+| Pseudo-class       | `:hover`              | Element on hover                              |
+| Pseudo-element     | `::before`            | Before the element's content                  |
+
+CSS CHEAT SHEET: BOX MODEL
+--------------------------
+| Property           | Description                                   |
+|--------------------|-----------------------------------------------|
+| `margin`           | Space outside the border.                     |
+| `padding`          | Space between content and border.             |
+| `border`           | Line around the padding.                      |
+| `box-sizing`       | `content-box` (default) or `border-box`.      |
+
+CSS CHEAT SHEET: POSITIONING
+----------------------------
+| Property           | Description                                   |
+|--------------------|-----------------------------------------------|
+| `static`           | Default flow.                                 |
+| `relative`         | Relative to itself.                           |
+| `absolute`         | Relative to nearest positioned ancestor.      |
+| `fixed`            | Relative to the viewport.                     |
+| `sticky`           | Hybrid of relative and fixed.                 |
+
+CSS CHEAT SHEET: FLEXBOX
+------------------------
+| Property           | Description                                   |
+|--------------------|-----------------------------------------------|
+| `display: flex`    | Enables Flexbox.                              |
+| `flex-direction`   | `row`, `column`, `row-reverse`, `column-reverse`. |
+| `flex-wrap`        | `nowrap`, `wrap`, `wrap-reverse`.             |
+| `justify-content`  | Main axis alignment.                          |
+| `align-items`      | Cross axis alignment.                         |
+| `flex-grow`        | Ability to grow.                              |
+| `flex-shrink`      | Ability to shrink.                            |
+| `flex-basis`       | Initial size.                                 |
+
+CSS CHEAT SHEET: GRID
+---------------------
+| Property           | Description                                   |
+|--------------------|-----------------------------------------------|
+| `display: grid`    | Enables Grid.                                 |
+| `grid-template-columns` | Defines columns.                        |
+| `grid-template-rows`    | Defines rows.                           |
+| `gap`              | Space between items.                          |
+| `grid-column`      | Column placement.                             |
+| `grid-row`         | Row placement.                                |
+| `grid-area`        | Named area placement.                         |
+
+CSS CHEAT SHEET: UNITS
+----------------------
+| Unit               | Description                                   |
+|--------------------|-----------------------------------------------|
+| `px`               | Pixels.                                       |
+| `%`                | Percentage of parent.                         |
+| `em`               | Relative to parent font-size.                 |
+| `rem`              | Relative to root font-size.                   |
+| `vw` / `vh`        | Viewport width / height.                      |
+| `fr`               | Fractional unit (Grid).                       |
+| `dvh` / `svh` / `lvh` | Dynamic/small/large viewport height.       |
+
+CSS CHEAT SHEET: RESPONSIVE
+---------------------------
+| Property           | Description                                   |
+|--------------------|-----------------------------------------------|
+| `@media`           | Applies styles based on device.               |
+| `@supports`        | Applies styles if feature is supported.       |
+| `@container`       | Applies styles based on container size.       |
+
+CSS CHEAT SHEET: PERFORMANCE
+----------------------------
+| Property           | Description                                   |
+|--------------------|-----------------------------------------------|
+| `will-change`      | Hints that a property will change.            |
+| `content-visibility` | Skips rendering of off-screen content.      |
+| `contain`          | Isolates the element.                         |
+
+================================================================================
+44. LAST-MINUTE CSS REVISION
+================================================================================
+
+BEFORE YOUR INTERVIEW, REVISE THESE HIGH-VALUE CONCEPTS:
+
+1.  **BOX MODEL**: Content, Padding, Border, Margin. `box-sizing: border-box` is your friend.
+
+2.  **SPECIFICITY**: Inline > ID > Class > Type. Use classes, avoid IDs.
+
+3.  **CASCADE**: Specificity -> Source Order -> Importance (`!important`).
+
+4.  **FLEXBOX**: One-dimensional layout. `justify-content` (main axis), `align-items` (cross axis).
+
+5.  **GRID**: Two-dimensional layout. `grid-template-columns`, `grid-template-rows`, `gap`.
+
+6.  **POSITIONING**: `relative` (relative to itself), `absolute` (relative to positioned ancestor), `fixed` (relative to viewport), `sticky` (hybrid).
+
+7.  **UNITS**: `px` (absolute), `rem` (root-relative), `em` (parent-relative), `%` (parent-relative), `vw`/`vh` (viewport).
+
+8.  **RESPONSIVE**: Media queries, fluid layouts, `clamp()`, `min()`, `max()`.
+
+9.  **PSEUDO-CLASSES**: `:hover`, `:focus`, `:nth-child()`, `:not()`, `:has()`, `:is()`, `:where()`.
+
+10. **PSEUDO-ELEMENTS**: `::before`, `::after`, `::first-line`.
+
+11. **VARIABLES**: `--var` and `var()`. Useful for theming.
+
+12. **PERFORMANCE**: `will-change`, `content-visibility`. Animate `transform` and `opacity`.
+
+13. **ACCESSIBILITY**: `:focus-visible`, `prefers-reduced-motion`, color contrast.
+
+14. **MODERN CSS**: Nesting, Container Queries, Cascade Layers, `:has()`.
+
+15. **LAYOUT PROBLEMS**: Centering (Flexbox/Grid), Sticky Footer, Responsive Grid.
+
+16. **COMMON TRAPS**: `z-index` not working (check stacking contexts), `position: sticky` not working (check `top` and parent height), `margin: auto` (works horizontally, use Flexbox for vertical).
+
+================================================================================
+                                END OF NOTES
+================================================================================
+```
