@@ -1,0 +1,291 @@
+Let / var / const 👍
+They are all used to declare variables:
+Prefer const by default. Use let when the value needs to change. Avoid var in modern code unless you specifically need its behavior. 
+
+var
+var allows reassignment 
+Var x= 10;
+x=20;
+
+var also allows redeclaration 
+Var x =25;
+Var x =35;
+This can sometimes lead to accidental bugs. 
+
+let
+let allows reassignment. 
+Let x=34;
+x=45;
+But unlike var, it does not allow redeclaration in the same scope 
+Let x =12;
+Let x= 14; // error 
+
+Const 
+const is used when the variable cannot be reassigned. 
+Const age =90;
+Age =20; //error
+
+scope
+JavaScript has function scope and block scope. 
+A block is anything inside { } 
+
+var is NOT block scoped 
+{var x=10 }
+console.log(x) //10 The var variable escaped the block. 
+
+let IS block scoped 
+{let  x=10}
+console.log(x) //error
+
+const is also block scoped 
+{const x= 12}
+console.log(x) //error 
+
+var is function scoped. 
+Function test ()
+{
+var x = 10; console.log(x); 
+}
+test(); //10 
+console.log(x); // reference error 
+So var is accessible throughout the function, but not outside the function. 
+
+let and const are block scoped 
+function test() {
+    if (true) {
+        let x = 10;
+        const y = 20;
+
+        console.log(x); // 10
+        console.log(y); // 20
+    }
+
+    console.log(x); // ❌
+    console.log(y); // ❌
+}
+//The variables only exist inside the if block. 
+
+Hoisting
+
+Declaration    	Binding created before execution?    	Before declaration
+—-------------------------------------------------------------------------------------------
+var    		 Yes    				undefined
+let    		 Yes   				ReferenceError (TDZ)
+const   		 Yes    				ReferenceError (TDZ)
+function f(){}   	 Yes   				Function can be called
+
+console.log(x);
+var x = 10; //undefined
+
+let and const are also hoisted — BUT gives reference error 
+console.log(x);
+let x = 10; //ReferenceError TDZ
+
+console.log(x);
+const x = 10;  //ReferenceError TDZ
+
+TDZ Temporal Dead Zone 
+The TDZ is the period between entering a scope and the point where the let/const declaration is initialized. 
+console.log(x); // ❌ TDZ
+let x = 10; //You cannot access x before its declaration. 
+
+This is NOT allowed 
+const person = {
+    name: "Rahul"
+};
+person = {
+    name: "Amit"
+};
+
+const numbers = [1, 2, 3];
+numbers.push(4);
+console.log(numbers);
+
+var inside loops — famous problem 
+
+for (var i = 0; i < 3; i++) {
+    console.log(i);
+} 
+console.log(i); //0123 //Because var isn't block scoped. 
+
+for (let i = 0; i < 3; i++) {
+    console.log(i);
+}
+console.log(i); // reference error 
+
+
+Trap 
+
+
+—----------------------------------------------------------------------------------------------
+B) Primitive vs Reference Types in JavaScript 
+JavaScript values are commonly taught as primitive values vs objects (often informally called "reference types"). 
+
+let name = "Rahul";       	 // string
+let age = 21;            		 // number
+let price = 99.99;       		 // number
+let big = 123456789n;    	 // bigint
+let isLoggedIn = true;   	 // boolean
+let x;                   		 // undefined
+let data = null;         		 // null
+let id = Symbol("id");   	 // symbol
+
+A primitive value is a single, immutable value. 
+let x = "hello"; //"hello" itself cannot be modified. You can make x refer to another string: x = "world"; 
+But you didn't modify "hello". You replaced the value associated with x.
+Unlike primitive values, objects can generally be modified. 
+const user = {
+    name: "Rahul",
+    age: 21
+};
+user.age = 22;
+
+console.log(user);  //    {name: "Rahul", age: 22}
+
+But this is true
+const a = { name: "Rahul" };
+const b = a;
+
+console.log(a === b); // Output:true
+
+Q1
+const a = {};
+const b = {};
+console.log(a === b); //false Because they're two separate objects. 
+
+Q2 
+const a = {};
+const b = a;
+console.log(a === b); //true Because they're the same object. 
+
+Arrays are objects 
+
+Primitive values
+├── string
+├── number
+├── bigint
+├── boolean
+├── undefined
+├── null
+└── symbol
+
+Object values
+├── ordinary objects
+├── arrays
+├── functions
+├── dates
+├── maps
+├── sets
+└── ...
+
+Passing primitives to functions 
+VERY IMPORTANT: JavaScript is pass-by-value 
+For an object, the value being copied is the reference to the object. 
+
+Shallow copying 
+const user1 = { name: "Rahul", age: 21 }; 
+const user2 = { ...user1 }; 
+user2.name = "Amit"; 
+console.log(user1.name); // Rahul 
+console.log(user2.name); // Amit 
+
+But spread is only a shallow copy 
+const user1 = { name: "Rahul", address: { city: "Pune" } }; 
+const user2 = { ...user1 }; 
+
+user1 → Object A
+           ↓
+        address ───→ Object C
+
+user2 → Object B
+           ↓
+        address ───→ Object C
+The outer objects are different: 
+Notice the nested address is still shared. 
+So user2.address.city = "Mumbai"; will also affect: user1.address.city
+
+Null 
+typeof null = object ← weird historical behavior 
+
+The biggest trap: nested objects 
+
+const a = { x: 10, nested: { y: 20 } }; 
+const b = { ...a }; 
+b.x = 100; 
+b.nested.y = 200; 
+console.log(a.x); 
+console.log(a.nested.y); 
+//10 
+ 200
+X is primitive but nested is an object: 
+Primitive values are immutable
+
+Equality cheat sheet 
+Same primitive value  10 === 10  //true
+
+Different objects  {} === {} //false
+
+Same object 
+const a = {};
+const b = a;
+a === b  //true
+
+Different arrays 
+[1, 2] === [1, 2] //false 
+
+Same array
+const a = [1, 2];
+const b = a;
+
+a === b //true
+
+"What's the difference between primitive and reference types?", a strong answer is:
+Primitive values are immutable values such as strings, numbers, booleans, bigint, undefined, null, and symbols. When a primitive is assigned to another variable, the value is copied, so changing one variable doesn't affect the other. Objects—including arrays and functions—are mutable values. When an object is assigned to another variable, the reference to the same object is copied, so both variables can access and modify that same object. Technically, JavaScript uses pass-by-value; for objects, the value being copied is the reference to the object.
+—----------------------------------------------------------------------------------------------
+c) type correction 
+
+Demo so why u need to learn type correction 
+"5" + 2      // "52"
+"5" - 2      // 3
+true + 1     // 2
+null + 1     // 1
+
+Type coercion = JavaScript converting a value from one type to another. 
+
+1)
+let x = "10";
+let y = 5;
+
+console.log(x + y); //105  
+JavaScript converts 5 into "5" and performs string concatenation: 
+This is implicit type coercion because JavaScript did the conversion automatically. 
+
+2)
+Implicit coercion
+JavaScript converts the type automatically:
+"10" - 5 //5	JavaScript converts "10" → 10. 
+
+Explicit coercion
+You tell JavaScript to convert it: 
+Number("10")
+String(100);      // "100"
+Number("100");    // 100
+Boolean(1);       // true
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
