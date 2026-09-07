@@ -436,7 +436,80 @@ const add = (a, b) => {
 };
 You need parentheses around the object: 
 
+—----------------------------------------------------------------------------------------------
+DESTRUCTURING
+Destructuring = taking values out of arrays or objects and storing them in variables 
 
+//normal way 
+Const  numbers =[10,20,30] ;
+Const a = numbers[0]
+Const b = numbers[1]
+Const c = numbers[2]; 	console.log(a, b, c); // 10 20 30
+
+// with ds 
+Const  numbers =[10,20,30] ;
+Const [a,b,c] =numbers;	console.log(a, b, c); // 10 20 30
+
+The position matters:
+const [first, second] = [10, 20];
+console.log(first);  // 10
+console.log(second); // 20
+
+—----------------------------------------------------------------------------------------------
+SPREAD & REST OPERATOR 
+
+In JavaScript, the spread operator and rest parameter use the exact same syntax (...), but they perform completely opposite actions depending on the context. [1, 2]
+The fundamental difference is that the spread operator unpacks elements (spreads them out)
+while the rest operator packs multiple elements into a single array (gathers them together).
+
+Spread Operator ⭐
+Spread takes elements from an array/object and spreads them out.
+//spread with array
+const arr1 = [1, 2, 3];
+const arr2 = [...arr1, 4, 5];
+console.log(arr2);
+// [1, 2, 3, 4, 5]
+
+// spread with objects 
+const user = {
+  name: "John",
+  age: 25
+};
+const newUser = {
+  ...user,
+  city: "Pune"
+};
+console.log(newUser);
+// { name: "John", age: 25, city: "Pune" }
+
+Rest Operator ⭐
+Rest does the opposite.
+It collects multiple values into an array.
+const [first, ...rest] = [10, 20, 30, 40];
+console.log(first);
+// 10
+console.log(rest);
+// [20, 30, 40] ...rest means "Collect everything remaining." 
+
+—----------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
 
 
 
