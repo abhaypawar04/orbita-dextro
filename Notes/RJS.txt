@@ -272,7 +272,169 @@ String(100);      // "100"
 Number("100");    // 100
 Boolean(1);       // true
 
+3) + is special 
+The + operator can mean: Numeric addition || String concatenation
+"5" + 2 //52
+5 + 2 //7
 
+number + number → addition
+string + anything → usually string concatenation
+
+4) - behaves differently 
+"5" - 2 //3
+"10" * 2   // 20
+"10" / 2   // 5
+"10" - 2   // 8
+
+5) + with booleans 
+true + 1 //2
+Why? When converted to a number: true → 1 false → 0
+6) boolean conversion 
+The following values are falsy: 
+false
+0
+-0
+0n
+""
+null
+undefined
+NaN
+
+Everything else is generally truthy, including: 
+[]
+{}
+"0"
+"False"
+–
+Boolean(1)        // true
+Boolean(0)        // false
+
+Boolean("hello")  // true
+Boolean("")       // false
+
+Boolean(null)     // false
+Boolean(undefined)// false
+
+Boolean([]) // Boolean({}) // true
+Because all objects are truthy, including empty arrays and empty objects. 
+
+7 trap 
+An empty object is still an object, and objects are truthy. 
+
+8 Number() conversion
+You can explicitly convert to number:
+
+Number("10")     // 10
+Number("10.5")   // 10.5
+Number(true)     // 1
+Number(false)    // 0
+Number(null)     // 0
+Number("")       // 0
+
+9 NaN Not-a-Number 
+Number(undefined) // NaN
+Number("hello") // NaN
+
+typeof NaN = number 
+Yes, weird—but NaN is a special numeric value representing an invalid numeric result. 
+
+10 String conversion 
+String(123)	//”123”
+String(true)       // "true"
+String(false)      // "false"
+String(null)       // "null"
+String(undefined)  // "undefined"
+
+11 == vs === 
+
+5 == "5"    // true
+5 === "5"   // false
+
+true == 1   // true
+true === 1  // false
+
+12 Very important: null and undefined 
+null == undefined //true
+null === undefined //false
+They are distinct types/values, but the loose equality algorithm has a special rule treating null and undefined as equal to each other. 
+
+null represents an intentional absence of any object value, while 
+undefined means a variable has been declared but has not yet been assigned a value 
+
+—----------------------------------------------------------------------------------------------
+d) closure 
+A closure happens when a function remembers and can access variables from the scope where the function was created, even after that outer scope has finished executing. 
+
+function outer() {
+    let message = "Hello";
+    function inner() {
+        console.log(message);
+    }
+    return inner;
+}
+const fn = outer();
+fn();
+//Hello
+Lexical scope
+let name = "Rahul";
+function greet() {
+    console.log(name);
+}
+greet();
+greet() can access name.
+Why?
+Because name is in an outer scope.
+JavaScript determines this based on where the function is written, not where it is called.
+This is called lexical scoping.
+
+Nested function : 
+function outer() {
+    let x = 10;
+
+    function inner() {
+        console.log(x);
+    }
+
+    inner();
+}
+
+outer();  // inner() can access x because inner was created inside outer. 
+
+STRONG DEF : A closure is a function together with the lexical environment in which it was created, allowing it to access variables from its outer scope even after the outer function has finished executing. 
+—----------------------------------------------------------------------------------------------
+e) this 
+this keyword refers to the context or object that is currently executing the code 
+For a normal function, this is determined by how the function is called, not where it was defined. 
+But arrow functions are different: they don't create their own this; they capture it from the surrounding scope. 
+
+
+this is a special keyword that refers to a value determined by the execution context. 
+const user = {
+    name: "Rahul",
+
+    greet() {
+        console.log(this.name);
+    }
+};
+user.greet();  //Rahul
+
+Here:this refers to:user So: this.name means: user.name
+
+Arrow functions do not have their own this.
+They inherit this from their surrounding lexical scope.
+—----------------------------------------------------------------------------------------------
+ARROW FUNCTION
+Arrow functions are a shorter way to write functions in JavaScript. 
+// Normal function
+function add(a, b) {
+  return a + b;
+}
+
+// Arrow function
+const add = (a, b) => {
+  return a + b;
+};
+You need parentheses around the object: 
 
 
 
