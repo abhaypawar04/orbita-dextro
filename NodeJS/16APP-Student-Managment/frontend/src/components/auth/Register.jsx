@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { GoogleLogin } from "@react-oauth/google";
+import toast from "react-hot-toast";
 import { useAuth } from "../../hooks/useAuth";
 import { registerValidationSchema } from "../../utils/validation";
 import Button from "../../components/common/Button";
 
 const Register = () => {
-  const { register } = useAuth();
+  const { register, googleAuth } = useAuth();
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -37,7 +39,8 @@ const Register = () => {
         email: formData.email,
         password: formData.password,
       });
-      navigate("/login");
+      // Redirect to OTP verification screen
+      navigate("/verify-email", { state: { email: formData.email } });
     } catch (err) {
       if (err.name === "ValidationError") {
         const validationErrors = {};
@@ -46,6 +49,19 @@ const Register = () => {
         });
         setErrors(validationErrors);
       }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleGoogleSuccess = async (credentialResponse) => {
+    if (!credentialResponse.credential) return;
+    try {
+      setLoading(true);
+      await googleAuth(credentialResponse.credential);
+      navigate("/dashboard");
+    } catch (err) {
+      // Toast shown in AuthContext
     } finally {
       setLoading(false);
     }
@@ -124,6 +140,33 @@ const Register = () => {
               Create Account
             </Button>
           </form>
+
+          {/* Divider */}
+          <div className="relative my-6">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-gray-200" />
+            </div>
+            <div className="relative flex justify-center text-xs uppercase">
+              <span className="bg-white/80 px-3 text-gray-500 rounded-full font-medium">Or</span>
+            </div>
+          </div>
+
+          {/* Google Sign-Up */}
+          <div className="flex justify-center">
+            <GoogleLogin
+              onSuccess={handleGoogleSuccess}
+              onError={() =>
+                toast.error(
+                  "Google Sign-In failed. Please configure a valid GOOGLE_CLIENT_ID in .env",
+                )
+              }
+              useOneTap={false}
+              shape="pill"
+              theme="outline"
+              size="large"
+              width="100%"
+            />
+          </div>
 
           <p className="mt-7 text-center text-sm text-gray-500">
             Already have an account?{" "}

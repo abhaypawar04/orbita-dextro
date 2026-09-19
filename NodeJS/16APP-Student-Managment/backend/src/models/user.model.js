@@ -20,7 +20,12 @@ const userSchema = new mongoose.Schema(
 
     password: {
       type: String,
-      required: [true, "Password is required"],
+      required: [
+        function () {
+          return this.authProvider === "local";
+        },
+        "Password is required",
+      ],
       minlength: [6, "Password must be at least 6 characters"],
       select: false,
     },
@@ -30,20 +35,50 @@ const userSchema = new mongoose.Schema(
       enum: ["user", "admin"],
       default: "user",
     },
+
+    isEmailVerified: {
+      type: Boolean,
+      default: false,
+    },
+
+    authProvider: {
+      type: String,
+      enum: ["local", "google"],
+      default: "local",
+    },
+
+    googleId: {
+      type: String,
+      default: null,
+    },
+
+    verificationOtp: {
+      hash: { type: String, select: false },
+      expiresAt: { type: Date, select: false },
+      attempts: { type: Number, default: 0, select: false },
+      lastSentAt: { type: Date, select: false },
+    },
+
+    resetOtp: {
+      hash: { type: String, select: false },
+      expiresAt: { type: Date, select: false },
+      attempts: { type: Number, default: 0, select: false },
+      lastSentAt: { type: Date, select: false },
+    },
   },
   {
     timestamps: true,
   },
 );
 
-//
 userSchema.methods.comparePassword = async function (candidatePassword) {
+  if (!this.password) return false;
   return bcrypt.compare(candidatePassword, this.password);
 };
 
 // Hash password before saving
 userSchema.pre("save", async function () {
-  if (!this.isModified("password")) {
+  if (!this.password || !this.isModified("password")) {
     return;
   }
 

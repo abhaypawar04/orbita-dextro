@@ -5,6 +5,8 @@ import Layout from "../components/layout/Layout";
 import Home from "../pages/Home";
 import LoginPage from "../pages/LoginPage";
 import RegisterPage from "../pages/RegisterPage";
+import VerifyEmailPage from "../pages/VerifyEmailPage";
+import ForgotPasswordPage from "../pages/ForgotPasswordPage";
 import DashboardPage from "../pages/DashboardPage";
 import StudentsPage from "../pages/StudentsPage";
 
@@ -54,6 +56,22 @@ const AppRoutes = () => {
           element={
             <PublicRoute>
               <RegisterPage />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="verify-email"
+          element={
+            <PublicRoute>
+              <VerifyEmailPage />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="forgot-password"
+          element={
+            <PublicRoute>
+              <ForgotPasswordPage />
             </PublicRoute>
           }
         />
