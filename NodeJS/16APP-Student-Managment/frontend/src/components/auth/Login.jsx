@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { GoogleLogin } from "@react-oauth/google";
 import { useAuth } from "../../hooks/useAuth";
 import { loginValidationSchema } from "../../utils/validation";
 import Button from "../../components/common/Button";
 
 const Login = () => {
-  const { login } = useAuth();
+  const { login, googleAuth } = useAuth();
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -35,7 +36,26 @@ const Login = () => {
           validationErrors[error.path] = error.message;
         });
         setErrors(validationErrors);
+      } else if (
+        err.response?.status === 403 &&
+        err.response?.data?.errors?.requiresVerification
+      ) {
+        // Redirect to OTP verification screen for unverified accounts
+        navigate("/verify-email", { state: { email: formData.email } });
       }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleGoogleSuccess = async (credentialResponse) => {
+    if (!credentialResponse.credential) return;
+    try {
+      setLoading(true);
+      await googleAuth(credentialResponse.credential);
+      navigate("/dashboard");
+    } catch (err) {
+      // Toast already shown in AuthContext
     } finally {
       setLoading(false);
     }
@@ -86,7 +106,15 @@ const Login = () => {
             </div>
 
             <div>
-              <label htmlFor="password" className="form-label mb-2">Password</label>
+              <div className="flex items-center justify-between mb-2">
+                <label htmlFor="password" className="form-label mb-0">Password</label>
+                <Link
+                  to="/forgot-password"
+                  className="text-xs font-semibold text-primary-600 hover:text-primary-700 transition-colors"
+                >
+                  Forgot Password?
+                </Link>
+              </div>
               <div className="relative">
                 <svg className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v2h8z" />
@@ -109,6 +137,33 @@ const Login = () => {
               Sign In
             </Button>
           </form>
+
+          {/* Divider */}
+          <div className="relative my-6">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-gray-200" />
+            </div>
+            <div className="relative flex justify-center text-xs uppercase">
+              <span className="bg-white/80 px-3 text-gray-500 rounded-full font-medium">Or</span>
+            </div>
+          </div>
+
+          {/* Google Sign-In */}
+          <div className="flex justify-center">
+            <GoogleLogin
+              onSuccess={handleGoogleSuccess}
+              onError={() =>
+                toast.error(
+                  "Google Sign-In failed. Please configure a valid GOOGLE_CLIENT_ID in .env",
+                )
+              }
+              useOneTap={false}
+              shape="pill"
+              theme="outline"
+              size="large"
+              width="100%"
+            />
+          </div>
 
           <p className="mt-7 text-center text-sm text-gray-500">
             Don't have an account?{" "}
