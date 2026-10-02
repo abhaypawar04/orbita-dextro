@@ -1,12 +1,13 @@
-//Print numbers from N to 1
+//Print numbers from 1 to N
 
-let n = 24;
+let n = 12;
+let i = 1;
 
-// for (let i = n; i > 0; i--) {
-//   console.log(i);
-// }
-
-while (n > 0) {
-  console.log(n);
-  n--;
+for (i = 1; i <= n; i++) {
+  console.log(i);
 }
+
+// while (i <= n) {
+//   console.log(i);
+//   i++;
+// }
