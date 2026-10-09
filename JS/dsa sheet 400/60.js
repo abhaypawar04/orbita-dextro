@@ -1,10 +1,10 @@
-// generate a fibonicci series
+// generate a fiboicci series
 
 let first = 0;
 let second = 1;
-let N = 10;
+let n = 10;
 
-for (let i = 0; i < N; i++) {
+for (let i = 0; i < n; i++) {
   console.log(first);
   let next = first + second;
   first = second;
