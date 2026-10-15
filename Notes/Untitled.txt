@@ -21,4 +21,4 @@
 42:11:32 - React Monorepos
 42:25:30 - Building Complete Design System For Company
 43:22:40 - FullStack Project
-50:31:53 - Outro
+50:31:53 - Outrob
